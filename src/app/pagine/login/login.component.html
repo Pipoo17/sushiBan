@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="wrapper">
+    <div class="title"><span>Accedi</span></div>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+      <div class="row">
+        <i class="fas fa-user"></i>
+        <input type="email" placeholder="Email" required ngModel name="email">
+      </div>
+      <div class="row">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Password" required ngModel name="password" minlength="6">
+      </div>
+      <div class="row button">
+        <input type="submit" value="Accedi">
+      </div>
+      <div class="signup-link">Non hai un account? <a routerLink="/register">Crealo qui</a></div>
+    </form>
+    <div *ngIf="this.registrationSuccess || this.logoutSuccess" class="successMessage">{{ message }}</div> <!-- Aggiungi questa linea per visualizzare il messaggio -->
+    <div *ngIf-else>{{ message }}</div> <!-- Aggiungi questa linea per visualizzare il messaggio -->
+  </div>
+</div>

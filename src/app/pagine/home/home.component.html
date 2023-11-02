@@ -1,0 +1,78 @@
+ <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+  <div class="wrapper">
+    <div class="searchBar">
+      <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Cerca Piatto..." value="" [(ngModel)]="searchValue"/>
+      <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit">
+        <svg style="width:px;height:24px" viewBox="0 0 24 24"><path fill="#666666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+        </svg>
+      </button>
+    </div>
+    </div>
+
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" color="primary" class="mat-tab-label-white">
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="matTabLable">Tutti</span>
+    </ng-template>
+      <div class="card-container">
+        <ng-container *ngFor="let categoria of servizioMenu.getCategorie(); let categoriaIndex = index">
+          <h1 class="titoloCategoria">{{ categoria }}</h1>
+          <div *ngFor="let piatto of servizioMenu.menu; let i = index">
+            <div class="card" *ngIf="(piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || searchValue === '')">
+              <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i" ></app-card-piatto>
+          <!--    <app-card-piatto [piatto]=piatto.img [img]="getImmagineUrlFromName(piatto.codice)" [i]="i" ></app-card-piatto>   -->
+          </div>
+          </div>
+        </ng-container>
+      </div>
+    </mat-tab>
+
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="matTabLable">Preferiti</span>
+      </ng-template>
+      <div *ngIf="servizioMenu.getQuantiPreferiti() <= 0" class="centered-alert">
+        <h1 class="alertPreferiti">Aggiungi dei piatti ai preferiti per poterli selezionare più facilmente!</h1>
+      </div>
+      <div class="card-container">
+        <ng-container *ngFor="let categoria of servizioMenu.getCategorie(); let categoriaIndex = index">
+          <ng-container *ngIf="servizioMenu.hasPreferitiInCategoria(categoria)">
+            <h1 class="titoloCategoria">{{ categoria }}</h1>
+            <div *ngFor="let piatto of servizioMenu.menu; let i = index">
+              <div class="card" *ngIf="piatto.preferito && (piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || searchValue === '')">
+                <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i"></app-card-piatto>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </mat-tab>
+    
+    
+    <!--  Crea  lable per ogni categoria  -->
+
+  <div *ngFor="let categoria of servizioMenu.getCategorie(); let categoriaIndex = index">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="matTabLable">{{servizioMenu.getCategorieFromIndex(categoriaIndex)}}</span>
+      </ng-template>
+      <div class="card-container">
+        <div *ngFor="let piatto of servizioMenu.menu; let i = index">
+          <div class="card" *ngIf="piatto.categoria == servizioMenu.getCategorieFromIndex(categoriaIndex) ">
+            <div *ngIf="(piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || searchValue === '')">
+              <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i"></app-card-piatto>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </div>
+</mat-tab-group>
+
+
+<app-pulsante-carrello></app-pulsante-carrello>
+
+<app-footer></app-footer>

@@ -1,0 +1,39 @@
+<div class="contenitore_searchbar">
+  <mat-form-field class="searchbar">
+    <mat-label>Cerca Piatto</mat-label>
+    <input matInput type="text" [(ngModel)]="searchValue">
+    <button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div class="card-container" >
+  <div *ngFor="let piatto of menu; let i = index" class="card">
+<mat-card class="example-card" *ngIf="piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || searchValue === '' ">  
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{piatto.nome}}</mat-card-title>
+    <mat-card-subtitle>{{piatto.codice}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="immagine" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>
+      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+      bred for hunting.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="rimuoviPiatto(i)">-</button>
+    <mat-form-field class="example-full-width">
+      <input matInput [value]="this.menu[i].counter" readonly>
+    </mat-form-field>
+    <button mat-button (click)="aggiungiPiatto(i)">+</button>
+
+  </mat-card-actions>
+</mat-card>
+
+</div>
+</div>
+

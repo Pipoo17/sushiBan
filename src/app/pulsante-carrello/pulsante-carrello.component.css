@@ -1,0 +1,19 @@
+.example-flex-container {
+    position: relative; /* Aggiungi questa riga per consentire la sovrapposizione del pulsante */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: right;
+    z-index: 1;
+  }
+  
+  .example-button-container {
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    display: flex;
+    justify-content: center;
+    width: 120px;
+    
+  }
+  

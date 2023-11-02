@@ -1,0 +1,35 @@
+<head></head>
+<div class="container">
+    <div class="wrapper">
+      <div class="title"><span>Registrazione</span></div>
+      <form #registrationform="ngForm" (ngSubmit)="onSubmit(registrationform)">
+       <!--
+        <div class="row">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Nome" required ngModel name="nome">
+        </div>
+        <div class="row">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Cognome" required ngModel name="cognome">
+        </div>
+        <div class="row">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Username" required ngModel name="username">
+        </div>
+        -->
+        <div class="row">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Email" required ngModel name="email">
+        </div>
+        <div class="row">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" required ngModel name="password" minlength="6">
+        </div>
+        <div class="row button">
+          <input type="submit" value="Registrati">
+        </div>
+        <div class="signup-link">Hai già un account? <a routerLink="/login">Accedi qui</a></div>
+      </form>
+      <div class="message">{{ message }}</div> <!-- Aggiungi questa linea per visualizzare il messaggio -->
+    </div>
+  </div>

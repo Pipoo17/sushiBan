@@ -1,0 +1,27 @@
+<div class="carrello">
+    
+    <h1 class="titolo">Carrello</h1>
+    <form (ngSubmit)="onSubmit()">
+    <div class="elencoPiatti">
+        <div *ngFor="let piatto of servizioMenu.menu; let i = index">
+            <div *ngIf="servizioMenu.getCounter(i) != 0" class="contenitorePiattiMenu marginePiatti">
+                <img src={{servizioMenu.getImg(i)}} class="imgPiatti">
+                <p>{{servizioMenu.getCodice(i)}}</p>
+        
+                <button mat-button (click)="servizioMenu.rimuoviPiatto(i)" #rimuoviBtn class="pulsateDec">-</button>
+                <h3>{{servizioMenu.getCounter(i)}}</h3>
+                <button mat-button (click)="servizioMenu.aggiungiPiatto(i)" #rimuoviBtn class="pulsateInc">+</button>
+                <button mat-button class="pulsateX" (click)="servizioMenu.eliminaPiatto(i)"><mat-icon>delete</mat-icon></button>
+            </div>
+        </div>
+    </div>
+<!--     <div *ngIf="servizioMenu.carrelloVuoto()" class="nessunPiatto">Nessun piatto</div> -->
+    <div class="contenitorePulsante">
+        <button mat-raised-button class="inviaForm">Invia Ordine</button>
+    </div>
+</form>
+</div>
+
+
+
+

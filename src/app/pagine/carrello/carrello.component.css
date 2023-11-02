@@ -1,0 +1,67 @@
+.carrello{
+    width: 40vw;
+    height: 70vh;
+    min-width: 300px;
+    min-height: 300px;
+
+}
+.elencoPiatti {
+    width: 35vw;; /* Calcola la larghezza sottraendo il padding del contenitore */
+    height: calc(71vh - 130px); /* Regola l'altezza sottraendo l'altezza del titolo e del contenitore pulsante */
+    min-height: 200px;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    overflow: auto;
+    padding-top: 5px;
+
+  }
+.contenitorePiattiMenu{
+    display: flex; /* Utilizza il display flex per allineare i figli */
+    align-items: center; /* Allinea verticalmente i figli al centro */
+    width: 100%;
+    height: 80px;
+    background-color: rgb(218, 218, 218);  
+    border-radius: 10px;
+}
+.contenitorePulsante {
+    width: calc(100% - 20px); /* Calcola la larghezza sottraendo il padding del contenitore */
+    height: 50px;
+  }
+.titolo{
+text-align: center;
+margin-top: 10px;
+}
+.inviaForm {
+    position: absolute;
+    bottom: 20px; /* Regola la distanza dal fondo */
+    left: 50%; /* Posiziona il pulsante al centro orizzontalmente */
+    transform: translateX(-50%); /* Centra il pulsante rispetto al suo punto centrale */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08); /* Applica una leggera ombra */
+  }
+
+
+  .imgPiatti{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+.contenitorePiattiMenu p,
+.contenitorePiattiMenu h3,
+.contenitorePiattiMenu mat-icon {
+  margin: 0; /* Resetta il margine dei paragrafi e delle icone */
+  display: flex; /* Utilizza il display flex per allineare gli elementi interni */
+  align-items: center; /* Allinea verticalmente gli elementi interni al centro */
+}
+
+.pulsanteInc
+.pulsanteDec{
+    width: 10px;
+}
+.pulsateX {
+    margin-left: auto;
+  }
+.marginePiatti {
+margin-bottom: 10px;
+}

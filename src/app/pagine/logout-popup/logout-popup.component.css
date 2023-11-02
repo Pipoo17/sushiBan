@@ -1,0 +1,11 @@
+/* Sostituisci "container-pulsanti" con la classe o l'ID del tuo container dei pulsanti */
+.container-pulsanti {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Aggiungi spazio tra i pulsanti */
+  .mat-dialog-actions button {
+    margin: 0 5px; /* Puoi regolare la quantità di spazio orizzontale tra i pulsanti a tuo piacimento */
+  }
+  
