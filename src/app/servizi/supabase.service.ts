@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, PostgrestResponse } from '@supabase/supabase-js';
 import { HttpClient } from '@angular/common/http';
+import { OrdineSuccesComponent } from '../animazioni/ordine-succes/ordine-succes.component';
 
 @Injectable({
   providedIn: 'root'
@@ -32,44 +33,51 @@ export class SupabaseService {
     
 
   //Inserimento ordini
-  async insertOrdine(paramJson: any) {
-    console.log("chiamata insertOrdine ");
-    console.log("body: ", paramJson);
-    console.log("paramJson : ",paramJson)
-    //creazione ordine
-    const { data: ordineData, error: insertError } = await this.supabase
-    .from('Ordini')
-    .insert({idUtente: null, dataOrdine: this.getData()});
-
-    if (insertError) {
-      console.error("Si è verificato un errore durante l'inserimento:", insertError);
-    } else {
-      for (const piatto of paramJson) {
-        //prendo l'id di ogni piatto 
-        const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
-
-        if (selectError && idPiatto != null) {
-          console.error("Si è verificato un errore durante la select:", selectError);
-        } else {
-         const { idOrdine, selectError } = await this.getLastOrdine(); // Chiamata asincrona
-        
-         const { data: ordineData, error: insertError } = await this.supabase
-         .from('PiattiOrdine')
-         .insert({idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter});
-      
-         if (insertError) {
-           console.error("Si è verificato un errore durante l'inserimento:", insertError);
-         } 
-        else {
-          console.log("Inserimento riuscito:", ordineData);
-          console.log("Animazione:");
-
+  async insertOrdine(paramJson: any): Promise<boolean> {
+    try {
+      // Creazione dell'ordine
+      const { data: ordineData, error: insertError } = await this.supabase
+        .from('Ordini')
+        .insert({ idUtente: null, dataOrdine: this.getData() });
+  
+      if (insertError) {
+        console.error("Si è verificato un errore durante l'inserimento:", insertError);
+        return false; // Restituisci false in caso di errore
+      } else {
+        let inserimentoRiuscito = true; // Inizializziamo a true
+  
+        for (const piatto of paramJson) {
+          // Prendi l'id di ogni piatto
+          const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
+  
+          if (selectError && idPiatto != null) {
+            console.error("Si è verificato un errore durante la select:", selectError);
+            inserimentoRiuscito = false; // Impostiamo a false in caso di errore
+            break; // Esci dal ciclo
+          } else {
+            const { idOrdine, selectError } = await this.getLastOrdine(); // Chiamata asincrona
+  
+            const { data: ordineData, error: insertError } = await this.supabase
+              .from('PiattiOrdine')
+              .insert({ idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
+  
+            if (insertError) {
+              console.error("Si è verificato un errore durante l'inserimento:", insertError);
+              inserimentoRiuscito = false; // Impostiamo a false in caso di errore
+              break; // Esci dal ciclo
+            }
+          }
         }
+  
+        if (inserimentoRiuscito) { return true } 
+        return false; // Restituisci false in caso di errore
       }
+    } catch (error) {
+      console.error("Si è verificato un errore durante l'inserimento:", error);
+      return false; // Restituisci false in caso di errore
     }
   }
-}
-
+  
 
 
 

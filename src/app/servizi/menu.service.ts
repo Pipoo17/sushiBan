@@ -82,7 +82,7 @@ export class MenuService {
 
 
 
-  insertOrdine(body: { counter: number }[]) {
+  async insertOrdine(body: { counter: number }[]) {
     this.supabaseService.insertOrdine(body)
   }
 

@@ -14,4 +14,8 @@ export class PulsanteCarrelloComponent {
     this.dialog.open(CarrelloComponent);
     // data : {menu: this.menu}
   }
+
+  closeCart() {
+    this.dialog.closeAll;
+  }
 }
