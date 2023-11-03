@@ -20,7 +20,6 @@ export class CarrelloComponent {
 
   onSubmit() {
     let paramJson = this.servizioMenu.getOrdine();
-    console.log("paramJson: ", paramJson);
     this.servizioMenu.insertOrdine(paramJson)
       .then(() => {
         console.log("Inserimento riuscito");
@@ -30,6 +29,7 @@ export class CarrelloComponent {
         this.dialogRef.close();
         //TODO
         //Apertura Dialog che contiene l'animazione dei successo  
+        
       })
       .catch((error) => {
         console.error("Errore durante l'inserimento:", error);
