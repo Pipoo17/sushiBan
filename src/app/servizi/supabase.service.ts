@@ -30,7 +30,54 @@ export class SupabaseService {
     return data;
   }
     
-    
+
+  //Inserimento ordini
+  async insertOrdine(paramJson: any) {
+    console.log("chiamata insertOrdine ");
+    console.log("body: ", paramJson);
+    console.log("paramJson : ",paramJson)
+    //creazione ordine
+    const { data: ordineData, error: insertError } = await this.supabase
+    .from('Ordini')
+    .insert({idUtente: null, dataOrdine: this.getData()});
+
+    if (insertError) {
+      console.error("Si è verificato un errore durante l'inserimento:", insertError);
+    } else {
+      for (const piatto of paramJson) {
+        //prendo l'id di ogni piatto 
+        const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
+
+        if (selectError && idPiatto != null) {
+          console.error("Si è verificato un errore durante la select:", selectError);
+        } else {
+         const { idOrdine, selectError } = await this.getLastOrdine(); // Chiamata asincrona
+        
+         const { data: ordineData, error: insertError } = await this.supabase
+         .from('PiattiOrdine')
+         .insert({idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter});
+      
+         if (insertError) {
+           console.error("Si è verificato un errore durante l'inserimento:", insertError);
+         } 
+        else {
+          console.log("Inserimento riuscito:", ordineData);
+          console.log("Animazione:");
+
+        }
+      }
+    }
+  }
+}
+
+
+
+
+  /*====================================*/ 
+  /*==========  METODI UTILS  ==========*/
+  /*====================================*/ 
+
+  //Genera l'url delle immagini partendo dal codice del piatto(es A1, B9...)
   async getImmagineUrlFromName(nomeContainerSupabase: string, nomePiatto: string, ): Promise<string> {
     // Utilizza la funzione getPublicUrl per ottenere l'URL pubblico dell'immagine.
     const response = await this.supabase.storage.from(nomeContainerSupabase).getPublicUrl(`${nomePiatto}.jpg`);
@@ -45,70 +92,40 @@ export class SupabaseService {
   }
 
 
-  //SELECT IDPIATTO
-  async getidPiattoFromCodice(codicePiatto:String){
-    const { data: piattoData, error: selectError } = await this.supabase
-    .from('Piatti')
-    .select('id')
-    .eq('codice', codicePiatto) 
-  
-    if (piattoData && piattoData.length > 0) {
-      const idPiatto = piattoData[0].id;
-      return { idPiatto, selectError};
-    } else {
-      // Gestisci il caso in cui piattoData sia nullo o vuoto
-      return { idPiatto: null, selectError };
-    }
-  }
-
-
-  //Inserimento ordini
-  async insertOrdine(paramJson: any) {
-    console.log("chiamata insertOrdine ");
-    console.log("body: ", paramJson);
-  
-    for (const piatto of paramJson) {
-      //prendo l'id del piatto 
-      const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
-
-
-      if (selectError && idPiatto != null) {
-        console.error("Si è verificato un errore durante la select:", selectError);
-      } else {
-        console.log("piattoData : ",idPiatto )
-        
-        
-        const { data: ordineData, error: insertError } = await this.supabase
-          .from('Ordini')
-          .insert({idUtente: null, dataOrdine: this.getData()});
+    //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)
+    async getidPiattoFromCodice(codicePiatto:String){
+      const { data: piattoData, error: selectError } = await this.supabase
+      .from('Piatti')
+      .select('id')
+      .eq('codice', codicePiatto) 
     
-        if (insertError) {
-          console.error("Si è verificato un errore durante l'inserimento:", insertError);
-        } else {
-          console.log("Inserimento riuscito:", ordineData);
-/*
-          // Ora, visualizza l'animazione quando l'inserimento ha successo
-          const lottiePlayer = document.createElement('lottie-player');
-          lottiePlayer.src = "https://lottie.host/50d7ee4d-877e-4d4a-a76d-145402927cf9/tyE4GqV01f.json";
-          lottiePlayer.style.width = "300px";
-          lottiePlayer.style.height = "300px";
-          lottiePlayer.loop = true;
-          lottiePlayer.autoplay = true;
-          lottiePlayer.direction = 1;
-          lottiePlayer.mode = "normal";
-  
-          // Aggiungi l'elemento lottiePlayer al tuo documento HTML
-          document.body.appendChild(lottiePlayer);
-          */
-         
-        }
-        
+      if (piattoData && piattoData.length > 0) {
+        const idPiatto = piattoData[0].id;
+        return { idPiatto, selectError};
+      } else {
+        // Gestisci il caso in cui piattoData sia nullo o vuoto
+        return { idPiatto: null, selectError };
       }
     }
-  }
+
+    //Ritorna l'id dell'ultimo ordine inserito
+    async getLastOrdine(){
+      const { data: ordineData, error: selectError } = await this.supabase
+      .from('Ordini')
+      .select('idOrdine')
+      .order('idOrdine', { ascending: false })
+      .limit(1);
+    
+      if (ordineData && ordineData.length > 0) {
+        const idOrdine = ordineData[0].idOrdine;
+        return { idOrdine, selectError};
+      } else {
+        // Gestisci il caso in cui piattoData sia nullo o vuoto
+        return { idOrdine: null, selectError };
+      }
+    }
+
     //return data
-
-
   private getData(): string {
     const oggi = new Date();
     const anno = oggi.getFullYear().toString();

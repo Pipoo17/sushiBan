@@ -10,6 +10,8 @@ import { LoginComponent } from './pagine/login/login.component';
 import { RegisterComponent } from './pagine/register/register.component';
 import { ErrorComponent } from './pagine/error/error.component';
 import { AccessoNegatoComponent } from './pagine/accesso-negato/accesso-negato.component';
+import { OrdineSuccesComponent } from './animazioni/ordine-succes/ordine-succes.component';
+
 
 const routes: Routes = [
   {path:'', component: HomeComponent, title: 'Sushiban'},
@@ -20,6 +22,7 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
   {path:'accessoNegato', component: AccessoNegatoComponent},
+  {path:'testAnimazioni', component: OrdineSuccesComponent},
   {path:'404', component: ErrorComponent, title: 'Pagina non trovata'},
   //{path:'**', pathMatch: 'full', redirectTo : '/404' },
 

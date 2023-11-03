@@ -82,18 +82,7 @@ export class MenuService {
 
 
 
-  insertOrdine(body: { counter: number }[]) {/*
-    console.log("chiamata insertOrdine ")
-    console.log("body : ",body)
-    let url = "";
-    const ordine: { counter: number }[] = [];
-
-    body.forEach((element) => {
-      if (element.counter !== 0) {
-        ordine.push(element);
-      }
-    });
-    return this.http.post(url, ordine);*/
+  insertOrdine(body: { counter: number }[]) {
     this.supabaseService.insertOrdine(body)
   }
 

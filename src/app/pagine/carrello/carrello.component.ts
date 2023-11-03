@@ -23,18 +23,6 @@ export class CarrelloComponent {
     let paramJson = this.servizioMenu.getOrdine()
     console.log("paramJson : ",paramJson)
     this.servizioMenu.insertOrdine(paramJson);
-
-
-    //insert nel db firebase
-/*
-    this.servizioMenu.insertOrdine(
-      this.servizioMenu.urlDBOrdini,
-      this.servizioMenu.menu
-    ).subscribe(data => {s
-      console.log(data)
-    } )
-*/
-
   }
 }
 

@@ -36,7 +36,16 @@ import { RegisterComponent } from './pagine/register/register.component';
 import { AccessoNegatoComponent } from './pagine/accesso-negato/accesso-negato.component';
 import { LogoutPopupComponent } from './pagine/logout-popup/logout-popup.component';
 import { SupabaseService } from './servizi/supabase.service';
-;
+import { OrdineSuccesComponent } from './animazioni/ordine-succes/ordine-succes.component';
+
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+
+
+export function playerFactory(): any {  
+  return import('lottie-web');
+}
+
 
 @NgModule({
   declarations: [
@@ -59,7 +68,8 @@ import { SupabaseService } from './servizi/supabase.service';
     CategoriePiattiComponent,
     RegisterComponent,
     AccessoNegatoComponent,
-    LogoutPopupComponent
+    LogoutPopupComponent,
+    OrdineSuccesComponent
     ],
   imports: [
     BrowserModule,
@@ -76,7 +86,8 @@ import { SupabaseService } from './servizi/supabase.service';
     MatDialogModule,
     MatTabsModule,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    LottieModule.forRoot({ player: playerFactory }),  
   ],
 
   providers: [
