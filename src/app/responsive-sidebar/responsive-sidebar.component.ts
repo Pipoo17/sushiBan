@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LogoutPopupComponent } from '../pagine/logout-popup/logout-popup.component';
-
+import { SupabaseService } from 'src/app/servizi/supabase.service';
 
 @Component({
   selector: 'app-responsive-sidebar',
@@ -9,7 +9,13 @@ import { LogoutPopupComponent } from '../pagine/logout-popup/logout-popup.compon
   styleUrls: ['./responsive-sidebar.component.css'],
 })
 export class ResponsiveSidebarComponent {
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private supabaseService: SupabaseService,
+    ) {
+
+      this.getImmagineUrlFromName();
+    }
 
   openLogoutDialog(): void {
     const dialogRef = this.dialog.open(LogoutPopupComponent, {
@@ -26,4 +32,20 @@ export class ResponsiveSidebarComponent {
       }
     });
   }
+
+  async getImmagineUrlFromName() {
+    let data = await this.supabaseService.getSession()
+
+    console.log("Dati della sessione:", data);
+
+    //TODO : QUERY CHE RITORNA IL NOME DELLA IMMAGINE PROFILO
+
+    let url = await this.supabaseService.getImmagineUrlFromName("avatars", "asd");
+    console.log("url : ",url)
+
+
+}
+
+
+  
 }

@@ -33,7 +33,7 @@ export class SupabaseService {
   private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjaXR4YnlibWl4a3NxbWx5eXpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczMDA0MTksImV4cCI6MjAxMjg3NjQxOX0.Gr20DaBG56cYTTuPF_pceqvA8lpiG4D-bizhqBRDf2o';
   private supabase = createClient(this.supabaseUrl, this.supabaseKey);
   
-  
+  private sessionData : any;
 
 
   private urlImgNotFound = "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/default.jpg.jpg"
@@ -102,6 +102,8 @@ async logout(){
 async getSession(){
   const {data: dataSession, error : errorSession } = await this.supabase.auth.getSession()
   console.log("dataSession : ",dataSession)
+  return dataSession
+  
 }
 
 
@@ -188,9 +190,9 @@ async restorePassword(paramJson : any){
   /*====================================*/ 
 
   //Genera l'url delle immagini partendo dal codice del piatto(es A1, B9...)
-  async getImmagineUrlFromName(nomeContainerSupabase: string, nomePiatto: string, ): Promise<string> {
+  async getImmagineUrlFromName(nomeContainerSupabase: string, nome: string, ): Promise<string> {
     // Utilizza la funzione getPublicUrl per ottenere l'URL pubblico dell'immagine.
-    const response = await this.supabase.storage.from(nomeContainerSupabase).getPublicUrl(`${nomePiatto}.jpg`);
+    const response = await this.supabase.storage.from(nomeContainerSupabase).getPublicUrl(`${nome}.jpg`);
 
     try {
       const imageUrl = response.data.publicUrl;
@@ -246,8 +248,8 @@ async restorePassword(paramJson : any){
   }
 
   async isUserLogged(): Promise<boolean> {
-    const { data: dataSession, error: errorSession } = await this.supabase.auth.getSession();
-    if(errorSession) { return false }
+    //const { data: dataSession, error: errorSession } = await this.supabase.auth.getSession();
+    let  dataSession = await this.getSession();
     if(dataSession.session == null ) { return false } 
     return true;
   }
