@@ -244,5 +244,14 @@ async restorePassword(paramJson : any){
   
     return anno + mese + giorno;
   }
+
+  async isUserLogged(): Promise<boolean> {
+    const { data: dataSession, error: errorSession } = await this.supabase.auth.getSession();
+    if(errorSession) { return false }
+    if(dataSession.session == null ) { return false } 
+    return true;
+  }
+
+  
   
 }

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,24 @@ export class HomeComponent implements OnInit {
   
   filteredMenu: any[] = [];
 
-  constructor(public servizioMenu: MenuService, private supabaseService: SupabaseService) {}
+  constructor(
+    public servizioMenu: MenuService, 
+    private supabaseService: SupabaseService,
+    private router: Router,
+    )
+  {
+    this.checkUserLoginStatus();
+
+  }
+
+  async checkUserLoginStatus() {
+    const isUserLoggedIn = await this.supabaseService.isUserLogged();
+    if (!isUserLoggedIn) {
+      this.router.navigate(['/login']);
+      // L'utente è loggato, puoi gestire l'accesso alla pagina
+    } 
+     // L'utente non è loggato, reindirizzalo alla pagina di login
+  }
 
 
   ngOnInit(): void {
@@ -32,19 +50,22 @@ export class HomeComponent implements OnInit {
     this.supabaseService.getImmagineUrlFromName("immaginiPiatti", codicePiatto)
 }
 
-  aggiungiPiatto(i: number) {
-    this.servizioMenu.aggiungiPiatto(i);
-  }
+aggiungiPiatto(i: number) {
+  this.servizioMenu.aggiungiPiatto(i);
+}
 
-  rimuoviPiatto(i: number) {
-    this.servizioMenu.rimuoviPiatto(i);
-  }
-  filterMenuByCode(searchValue: string) { 
+rimuoviPiatto(i: number) {
+  this.servizioMenu.rimuoviPiatto(i);
+}
+
+filterMenuByCode(searchValue: string) { 
     if (searchValue === '') {
       this.filteredMenu = this.servizioMenu.menu; // Nessuna ricerca, mostra l'intero menu
-    } else {
+  } else {
       this.filteredMenu = this.servizioMenu.menu.filter(piatto => piatto.codice === searchValue);
-    }
   }
+}
+
+
   
 }

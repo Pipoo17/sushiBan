@@ -12,12 +12,10 @@ export class LogoutPopupComponent {
     private router: Router,
     private supabaseService: SupabaseService,
     ) {}
+
+
   logout() {
-    // Rimuovi i dati relativi al profilo loggato (user) dal localStorage
-    //console.log("Logout")
-    //localStorage.removeItem('user');
-    //// Reindirizza alla pagina di login (assumendo che il percorso sia '/login')
-    //this.router.navigate(['/login'], { queryParams: { logoutSuccess: true } });
     this.supabaseService.logout()
+    this.router.navigate(['/login']);
   }
 }

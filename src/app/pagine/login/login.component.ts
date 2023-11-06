@@ -30,7 +30,7 @@ export class LoginComponent {
       this.supabaseService.login(paramJson)
         .then(() => {
             //gestire nel front end gli errori (pass min 6 caratteri ... )
-            
+            this.router.navigate(['/home']);
         })
         .catch((error) => {
           console.error("Errore durante l'accesso:", error);
