@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ComponenteComponent } from './componente/componente.component';
 import { ProfiloComponent } from './pagine/profilo/profilo.component';
 import { OrdiniComponent } from './pagine/ordini/ordini.component';
 import { StatisticheComponent } from './pagine/statistiche/statistiche.component';

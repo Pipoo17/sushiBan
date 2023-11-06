@@ -1,21 +1,83 @@
 import { Injectable } from '@angular/core';
-import { createClient, PostgrestResponse } from '@supabase/supabase-js';
+import { AuthChangeEvent, createClient, Session, SupabaseClient, User, PostgrestResponse } from '@supabase/supabase-js';
 import { HttpClient } from '@angular/common/http';
 import { OrdineSuccesComponent } from '../animazioni/ordine-succes/ordine-succes.component';
+import { EnvironmentService } from '../environment/environment.service';
+
+
+
+
+
+export interface IUser {
+  email: string;
+  name: string;
+  website: string;
+  url: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
+
+
+
+
+
+
+
 //    Configurazione DB Supabase
 export class SupabaseService {
+  //private supabase = this.EnvironmentService.getSupabaseParams
   private supabaseUrl = 'https://lcitxbybmixksqmlyyzb.supabase.co';
   private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjaXR4YnlibWl4a3NxbWx5eXpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczMDA0MTksImV4cCI6MjAxMjg3NjQxOX0.Gr20DaBG56cYTTuPF_pceqvA8lpiG4D-bizhqBRDf2o';
   private supabase = createClient(this.supabaseUrl, this.supabaseKey);
   
+  
 
 
   private urlImgNotFound = "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/default.jpg.jpg"
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+   }
+
+
+
+
+
+
+  /*====================================*/ 
+  /*=========  AUTHENTICATION  =========*/
+  /*====================================*/ 
+
+
+async register(paramJson : any){
+  console.log(paramJson)
+
+  const { data, error } = await this.supabase.auth.signUp({
+    email: paramJson.email,
+    password: paramJson.password,
+   //options: {
+   //  data: {
+   //    first_name: 'John',
+   //    age: 27,
+   //  }
+   //}
+  })
+}
+
+
+
+async login(paramJson : any){
+  const { data, error } = await this.supabase.auth.signInWithPassword({
+    email: paramJson.email,
+    password: paramJson.password,
+  })
+}
+
+  /*====================================*/ 
+  /*=============  QUERY  =============*/
+  /*===================================*/ 
 
 
   //  Chiaamta alle Stored Procedure sul db Supabase (per elenco guardare evernote)

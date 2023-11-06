@@ -20,7 +20,6 @@ import { OrdiniComponent } from './pagine/ordini/ordini.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { StatisticheComponent } from './pagine/statistiche/statistiche.component';
 import { FooterComponent } from './footer/footer.component';
-import { ComponenteComponent } from './componente/componente.component';
 import { LoginComponent } from './pagine/login/login.component';
 import { ErrorComponent } from './pagine/error/error.component';
 import { ErrorLayoutComponent } from './pagine/error-layout/error-layout.component';
@@ -37,7 +36,6 @@ import { AccessoNegatoComponent } from './pagine/accesso-negato/accesso-negato.c
 import { LogoutPopupComponent } from './pagine/logout-popup/logout-popup.component';
 import { SupabaseService } from './servizi/supabase.service';
 import { OrdineSuccesComponent } from './animazioni/ordine-succes/ordine-succes.component';
-
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 
@@ -50,7 +48,6 @@ export function playerFactory(): any {
 @NgModule({
   declarations: [
     AppComponent,
-    ComponenteComponent,
     NavbarComponent,
     ResponsiveSidebarComponent,
     ProfiloComponent,

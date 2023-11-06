@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { MenuService } from 'src/app/servizi/menu.service';
+import { SupabaseService } from 'src/app/servizi/supabase.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +16,7 @@ export class LoginComponent {
 
 
   constructor(
+    private supabaseService: SupabaseService,
     private servizioMenu: MenuService,
     private router: Router,
     private route: ActivatedRoute // Importa ActivatedRoute per ottenere i query parameters
@@ -34,7 +35,7 @@ export class LoginComponent {
       }
     });
   }
-  
+  /*
   onSubmit(form : NgForm){
     console.log(form)
     const email = form.value.email;
@@ -71,4 +72,22 @@ export class LoginComponent {
     
     
   }
+  */
+
+
+  onSubmit(form: NgForm){
+    try{
+      let paramJson = form.value;
+      this.supabaseService.login(paramJson)
+        .then(() => {
+            //gestire nel front end gli errori (pass min 6 caratteri ... )
+        })
+        .catch((error) => {
+          console.error("Errore durante l'accesso:", error);
+        });
+    }catch{
+  
+    }
+  }
+  
 }
