@@ -67,13 +67,36 @@ async register(paramJson : any){
 }
 
 
-
 async login(paramJson : any){
   const { data, error } = await this.supabase.auth.signInWithPassword({
     email: paramJson.email,
     password: paramJson.password,
   })
+  this.getSession()
 }
+
+
+async logout(){
+  const { error } = await this.supabase.auth.signOut()
+  this.getSession()
+} 
+
+
+async getSession(){
+  const {data: dataSession, error : errorSession } = await this.supabase.auth.getSession()
+  console.log("dataSession : ",dataSession)
+}
+
+
+async restorePassword(paramJson : any){
+ // TODO
+ // const { data, error } = await this.supabase.auth.resetPasswordForEmail(paramJson.email, {
+ //   redirectTo: 'https://example.com/update-password',
+ // })
+}
+
+
+
 
   /*====================================*/ 
   /*=============  QUERY  =============*/
