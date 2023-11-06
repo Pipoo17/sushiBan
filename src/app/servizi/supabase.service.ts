@@ -57,13 +57,30 @@ async register(paramJson : any){
   const { data, error } = await this.supabase.auth.signUp({
     email: paramJson.email,
     password: paramJson.password,
-   //options: {
-   //  data: {
-   //    first_name: 'John',
-   //    age: 27,
-   //  }
-   //}
+    options: {
+     data: {
+       username: paramJson.username,
+     }
+   }
   })
+
+  if (data.user != null) {
+
+    const userId = data.user.id;
+    // L'operazione upsert aggiornerà il record se esiste già con lo stesso ID, altrimenti ne creerà uno nuovo.
+    // Aggiorno i campi username e avatarURL dove l'id è quello dell'utente appena creato
+    const { data: ordineData, error: insertError } = await this.supabase
+      .from('profiles')
+      .upsert([
+        {
+          id: userId,
+          username: paramJson.username,
+          avatar_url: "Empty.jpg",
+        },
+      ]);
+
+    
+  }
 }
 
 
@@ -103,7 +120,7 @@ async restorePassword(paramJson : any){
   /*===================================*/ 
 
 
-  //  Chiaamta alle Stored Procedure sul db Supabase (per elenco guardare evernote)
+  //  Chiamata alle Stored Procedure sul db Supabase (per elenco guardare evernote)
   async callStoredProcedure<T>(procedureName: string): Promise<T> {
     // Chiamata alla procedura memorizzata senza parametri
     const { data, error } = await this.supabase.rpc(procedureName);
