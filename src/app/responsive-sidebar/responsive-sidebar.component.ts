@@ -14,7 +14,7 @@ export class ResponsiveSidebarComponent {
     private supabaseService: SupabaseService,
     ) {
 
-      this.getImmagineUrlFromName();
+      this.getProfilePic();
     }
 
   openLogoutDialog(): void {
@@ -33,15 +33,9 @@ export class ResponsiveSidebarComponent {
     });
   }
 
-  async getImmagineUrlFromName() {
-    let data = await this.supabaseService.getSession()
-
-    console.log("Dati della sessione:", data);
-
-    //TODO : QUERY CHE RITORNA IL NOME DELLA IMMAGINE PROFILO
-
-    let url = await this.supabaseService.getImmagineUrlFromName("avatars", "asd");
-    console.log("url : ",url)
+  async getProfilePic() {
+    let data = await this.supabaseService.getProfilePic()
+    console.log(data )
 
 
 }

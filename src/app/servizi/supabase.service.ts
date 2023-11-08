@@ -204,6 +204,41 @@ async restorePassword(paramJson : any){
   }
 
 
+  async getProfilePic() {
+    let data = await this.getSession()
+
+    console.log("Dati della sessione:", data.session?.user.id);
+    
+    let idUtente = data.session?.user.id
+    if (idUtente) {
+      // La variabile idUtente è definita, quindi possiamo usarla
+      let picName = await this.getProfilePicName(idUtente);
+      console.log("picname : ",picName)
+      return await this.supabase.storage.from('avatars').getPublicUrl(picName);
+    } else {
+      return "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/avatars/Empty.jpg"
+    }
+
+
+}
+
+  async getProfilePicName(idUtente : string){
+    console.log("idUtente : ",idUtente)
+
+    const { data: imageData, error: selectError } = await this.supabase
+    .from('profiles')
+    .select('avatar_url')
+    .eq('id', idUtente) 
+    if(imageData != null){
+      imageData[0].avatar_url
+    }
+      return "Empty.jpg"
+    
+
+    console.log(selectError)
+  }
+
+
     //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)
     async getidPiattoFromCodice(codicePiatto:String){
       const { data: piattoData, error: selectError } = await this.supabase
