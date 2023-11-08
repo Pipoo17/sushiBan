@@ -10,11 +10,18 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 })
 export class ResponsiveSidebarComponent {
 immagineProfilo: any;
+isLogged: any;
+
   constructor(
     public dialog: MatDialog,
     private supabaseService: SupabaseService,
     ) {
       this.getProfilePic();
+
+      this.supabaseService.isUserLogged().then((data) => {
+        this.isLogged = data;
+      })
+
     }
 
   openLogoutDialog(): void {
