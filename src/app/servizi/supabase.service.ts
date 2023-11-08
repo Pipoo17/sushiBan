@@ -205,20 +205,20 @@ async restorePassword(paramJson : any){
 
 
   async getProfilePic() {
-  // let data = await this.getSession()
+   let data = await this.getSession()
 
-  // console.log("Dati della sessione:", data.session?.user.id);
-  // 
-  // let idUtente = data.session?.user.id
-  // if (idUtente) {
-  //   let picName = await this.getProfilePicName(idUtente);
-  //   console.log("picname : ",picName)
-  //   let URL = await this.supabase.storage.from('avatars').getPublicUrl(picName);
-  //   return URL.data.publicUrl
-  // } else {
-  //   //immagine standard
-      return "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/avatars/Empty.jpg"
-    //}
+   console.log("Dati della sessione:", data.session?.user.id);
+   
+   let idUtente = data.session?.user.id
+   if (idUtente) {
+     let picName = await this.getProfilePicName(idUtente);
+     console.log("picname : ",picName)
+     let URL = await this.supabase.storage.from('avatars').getPublicUrl(picName);
+     return URL.data.publicUrl
+   } else {
+     //immagine standard
+    return "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/avatars/Empty.jpg"
+  }
 
 
 }
@@ -230,10 +230,11 @@ async restorePassword(paramJson : any){
     .from('profiles')
     .select('avatar_url')
     .eq('id', idUtente) 
+    console.log("imageData != null ",imageData != null)
     if(imageData != null){
-      imageData[0].avatar_url
+      return imageData[0].avatar_url
     }
-      return "Empty.jpg"
+      return "Error.jpg"
     
 
     console.log(selectError)
