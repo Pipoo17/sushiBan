@@ -34,9 +34,7 @@ immagineProfilo: any;
   }
 
   async getProfilePic() {
-    let imgURL = await this.supabaseService.getProfilePic() 
-    console.log("imgURL : ",imgURL )
-    this.immagineProfilo =  imgURL
+    this.immagineProfilo =  await this.supabaseService.getProfilePic()
 
 }
 

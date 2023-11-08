@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.servizioMenu.getCategorie())
+    //console.log(this.servizioMenu.getCategorie())
     this.servizioMenu.menu$.subscribe((menu) => {
       this.filteredMenu = menu;
     });

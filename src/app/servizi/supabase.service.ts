@@ -206,13 +206,9 @@ async restorePassword(paramJson : any){
 
   async getProfilePic() {
    let data = await this.getSession()
-
-   console.log("Dati della sessione:", data.session?.user.id);
-   
    let idUtente = data.session?.user.id
    if (idUtente) {
      let picName = await this.getProfilePicName(idUtente);
-     console.log("picname : ",picName)
      let URL = await this.supabase.storage.from('avatars').getPublicUrl(picName);
      return URL.data.publicUrl
    } else {
@@ -224,20 +220,14 @@ async restorePassword(paramJson : any){
 }
 
   async getProfilePicName(idUtente : string){
-    console.log("idUtente : ",idUtente)
-
     const { data: imageData, error: selectError } = await this.supabase
     .from('profiles')
     .select('avatar_url')
     .eq('id', idUtente) 
-    console.log("imageData != null ",imageData != null)
     if(imageData != null){
       return imageData[0].avatar_url
     }
       return "Error.jpg"
-    
-
-    console.log(selectError)
   }
 
 
