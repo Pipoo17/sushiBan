@@ -205,19 +205,20 @@ async restorePassword(paramJson : any){
 
 
   async getProfilePic() {
-    let data = await this.getSession()
+  // let data = await this.getSession()
 
-    console.log("Dati della sessione:", data.session?.user.id);
-    
-    let idUtente = data.session?.user.id
-    if (idUtente) {
-      // La variabile idUtente è definita, quindi possiamo usarla
-      let picName = await this.getProfilePicName(idUtente);
-      console.log("picname : ",picName)
-      return await this.supabase.storage.from('avatars').getPublicUrl(picName);
-    } else {
+  // console.log("Dati della sessione:", data.session?.user.id);
+  // 
+  // let idUtente = data.session?.user.id
+  // if (idUtente) {
+  //   let picName = await this.getProfilePicName(idUtente);
+  //   console.log("picname : ",picName)
+  //   let URL = await this.supabase.storage.from('avatars').getPublicUrl(picName);
+  //   return URL.data.publicUrl
+  // } else {
+  //   //immagine standard
       return "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/avatars/Empty.jpg"
-    }
+    //}
 
 
 }

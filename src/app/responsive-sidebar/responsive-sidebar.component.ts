@@ -9,11 +9,11 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
   styleUrls: ['./responsive-sidebar.component.css'],
 })
 export class ResponsiveSidebarComponent {
+immagineProfilo: any;
   constructor(
     public dialog: MatDialog,
     private supabaseService: SupabaseService,
     ) {
-
       this.getProfilePic();
     }
 
@@ -34,9 +34,9 @@ export class ResponsiveSidebarComponent {
   }
 
   async getProfilePic() {
-    let data = await this.supabaseService.getProfilePic()
-    console.log(data )
-
+    let imgURL = await this.supabaseService.getProfilePic() 
+    console.log("imgURL : ",imgURL )
+    this.immagineProfilo =  imgURL
 
 }
 
