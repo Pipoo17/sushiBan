@@ -14,8 +14,9 @@
         <input type="submit" value="Accedi">
       </div>
       <div class="signup-link">Non hai un account? <a routerLink="/register">Crealo qui</a></div>
+      <div class="signup-link"> <a routerLink="/recuperoPword">Hai dimenticato la Password?</a></div>
     </form>
-    <div *ngIf="this.registrationSuccess || this.logoutSuccess" class="successMessage">{{ message }}</div> <!-- Aggiungi questa linea per visualizzare il messaggio -->
-    <div *ngIf-else>{{ message }}</div> <!-- Aggiungi questa linea per visualizzare il messaggio -->
+    <div *ngIf="this.authError" class="errorMessage">{{ message }}</div> 
+    <div *ngIf-else>{{ message }}</div>
   </div>
 </div>

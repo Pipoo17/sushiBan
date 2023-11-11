@@ -107,7 +107,7 @@ form .button input:hover{
 form .signup-link a:hover{
   text-decoration: underline;
 }
-.message{
+.errorMessage{
   text-align: center;
   color: red;
   padding-bottom: 10px;
@@ -119,4 +119,5 @@ form .signup-link a:hover{
   color: green;
   padding-bottom: 10px;
   font-weight: bold;
+  font-family: monospace
 }

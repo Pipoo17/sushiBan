@@ -11,9 +11,9 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 })
 export class LoginComponent {
   message: string = '';
-  registrationSuccess: boolean = false;
-  logoutSuccess: boolean = false;
-
+  //registrationSuccess: boolean = false;
+  //logoutSuccess: boolean = false;
+  authError : boolean = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -25,14 +25,24 @@ export class LoginComponent {
 
 
   onSubmit(form: NgForm){
+
+    console.log('this.authError : ',this.authError)
     try{
       let paramJson = form.value;
       this.supabaseService.login(paramJson)
-        .then(() => {
-            //gestire nel front end gli errori (pass min 6 caratteri ... )
-            this.router.navigate(['/home']);
+        .then((data) => {
+            if(data.user == null){
+              this.authError = true
+              this.message ="Le credenziali sono errate";
+              this.router.navigate(['/login']);
+            }
+            else{
+              this.router.navigate(['/home']);
+            }
+
         })
         .catch((error) => {
+          console.log(error)
           console.error("Errore durante l'accesso:", error);
         });
     }catch{

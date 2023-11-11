@@ -90,6 +90,7 @@ async login(paramJson : any){
     password: paramJson.password,
   })
   this.getSession()
+  return data
 }
 
 
