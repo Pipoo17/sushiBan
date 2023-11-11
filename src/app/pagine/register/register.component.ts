@@ -48,8 +48,8 @@ onSubmit(form: NgForm){
             console.log('errore gestito')
           }
           else{
-            this.message ="Errore nella recistrazione : ",data.description;
-            console.log('errore da gestire')
+            this.message ="Errore nella registrazione : "+ data.description;
+            console.log('errore da gestire',data.description)
           }
           
           // Gestisci l'errore nel front end, ad esempio mostrando un messaggio all'utente
