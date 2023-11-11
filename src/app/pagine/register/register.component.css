@@ -113,10 +113,19 @@ form .signup-link a:hover{
   padding-bottom: 10px;
   font-weight: bold;
 }
+
+
 /* register.component.css */
+.errorMessage{
+  text-align: center;
+  color: red;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
 .successMessage {
   text-align: center;
   color: green;
   padding-bottom: 10px;
   font-weight: bold;
+  font-family: monospace
 }

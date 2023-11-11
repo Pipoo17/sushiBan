@@ -51,37 +51,56 @@ export class SupabaseService {
   /*====================================*/ 
 
 
-async register(paramJson : any){
-  console.log(paramJson)
+  async register(paramJson: any) {
+    console.log('paramJson : ',paramJson)
+    try {
+      //controllo che l'user name non sia gia stato usato
+      let isUsernameFree = await this.isUsernameFree(paramJson.username)
+      
+      if (!isUsernameFree){
+        return { success: false, description: 'duplicate key value violates unique constraint "profiles_username_key' };
+      }
 
-  const { data, error } = await this.supabase.auth.signUp({
-    email: paramJson.email,
-    password: paramJson.password,
-    options: {
-     data: {
-       username: paramJson.username,
-     }
-   }
-  })
-
-  if (data.user != null) {
-
-    const userId = data.user.id;
-    // L'operazione upsert aggiornerà il record se esiste già con lo stesso ID, altrimenti ne creerà uno nuovo.
-    // Aggiorno i campi username e avatarURL dove l'id è quello dell'utente appena creato
-    const { data: ordineData, error: insertError } = await this.supabase
-      .from('profiles')
-      .upsert([
-        {
-          id: userId,
-          username: paramJson.username,
-          avatar_url: "Empty.jpg",
+      const { data, error } = await this.supabase.auth.signUp({
+        email: paramJson.email,
+        password: paramJson.password,
+        options: {
+          data: {
+            username: paramJson.username,
+          },
         },
-      ]);
-
-    
+      });
+  
+      if (error) {
+        return { success: false, description: error.message };
+      }
+  
+      if (data && data.user != null) {
+        const userId = data.user.id;
+  
+        const { data: ordineData, error: insertError } = await this.supabase
+          .from('profiles')
+          .upsert([
+            {
+              id: userId,
+              username: paramJson.username,
+              avatar_url: "Empty.jpg",
+            },
+          ]);
+  
+        if (insertError) {
+          return { success: false, description: insertError.message };
+        }
+      }
+      //commit
+      return { success: true, description: 'Registrazione avvenuta con successo' };
+    } catch (err) {
+      return { success: false, description: err };
+    }
   }
-}
+  
+
+
 
 
 async login(paramJson : any){
@@ -230,6 +249,27 @@ async restorePassword(paramJson : any){
     }
       return "Error.jpg"
   }
+
+
+
+  async isUsernameFree(username: string) {
+    const { data: imageData, error: selectError } = await this.supabase
+      .from('profiles')
+      .select('username', { count: 'exact' })
+      .eq('username', username);
+    if (selectError) {
+      // Gestisci l'errore qui
+      console.error('Errore nella query:', selectError);
+      return -1; // O un'altra gestione dell'errore
+    }
+  
+    const count = imageData.length; // Ottieni il conteggio dal risultato della query
+    if (count > 0) return false
+    return true 
+
+  }
+
+
 
 
     //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)

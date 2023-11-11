@@ -31,6 +31,7 @@
         </div>
         <div class="signup-link">Hai già un account? <a routerLink="/login">Accedi qui</a></div>
       </form>
-      <div class="message">{{ message }}</div> <!-- Aggiungi questa linea per visualizzare il messaggio -->
+      <div *ngIf="this.authError == true" class="errorMessage">{{ message }}</div>
+      <div *ngIf="this.authError == false" class="successMessage">{{ message }}</div> 
     </div>
   </div>
