@@ -51,6 +51,9 @@ export class LoginComponent {
     if (descErrore == 'Invalid login credentials'){
       return "Email o password sono sbagliati";
     }
+    if (descErrore == 'Email not confirmed'){
+      return "Completa la registrazione tramite la mail ricevuta";
+    }
     else{
       return "Errore nell' accesso : "+ descErrore;
     }

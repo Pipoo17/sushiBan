@@ -55,13 +55,16 @@ getMessageError(descErrore : any){
     return "La password deve avere alemno 6 caratteri";
   }
   else if (descErrore == 'Unable to validate email address: invalid format'){
-    return"Email non valida";
+    return"Email non valida.";
   }
   else if (descErrore == 'User already registered'){
-    return"Questo utente è gia registrato";
+    return"Questo utente è gia registrato.";
   }
   else if (descErrore == 'duplicate key value violates unique constraint "profiles_username_key'){
-    return "Esista già un utente con questo Username";
+    return "Esista già un utente con questo Username.";
+  }
+  else if (descErrore == 'Email rate limit exceeded'){
+    return "Troppe richieste in arrivo : riprova tra un po." ;
   }
   else{
     return "Errore nella registrazione : "+ descErrore;
