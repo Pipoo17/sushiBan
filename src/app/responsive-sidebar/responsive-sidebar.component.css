@@ -176,6 +176,9 @@
 .sidebar.close .profile-details{
   width: 78px;
 }
+.profile-content{
+  cursor: pointer;
+}
 .sidebar .profile-details .profile-content{
   display: flex;
   align-items: center;
