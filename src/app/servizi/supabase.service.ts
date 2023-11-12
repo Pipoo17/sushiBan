@@ -108,8 +108,12 @@ async login(paramJson : any){
     email: paramJson.email,
     password: paramJson.password,
   })
-  this.getSession()
-  return data
+
+  if (error){
+    return { success: false, description: error.message };
+  }
+  return { success: true, description: 'Accesso avvenuto con successo' };
+
 }
 
 
