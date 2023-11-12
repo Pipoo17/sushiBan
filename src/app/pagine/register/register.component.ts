@@ -30,29 +30,8 @@ onSubmit(form: NgForm){
         if (data.success == false) {
           this.authError = true,
           console.error("ERRORE : ", data.description);
+          this.message = this.getMessageError(data.description)
 
-          if (data.description == 'Password should be at least 6 characters'){
-            this.message ="La password deve avere alemno 6 caratteri";
-            console.log('errore gestito')
-          }
-          else if (data.description == 'Unable to validate email address: invalid format'){
-            this.message ="Email non valida";
-            console.log('errore gestito')
-          }
-          else if (data.description == 'User already registered'){
-            this.message ="Questo utente è gia registrato";
-            console.log('errore gestito')
-          }
-          else if (data.description == 'duplicate key value violates unique constraint "profiles_username_key'){
-            this.message ="Esista già un utente con questo Username";
-            console.log('errore gestito')
-          }
-          else{
-            this.message ="Errore nella registrazione : "+ data.description;
-            console.log('errore da gestire',data.description)
-          }
-          
-          // Gestisci l'errore nel front end, ad esempio mostrando un messaggio all'utente
         }else {
           this.message ="Conferma la mail per completare la registrazione";
           console.log('Conferma Mail')
@@ -71,4 +50,28 @@ onSubmit(form: NgForm){
 }
 
 
+getMessageError(descErrore : any){
+  if (descErrore == 'Password should be at least 6 characters'){
+    return "La password deve avere alemno 6 caratteri";
+  }
+  else if (descErrore == 'Unable to validate email address: invalid format'){
+    return"Email non valida";
+  }
+  else if (descErrore == 'User already registered'){
+    return"Questo utente è gia registrato";
+  }
+  else if (descErrore == 'duplicate key value violates unique constraint "profiles_username_key'){
+    return "Esista già un utente con questo Username";
+  }
+  else{
+    return "Errore nella registrazione : "+ descErrore;
+  }
 }
+
+
+}
+
+
+
+
+
