@@ -12,8 +12,7 @@ body {
     text-align: center;
     position: relative;
 }
-
-.profile-image {
+.immageContainer{
     display: inline-block;
     width: 200px;
     height: 200px;
@@ -21,6 +20,17 @@ body {
     object-fit: cover;
     box-shadow: 0 0 0 10px #04364A; /* Margine colorato */
     position: relative;
+}
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+}
+
+.profile-image:hover {
+    filter: grayscale(70%);
 }
 
 .center-line {
