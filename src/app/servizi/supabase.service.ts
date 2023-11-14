@@ -163,10 +163,12 @@ async restorePassword(paramJson : any){
   //Inserimento ordini
   async insertOrdine(paramJson: any): Promise<boolean> {
     try {
-      // Creazione dell'ordine
+      
+      let thisUserId = await this.getUserId()
+
       const { data: ordineData, error: insertError } = await this.supabase
         .from('Ordini')
-        .insert({ idUtente: null, dataOrdine: this.getData() });
+        .insert({ idUtente: thisUserId, dataOrdine: this.getData() });
   
       if (insertError) {
         console.error("Si è verificato un errore durante l'inserimento:", insertError);
@@ -326,6 +328,9 @@ async restorePassword(paramJson : any){
     return true;
   }
 
-  
+  async getUserId(){
+    let  dataSession = await this.getSession();
+    return dataSession.session?.user.id
+  }
   
 }

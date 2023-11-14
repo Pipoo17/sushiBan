@@ -30,4 +30,12 @@ export class OrdiniComponent {
     } 
      // L'utente non è loggato, reindirizzalo alla pagina di login
   }
+
+
+async getYourOrder(){
+
+  
+}
+
+
 }
