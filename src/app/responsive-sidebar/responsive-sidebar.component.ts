@@ -18,9 +18,10 @@ isLogged: any;
     ) {
       this.getProfilePic();
 
-      this.supabaseService.isUserLogged().then((data) => {
-        this.isLogged = data;
-      })
+      
+      //this.supabaseService.isUserLogged().then((data) => {
+      //  this.isLogged = data;
+      //})
 
     }
 
@@ -45,6 +46,9 @@ isLogged: any;
 
 }
 
+getIsUserLogged(){
+  return this.supabaseService.getUserLogged();
+}
 
   
 }

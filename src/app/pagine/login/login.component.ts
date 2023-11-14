@@ -20,7 +20,10 @@ export class LoginComponent {
     private servizioMenu: MenuService,
     private router: Router,
     private route: ActivatedRoute // Importa ActivatedRoute per ottenere i query parameters
-  ) {}
+  ) {
+    this.supabaseService.setUserLogged(false)
+
+  }
 
 
 
@@ -58,5 +61,7 @@ export class LoginComponent {
       return "Errore nell' accesso : "+ descErrore;
     }
   }
+
+  
 
 }

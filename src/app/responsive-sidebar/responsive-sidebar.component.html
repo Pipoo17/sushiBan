@@ -16,8 +16,8 @@
       <img src="https://cdn-icons-png.flaticon.com/512/2821/2821808.png" alt="" style="height: 60px;width: 60px;margin-left: 10%;">
     </div>
 
-
-    <ul class="nav-links" *ngIf="isLogged">
+{{getIsUserLogged()}}
+    <ul class="nav-links" *ngIf="getIsUserLogged()">
       <li>
         <a routerLink="/">
           <i class='bx bx-grid-alt  bx-burst-hover' ></i>

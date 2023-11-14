@@ -33,8 +33,7 @@ export class SupabaseService {
   private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjaXR4YnlibWl4a3NxbWx5eXpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczMDA0MTksImV4cCI6MjAxMjg3NjQxOX0.Gr20DaBG56cYTTuPF_pceqvA8lpiG4D-bizhqBRDf2o';
   private supabase = createClient(this.supabaseUrl, this.supabaseKey);
   
-  private sessionData : any;
-
+  private isThisUserLogged : boolean = false
 
   private urlImgNotFound = "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/default.jpg.jpg"
   constructor(private http: HttpClient) {
@@ -332,5 +331,15 @@ async restorePassword(paramJson : any){
     let  dataSession = await this.getSession();
     return dataSession.session?.user.id
   }
+
+  setUserLogged(isLogged : boolean){
+    this.isThisUserLogged = isLogged;
+  }
   
+  getUserLogged(){
+    return this.isThisUserLogged
+  }
+  
+
+
 }

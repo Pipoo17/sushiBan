@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     )
   {
     this.checkUserLoginStatus();
+    this.supabaseService.setUserLogged(true)
 
   }
 
