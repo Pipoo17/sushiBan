@@ -24,19 +24,13 @@ export class HomeComponent implements OnInit {
     private router: Router,
     )
   {
-    this.checkUserLoginStatus();
+
+    this.supabaseService.checkIfUserAuth();
     this.supabaseService.setUserLogged(true)
 
   }
 
-  async checkUserLoginStatus() {
-    const isUserLoggedIn = await this.supabaseService.isUserLogged();
-    if (!isUserLoggedIn) {
-      this.router.navigate(['/login']);
-      // L'utente è loggato, puoi gestire l'accesso alla pagina
-    } 
-     // L'utente non è loggato, reindirizzalo alla pagina di login
-  }
+
 
 
   ngOnInit(): void {

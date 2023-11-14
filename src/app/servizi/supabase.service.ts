@@ -3,7 +3,7 @@ import { AuthChangeEvent, createClient, Session, SupabaseClient, User, Postgrest
 import { HttpClient } from '@angular/common/http';
 import { OrdineSuccesComponent } from '../animazioni/ordine-succes/ordine-succes.component';
 import { EnvironmentService } from '../environment/environment.service';
-
+import { Router } from '@angular/router';
 
 
 
@@ -36,7 +36,10 @@ export class SupabaseService {
   private isThisUserLogged : boolean = false
 
   private urlImgNotFound = "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/default.jpg.jpg"
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    ) {
 
    }
 
@@ -127,6 +130,16 @@ async getSession(){
   console.log("dataSession : ",dataSession)
   return dataSession
   
+}
+
+
+async checkIfUserAuth() {
+  const isUserLoggedIn = await this.isUserLogged();
+  if (!isUserLoggedIn) {
+    this.router.navigate(['/login']);
+    // L'utente è loggato, puoi gestire l'accesso alla pagina
+  } 
+   // L'utente non è loggato, reindirizzalo alla pagina di login
 }
 
 
