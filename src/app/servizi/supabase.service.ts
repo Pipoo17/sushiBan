@@ -132,6 +132,8 @@ async getSession(){
   
 }
 
+//TODO : QUANDO IL FRONTAND SI RESETTA A CAUSA DI ANGULAR (IL CODICE VIENE MODIFICATO)
+//       NON VIENNE MOSTRATA LA BARRA LATERALE
 
 async checkIfUserAuth() {
   const isUserLoggedIn = await this.isUserLogged();
@@ -173,9 +175,16 @@ async restorePassword(paramJson : any){
     
 
   //Inserimento ordini
+  //TODO : RIFARE METODO
   async insertOrdine(paramJson: any): Promise<boolean> {
     try {
+
+      let isFirstOrder = await this.isFirstOrder()
+      console.log("isFirstOrder : ",isFirstOrder)
       
+      if (!isFirstOrder) {
+        return false;
+      }
       let thisUserId = await this.getUserId()
 
       const { data: ordineData, error: insertError } = await this.supabase
@@ -226,6 +235,41 @@ async restorePassword(paramJson : any){
   /*====================================*/ 
   /*==========  METODI UTILS  ==========*/
   /*====================================*/ 
+
+  async isFirstOrder() {
+    try {
+
+      const userId = await this.getUserId();
+      if (!userId) {
+        console.error('UserId non disponibile.');
+        return;
+      }
+  
+      const { data: countData, error: countError } = await this.supabase
+        .from('Ordini')
+        .select('*', { count: 'exact' })
+        .eq('dataOrdine', this.getData())
+        .eq('idUtente', userId.trim());
+  
+      if (countError) {
+        console.error(countError.message);
+        return; // Gestisci l'errore come desideri
+      }
+  
+      let numeroOrdini = countData.length;
+      if(numeroOrdini = 0 ) return true
+      return false
+
+
+
+    } catch (error) {
+      console.error(error);
+      return
+      // Gestisci l'errore come desideri
+    }
+  }
+  
+  
 
   //Genera l'url delle immagini partendo dal codice del piatto(es A1, B9...)
   async getImmagineUrlFromName(nomeContainerSupabase: string, nome: string, ): Promise<string> {
