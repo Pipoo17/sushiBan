@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./carrello.component.css']
 })
 export class CarrelloComponent {
+  message : string = '';
 
   constructor(
     public servizioMenu: MenuService,
@@ -21,18 +22,32 @@ export class CarrelloComponent {
 
   ngOnInit(): void {}
 
+
+
   onSubmit() {
     let paramJson = this.servizioMenu.getOrdine();
-    this.servizioMenu.insertOrdine(paramJson)
-      .then(() => {
-        console.log("Inserimento riuscito");
-        console.log("Animazione:");
-        
-        // Chiudi il dialog corrente
-        this.dialogRef.close();
-        this.router.navigate(['/ordini']);
-        //TODO
-        //Apertura Dialog che contiene l'animazione dei successo  
+    this.supabaseService.insertOrdine(paramJson)
+      .then((data) => {
+
+        console.log("data : ",data);
+
+        if(data.success){
+          console.log("Inserimento riuscito");
+          console.log("Animazione:");
+
+          this.dialogRef.close();
+          this.router.navigate(['/ordini']);
+        }
+
+        else{
+          console.error(data.description)
+          this.message = data.description;
+        // if(data.description = ''){
+        //     this.message
+        // }else{
+        //   this.message = data.description;
+        // }
+        }
         
       })
       .catch((error) => {

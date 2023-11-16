@@ -176,15 +176,15 @@ async restorePassword(paramJson : any){
 
   //Inserimento ordini
   //TODO : RIFARE METODO
-  async insertOrdine(paramJson: any): Promise<boolean> {
+  async insertOrdine(paramJson: any){
     try {
-
-      let isFirstOrder = await this.isFirstOrder()
-      console.log("isFirstOrder : ",isFirstOrder)
       
-      if (!isFirstOrder) {
-        return false;
-      }
+      //controllo che sia il primo ordine
+      //if (!await this.isFirstOrder()) {
+      //  console.error("Si è verificato un errore durante l'inserimento: E' possibile fare solo un ordine a persona",);
+      //  return { success: false, description: "E' possibile fare solo un ordine a persona" };
+      //}
+
       let thisUserId = await this.getUserId()
 
       const { data: ordineData, error: insertError } = await this.supabase
@@ -192,41 +192,41 @@ async restorePassword(paramJson : any){
         .insert({ idUtente: thisUserId, dataOrdine: this.getData() });
   
       if (insertError) {
-        console.error("Si è verificato un errore durante l'inserimento:", insertError);
-        return false; // Restituisci false in caso di errore
-      } else {
-        let inserimentoRiuscito = true; // Inizializziamo a true
-  
-        for (const piatto of paramJson) {
-          // Prendi l'id di ogni piatto
-          const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
-  
-          if (selectError && idPiatto != null) {
-            console.error("Si è verificato un errore durante la select:", selectError);
-            inserimentoRiuscito = false; // Impostiamo a false in caso di errore
+            console.error("Si è verificato un errore durante l'inserimento:", insertError);
+            return { success: false, description: insertError.message };
+      } 
+
+      for (const piatto of paramJson) {
+        // Prendi l'id di ogni piatto
+        const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
+
+        if (selectError) {
+            console.error("Si è verificato un errore durante l'inserimento:", selectError);
+            return { success: false, description: selectError.message };
+        } else {
+          const { idOrdine, selectError } = await this.getLastOrdineId(); 
+          if(selectError){
+          return { success: false, description: selectError.message };
+          }
+
+          const { data: ordineData, error: insertError } = await this.supabase
+            .from('PiattiOrdine')
+            .insert({ idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
+
+          if (insertError) {
+            console.error("Si è verificato un errore durante l'inserimento:", insertError);
+            return { success: false, description: insertError.message };
             break; // Esci dal ciclo
-          } else {
-            const { idOrdine, selectError } = await this.getLastOrdine(); // Chiamata asincrona
-  
-            const { data: ordineData, error: insertError } = await this.supabase
-              .from('PiattiOrdine')
-              .insert({ idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
-  
-            if (insertError) {
-              console.error("Si è verificato un errore durante l'inserimento:", insertError);
-              inserimentoRiuscito = false; // Impostiamo a false in caso di errore
-              break; // Esci dal ciclo
-            }
           }
         }
-  
-        if (inserimentoRiuscito) { return true } 
-        return false; // Restituisci false in caso di errore
       }
+
+      return { success: true, description: 'Inserimento Completato' };
+    
     } catch (error) {
       console.error("Si è verificato un errore durante l'inserimento:", error);
-      return false; // Restituisci false in caso di errore
-    }
+      //return { success: false, description: error };    }
+      return { success: false, description: "Si è verificato un errore durante l'inserimento" };    }
   }
   
 
@@ -351,7 +351,7 @@ async restorePassword(paramJson : any){
     }
 
     //Ritorna l'id dell'ultimo ordine inserito
-    async getLastOrdine(){
+    async getLastOrdineId(){
       const { data: ordineData, error: selectError } = await this.supabase
       .from('Ordini')
       .select('idOrdine')
