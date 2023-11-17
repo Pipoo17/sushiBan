@@ -3,6 +3,8 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-carrello',
@@ -17,7 +19,7 @@ export class CarrelloComponent {
     private supabaseService: SupabaseService,
     private dialogRef: MatDialogRef<CarrelloComponent>,
     private router: Router,
-
+    private snackBar: MatSnackBar, 
   ) {}
 
   ngOnInit(): void {}
@@ -42,6 +44,9 @@ export class CarrelloComponent {
         else{
           console.error(data.description)
           this.message = data.description;
+          this.snackBar.open(data.description, 'Close', {
+            duration: 5000, 
+          });
           // if(data.description = ''){
         //     this.message
         // }else{

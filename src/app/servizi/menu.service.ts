@@ -31,7 +31,10 @@ export class MenuService {
 
 
 
-  constructor(private snackBar: MatSnackBar, private http:HttpClient, private supabaseService: SupabaseService) { }
+  constructor(
+    private snackBar: MatSnackBar, 
+    private http:HttpClient,
+    private supabaseService: SupabaseService) { }
   
   private menuSubject = new BehaviorSubject<any[]>(this.menu);
   
