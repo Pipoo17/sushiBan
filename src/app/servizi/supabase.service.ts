@@ -268,13 +268,18 @@ async restorePassword(paramJson : any){
 
 //TODO : CONTROLLARE CHE CI SIA ALMENO UN ORDINE
     async getThisUserOrder(idUtente : string){
-      console.log("getThisUserOrder");
       
       let idOrdine = await this.getLastOrdineId(idUtente)
       
-      console.log("idOrdine.idOrdine :",idOrdine.idOrdine);
+      /*
       
-      if(idOrdine.idOrdine == -1) {return [{idPiatto : 'error',numeroPiatti:"Dopo aver fatto il tuo ordine lo potrai vedere qui"}]}
+      Codice -1 : Ordine non esistente
+      Codice -2 : Errore select ordice
+
+      */ 
+
+
+      if(idOrdine.idOrdine == -1) {return [{idPiatto : '',numeroPiatti:""}]}
       if(idOrdine.idOrdine == -2) {return [{idPiatto : 'error',numeroPiatti:idOrdine.selectError?.message}]}
 
       const { data: selectData, error: selectError } = await this.supabase
@@ -282,12 +287,8 @@ async restorePassword(paramJson : any){
       .select('idPiatto,numeroPiatti')
       .eq('idOrdine', idOrdine.idOrdine) 
       
-      console.log(selectData);
-      console.log(selectError);
-      
-
       if(selectError){
-        return [{idPiatto : 'errror',numeroPiatti:"Errore nella visualizzazione dell'ordine : ",selectError}]
+        return [{idPiatto : 'error',numeroPiatti:"Errore nella visualizzazione dell'ordine : ",selectError}]
       }
     return selectData
     }
