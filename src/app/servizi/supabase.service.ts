@@ -196,27 +196,30 @@ async restorePassword(paramJson : any){
             return { success: false, description: insertError.message };
       } 
 
+      const { idOrdine, selectError } = await this.getLastOrdineId(); 
+      if(selectError){
+        return { success: false, description: selectError.message };
+      }
+      
+
       for (const piatto of paramJson) {
         // Prendi l'id di ogni piatto
         const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
 
         if (selectError) {
             console.error("Si è verificato un errore durante l'inserimento:", selectError);
+            this.rollBackOrdine(idOrdine);
             return { success: false, description: selectError.message };
         } else {
-          const { idOrdine, selectError } = await this.getLastOrdineId(); 
-          if(selectError){
-          return { success: false, description: selectError.message };
-          }
-
+          
           const { data: ordineData, error: insertError } = await this.supabase
             .from('PiattiOrdine')
-            .insert({ idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
+            .insert({ idvOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
 
           if (insertError) {
             console.error("Si è verificato un errore durante l'inserimento:", insertError);
+            this.rollBackOrdine(idOrdine);
             return { success: false, description: insertError.message };
-            break; // Esci dal ciclo
           }
         }
       }
@@ -229,6 +232,27 @@ async restorePassword(paramJson : any){
       return { success: false, description: "Si è verificato un errore durante l'inserimento" };    }
   }
   
+
+  async rollBackOrdine(idOrdine : string){
+    console.log("idOrdine : ",idOrdine)
+    const { data: dataPiatti, error: errorPiatti } = await this.supabase
+    .from('PiattiOrdine')
+    .delete()
+    .eq( 'idOrdine', idOrdine );
+
+    const { data, error } = await this.supabase
+    .from('Ordini')
+    .delete()
+    .eq( 'idOrdine', 64 );
+
+
+    if(!error && !errorPiatti){
+      console.error("ERRORE GESTITO : Ordine eliminato")
+    }else{
+      console.error("ERRORE NON GESTITO : Ordine non eliminato!!")
+
+    }
+  }
 
 
 
