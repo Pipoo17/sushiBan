@@ -193,18 +193,18 @@ async restorePassword(paramJson : any){
       //  return { success: false, description: "E' possibile fare solo un ordine a persona" };
       //}
 
-      let thisUserId = await this.getUserId()
+      let UserId = await this.getUserId() + '';
 
       const { data: ordineData, error: insertError } = await this.supabase
         .from('Ordini')
-        .insert({ idutente: thisUserId, dataOrdine: this.getData() });
+        .insert({ idutente: UserId, dataOrdine: this.getData() });
   
       if (insertError) {
             console.error("Si è verificato un errore durante l'inserimento:", insertError);
             return { success: false, description: insertError.message };
       } 
 
-      const { idOrdine, selectError } = await this.getLastOrdineId(); 
+      const { idOrdine, selectError } = await this.getLastOrdineId(UserId); 
       if(selectError){
         return { success: false, description: selectError.message };
       }
@@ -243,28 +243,30 @@ async restorePassword(paramJson : any){
 
   async rollBackOrdine(idOrdine : string){
     console.log("idOrdine : ",idOrdine)
-        const { data: dataPiatti, error: errorPiatti } = await this.supabase
-    .from('PiattiOrdine')
-    .delete()
-    .eq( 'idOrdine', idOrdine );
+    const { data: dataPiatti, error: errorPiatti } = await this.supabase
+      .from('PiattiOrdine')
+      .delete()
+      .eq( 'idOrdine', idOrdine );
 
-const { data, error } = await this.supabase
-    .from('Ordini')
-    .delete()
-    .eq('idOrdine', idOrdine);
+    const { data, error } = await this.supabase
+      .from('Ordini')
+      .delete()
+      .eq('idOrdine', idOrdine);
 
-    console.log('dataPiatti : ',dataPiatti)
-    console.log('errorPiatti : ',errorPiatti)
-    console.log('data : ',data)
-    console.log('error : ',error)
+      console.log('dataPiatti : ',dataPiatti)
+      console.log('errorPiatti : ',errorPiatti)
+      console.log('data : ',data)
+      console.log('error : ',error)
 
-    if(!error && !errorPiatti){
-      console.error("ERRORE GESTITO : Ordine eliminato")
-    }else{
-      console.error("ERRORE NON GESTITO : Ordine non eliminato!!")
+      if(!error && !errorPiatti){
+        console.error("ERRORE GESTITO : Ordine eliminato")
+      }else{
+        console.error("ERRORE NON GESTITO : Ordine non eliminato!!")
 
+      }
     }
-  }
+
+
 
 
 
@@ -387,21 +389,36 @@ const { data, error } = await this.supabase
     }
 
     //Ritorna l'id dell'ultimo ordine inserito
-    async getLastOrdineId(){
+    async getLastOrdineId(idUtente : string){
       const { data: ordineData, error: selectError } = await this.supabase
       .from('Ordini')
       .select('idOrdine')
-      .order('idOrdine', { ascending: false })
-      .limit(1);
+      .eq('idutente', idUtente)
+      .eq('dataOrdine', this.getData())
     
       if (ordineData && ordineData.length > 0) {
         const idOrdine = ordineData[0].idOrdine;
         return { idOrdine, selectError};
       } else {
-        // Gestisci il caso in cui piattoData sia nullo o vuoto
         return { idOrdine: null, selectError };
       }
     }
+
+    async getThisUserOrder(idUtente : string){
+      
+      let idOrdine = await (await this.getLastOrdineId(idUtente)).idOrdine
+      
+      const { data: selectData, error: selectError } = await this.supabase
+      .from('PiattiOrdine')
+      .select('idPiatto,numeroPiatti')
+      .eq('idOrdine', idOrdine) 
+  
+      if(selectError){
+        return selectError
+      }
+    return selectData
+    }
+
 
     //return data
   private getData(): string {
@@ -422,7 +439,7 @@ const { data, error } = await this.supabase
 
   async getUserId(){
     let  dataSession = await this.getSession();
-    return dataSession.session?.user.id
+    return dataSession.session?.user.id + ''
   }
 
   setUserLogged(isLogged : boolean){
