@@ -80,25 +80,33 @@ export class SupabaseService {
       if (data && data.user != null) {
         const userId = data.user.id;
   
-        const { data: ordineData, error: insertError } = await this.supabase
-          .from('profiles')
-          .upsert([
-            {
-              id: userId,
-              username: paramJson.username,
-              avatar_url: "Empty.jpg",
-            },
-          ]);
+      const { data: ordineData, error: insertError } = await this.supabase
+        .from('profiles')
+        .upsert([
+          {
+            id: userId,
+            username: paramJson.username,
+            avatar_url: "Empty.jpg",
+          },
+        ]);
+
+console.log(userId)
+      // const { data: ordineData, error: insertError } = await this.supabase
+      //   .from('profiles')
+      //   .update([{username: paramJson.username,
+      //             avatar_url: "Empty.jpg",},])
+      //   .eq('id', userId)
+      //   .select()
   
-        if (insertError) {
-          return { success: false, description: insertError.message };
-        }
-      }
-      //commit
-      return { success: true, description: 'Registrazione avvenuta con successo' };
-    } catch (err) {
-      return { success: false, description: err };
-    }
+       if (insertError) {
+         return { success: false, description: insertError.message };
+       }
+     }
+     //commit
+     return { success: true, description: 'Registrazione avvenuta con successo' };
+   } catch (err) {
+     return { success: false, description: err };
+   }
   }
   
 
@@ -189,7 +197,7 @@ async restorePassword(paramJson : any){
 
       const { data: ordineData, error: insertError } = await this.supabase
         .from('Ordini')
-        .insert({ idUtente: thisUserId, dataOrdine: this.getData() });
+        .insert({ idutente: thisUserId, dataOrdine: this.getData() });
   
       if (insertError) {
             console.error("Si è verificato un errore durante l'inserimento:", insertError);
@@ -214,7 +222,7 @@ async restorePassword(paramJson : any){
           
           const { data: ordineData, error: insertError } = await this.supabase
             .from('PiattiOrdine')
-            .insert({ idvOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
+            .insert({ idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
 
           if (insertError) {
             console.error("Si è verificato un errore durante l'inserimento:", insertError);
@@ -235,16 +243,20 @@ async restorePassword(paramJson : any){
 
   async rollBackOrdine(idOrdine : string){
     console.log("idOrdine : ",idOrdine)
-    const { data: dataPiatti, error: errorPiatti } = await this.supabase
+        const { data: dataPiatti, error: errorPiatti } = await this.supabase
     .from('PiattiOrdine')
     .delete()
     .eq( 'idOrdine', idOrdine );
 
-    const { data, error } = await this.supabase
+const { data, error } = await this.supabase
     .from('Ordini')
     .delete()
-    .eq( 'idOrdine', 64 );
+    .eq('idOrdine', idOrdine);
 
+    console.log('dataPiatti : ',dataPiatti)
+    console.log('errorPiatti : ',errorPiatti)
+    console.log('data : ',data)
+    console.log('error : ',error)
 
     if(!error && !errorPiatti){
       console.error("ERRORE GESTITO : Ordine eliminato")
@@ -273,7 +285,7 @@ async restorePassword(paramJson : any){
         .from('Ordini')
         .select('*', { count: 'exact' })
         .eq('dataOrdine', this.getData())
-        .eq('idUtente', userId.trim());
+        .eq('idutente', userId.trim());
   
       if (countError) {
         console.error(countError.message);

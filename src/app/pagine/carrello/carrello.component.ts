@@ -42,7 +42,7 @@ export class CarrelloComponent {
         else{
           console.error(data.description)
           this.message = data.description;
-        // if(data.description = ''){
+          // if(data.description = ''){
         //     this.message
         // }else{
         //   this.message = data.description;
