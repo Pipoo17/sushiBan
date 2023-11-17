@@ -142,7 +142,6 @@ async getSession(){
 
 //TODO : QUANDO IL FRONTAND SI RESETTA A CAUSA DI ANGULAR (IL CODICE VIENE MODIFICATO)
 //       NON VIENNE MOSTRATA LA BARRA LATERALE
-
 async checkIfUserAuth() {
   const isUserLoggedIn = await this.isUserLogged();
   if (!isUserLoggedIn) {
@@ -267,6 +266,31 @@ async restorePassword(paramJson : any){
     }
 
 
+//TODO : CONTROLLARE CHE CI SIA ALMENO UN ORDINE
+    async getThisUserOrder(idUtente : string){
+      console.log("getThisUserOrder");
+      
+      let idOrdine = await this.getLastOrdineId(idUtente)
+      
+      console.log("idOrdine.idOrdine :",idOrdine.idOrdine);
+      
+      if(idOrdine.idOrdine == -1) {return [{idPiatto : 'error',numeroPiatti:"Dopo aver fatto il tuo ordine lo potrai vedere qui"}]}
+      if(idOrdine.idOrdine == -2) {return [{idPiatto : 'error',numeroPiatti:idOrdine.selectError?.message}]}
+
+      const { data: selectData, error: selectError } = await this.supabase
+      .from('PiattiOrdine')
+      .select('idPiatto,numeroPiatti')
+      .eq('idOrdine', idOrdine.idOrdine) 
+      
+      console.log(selectData);
+      console.log(selectError);
+      
+
+      if(selectError){
+        return [{idPiatto : 'errror',numeroPiatti:"Errore nella visualizzazione dell'ordine : ",selectError}]
+      }
+    return selectData
+    }
 
 
 
@@ -388,36 +412,51 @@ async restorePassword(paramJson : any){
       }
     }
 
+    //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)
+    async getCodicePiattoFromId(idPiatto:String){
+      const { data: piattoData, error: selectError } = await this.supabase
+      .from('Piatti')
+      .select('codice')
+      .eq('id', idPiatto) 
+    
+      if (piattoData && piattoData.length > 0) {
+        const idPiatto = piattoData[0].codice;
+        return { idPiatto, selectError};
+      } else {
+        // Gestisci il caso in cui piattoData sia nullo o vuoto
+        return { idPiatto: null, selectError };
+      }
+    }
+
     //Ritorna l'id dell'ultimo ordine inserito
     async getLastOrdineId(idUtente : string){
-      const { data: ordineData, error: selectError } = await this.supabase
+      console.log("getLastOrdineId");
+      
+      const { data: selectData, error: selectError } = await this.supabase
       .from('Ordini')
       .select('idOrdine')
       .eq('idutente', idUtente)
       .eq('dataOrdine', this.getData())
-    
-      if (ordineData && ordineData.length > 0) {
-        const idOrdine = ordineData[0].idOrdine;
-        return { idOrdine, selectError};
-      } else {
-        return { idOrdine: null, selectError };
+    console.log(selectData);
+    console.log(selectError);
+
+
+      if(selectData?.length == 0) {
+        return { idOrdine: -1, selectError };
       }
+      if(selectError){
+        return { idOrdine: -2, selectError };
+      }
+      const idOrdine = selectData[0].idOrdine;  
+      console.log("typeof idOrdine : ",typeof idOrdine);
+      
+      return { idOrdine, selectError};
+      
+
+
     }
 
-    async getThisUserOrder(idUtente : string){
-      
-      let idOrdine = await (await this.getLastOrdineId(idUtente)).idOrdine
-      
-      const { data: selectData, error: selectError } = await this.supabase
-      .from('PiattiOrdine')
-      .select('idPiatto,numeroPiatti')
-      .eq('idOrdine', idOrdine) 
-  
-      if(selectError){
-        return selectError
-      }
-    return selectData
-    }
+
 
 
     //return data

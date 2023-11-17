@@ -9,23 +9,26 @@ palette :
 -->
 
 
-
-    <div class="left-div" style="background-color: #04364A;">
-        <h2>Il tuo ordine</h2>
-        {{this.userOrder}}
-        <button mat-stroked-button color="#176B87">
-            Annulla Ordine<mat-icon>delete</mat-icon>
-        </button>
-        <br>
+<div class="left-div" style="background-color: #04364A;">
+    <h2>Il tuo ordine</h2>
+    {{userOrder}}
+    <div *ngFor="let piatto of userOrder">
+        Piatto ID: {{ piatto.idPiatto }}, Quantità: {{ piatto.numeroPiatti }}
+        <!-- Aggiungi altre informazioni del piatto che desideri visualizzare -->
     </div>
-    <div class="right-div" style="background-color: #04364A;">
-        <h2>Tutti gli ordini</h2>
-        <button mat-stroked-button color="#176B87">
-            Copia Ordine<mat-icon>file_copy</mat-icon>
-        </button>
-        <br>
-    </div>
+    <button mat-stroked-button color="#176B87">
+        Annulla Ordine<mat-icon>delete</mat-icon>
+    </button>
+    <br>
 </div>
+<div class="right-div" style="background-color: #04364A;">
+    <h2>Tutti gli ordini</h2>
+    <button mat-stroked-button color="#176B87">
+        Copia Ordine<mat-icon>file_copy</mat-icon>
+    </button>
+    <br>
+</div>
+
 
 <!--
 

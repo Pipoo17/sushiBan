@@ -18,8 +18,9 @@ export class OrdiniComponent {
     private router: Router,
     )
   {
-
+    this.supabaseService.setUserLogged(true)
     this.supabaseService.checkIfUserAuth();
+    
 
   }
 
@@ -27,37 +28,26 @@ export class OrdiniComponent {
     try{
         console.log("test");
         let idUser  = await this.supabaseService.getUserId();
+        console.log("idUser : ",idUser);
+        
+        let ordine = await this.supabaseService.getThisUserOrder(idUser)
+        console.log("ordine : ",ordine);
 
-        this.userOrder = await this.supabaseService.getThisUserOrder(idUser)
-        console.log("thisUserOrder : ",this.userOrder)
+        this.userOrder = ordine
+        //if(ordine[0].idPiatto = 'error'){
+        //  //TODO : gestione errore
+        //}
 
+       // ordine.forEach(piatto => {
+       //    // let nomePiatto = this.supabaseService.get
+       // });
+        
+ 
 
-
-
-
-
-    //  this.supabaseService.getLastOrdineId(paramJson)
-    //    .then((data) => {
-    //      if (!data.success) {
-    //        this.router.navigate(['/login']);
-    //      }
-    //      else{
-    //        this.router.navigate(['/home']);
-    //      }
-    //    })
-    //    .catch((error) => {
-    //      console.error("Errore durante l'accesso:", error);
-    //    });
     }catch{
   
     }
   }
-
-
-async getYourOrder(){
-
-  
-}
 
 
 }

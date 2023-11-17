@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
     private router: Router,
     )
   {
-
     this.supabaseService.checkIfUserAuth();
     this.supabaseService.setUserLogged(true)
 
