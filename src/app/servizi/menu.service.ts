@@ -172,9 +172,7 @@ export class MenuService {
     return this.isAdmin
   }
 
-  getQuantiClienti(){
-    return this.supabaseService.getQuantiClienti();
-  }
+
 
 
   createUser(email: string,id: string,_token: string,_expirationDate: Date){

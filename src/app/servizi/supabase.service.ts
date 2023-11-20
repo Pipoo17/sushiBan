@@ -303,6 +303,27 @@ async restorePassword(paramJson : any){
     }
 
 
+    async deleteOrder(){
+      let orderId = await (await this.getLastOrdineId(await this.getUserId())).idOrdine
+      console.log(orderId);
+      
+      const { data: deleteData1, error: deleteError1 } = await this.supabase
+      .from('PiattiOrdine')
+      .delete()
+      .eq("idOrdine",orderId)
+
+    
+      
+      const { data: deleteData2, error: deleteError2 } = await this.supabase
+      .from('Ordini')
+      .delete()
+      .eq("idOrdine",orderId)
+
+      
+
+
+    }
+
 
 
 

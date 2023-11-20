@@ -3,7 +3,7 @@ import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router } from '@angular/router';
 import { LottieTransferState } from 'ngx-lottie';
-
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-ordini',
@@ -55,6 +55,8 @@ export class OrdiniComponent {
               numeroPiatto: piatto.numeroPiatti
             });
           }
+          console.log(this.userOrder);
+          
 
         }
        
@@ -91,4 +93,10 @@ export class OrdiniComponent {
   }
 
 
+async deleteOrdine(){
+  this.supabaseService.deleteOrder();
+  this.userOrder = []
+  this.userOrderLabel = 'Ordine annullato correttamente!'
+}
+  
 }
