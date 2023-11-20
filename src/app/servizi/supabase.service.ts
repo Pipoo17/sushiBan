@@ -464,7 +464,15 @@ async restorePassword(paramJson : any){
 
     }
 
+  async getQuantiClienti(){
+    const { data: selectData, error: selectError } = await this.supabase
+    .from('Ordini')
+    .select('idOrdine')
+    .eq("dataOrdine",this.getData())
+    
+    return selectData?.length;
 
+  }
 
 
     //return data

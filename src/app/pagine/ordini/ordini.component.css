@@ -78,6 +78,11 @@ button[color="#176B87"] {
 .codicePiatto{
     color: #176B87;
 }
+.intestazioneDiv{
+    height: 50px;
+    margin-bottom: 20px;
+    
+}
 
 
 @media (max-width: 1050px) {

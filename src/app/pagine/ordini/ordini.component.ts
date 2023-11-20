@@ -11,6 +11,8 @@ import { LottieTransferState } from 'ngx-lottie';
   styleUrls: ['./ordini.component.css']
 })
 export class OrdiniComponent {
+  quantiClienti: any 
+
   userOrder :any= [];
   allUsersOrder: any=[];
 
@@ -26,25 +28,24 @@ export class OrdiniComponent {
     this.supabaseService.setUserLogged(true)
     this.supabaseService.checkIfUserAuth();
 
-
+    
   }
 
   async ngOnInit(){
+    this.quantiClienti = await this.supabaseService.getQuantiClienti();
     //TRY ORDINE PERSONALE
     try{
         let idUser  = await this.supabaseService.getUserId();
         let ordine = await this.supabaseService.getThisUserOrder(idUser)
 
         //console.log("ordine : ",ordine);
-            
-       if(ordine[0].idPiatto == 'error'){
+        if(ordine.length == 0){
+          this.userOrder = []
+          this.userOrderLabel = 'Qui potrai visualizzare il tuo ordine una volta fatto'
+        }
+       else if(ordine[0].idPiatto == 'error'){
          //TODO : gestione errore
        }
-       else{
-        if(ordine.length == 0){
-           this.userOrder = []
-           this.userOrderLabel = 'Qui potrai visualizzare il tuo ordine una volta fatto'
-        }
         else{
           for (const piatto of ordine) {
             let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
@@ -56,10 +57,6 @@ export class OrdiniComponent {
           }
 
         }
-
-       }
-
-
        
     }catch(error){
       console.error(error);

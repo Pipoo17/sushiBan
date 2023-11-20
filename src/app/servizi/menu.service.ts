@@ -172,8 +172,8 @@ export class MenuService {
     return this.isAdmin
   }
 
-  getImgFromCodicePiatto(codice: string){
-    this.supabaseService.getImmagineUrlFromName("immaginiPiatti",codice);
+  getQuantiClienti(){
+    return this.supabaseService.getQuantiClienti();
   }
 
 

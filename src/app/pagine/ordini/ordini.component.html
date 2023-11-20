@@ -10,13 +10,14 @@ palette :
 
 
 <div class="left-div">
-    <h2>Il tuo ordine</h2>
-
+    <div class="intestazioneDiv">
+        <h2>Il tuo ordine</h2>
+    </div>
     <div *ngIf=" this.userOrderLabel != '' ">
         <p class="label">{{this.userOrderLabel}}</p>
     </div>
 
-    <div *ngIf=" this.allUserOrdersLabel == '' ">
+    <div *ngIf=" this.userOrderLabel == '' ">
         <div class="elencoPiatti">
             <div *ngFor="let piatto of userOrder; let i = index">
                 <div class="contenitorePiattiMenu marginePiatti">
@@ -38,22 +39,26 @@ palette :
 
 
 <div class="right-div">
+  <div class="intestazioneDiv">
     <h2>Tutti gli ordini</h2>
-    <div *ngIf=" this.allUserOrdersLabel != '' ">
-        <p class="label">{{this.allUserOrdersLabel}}</p>
-    </div>
+    <p>Numero di clienti : {{this.quantiClienti}}</p>
+  </div>
 
-    <div *ngIf=" this.allUserOrdersLabel == '' ">
-        <div class="elencoPiatti">
-            <div *ngFor="let piatto of allUsersOrder;">
-                <div class="contenitorePiattiMenu marginePiatti">
-                    <img src={{servizioMenu.getImg(piatto.id)}} class="imgPiatti">
-                
-                     <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+  <div *ngIf=" this.allUserOrdersLabel != '' ">
+      <p class="label">{{this.allUserOrdersLabel}}</p>
+  </div>
 
-                 </div>
-             </div>
-         </div>
+  <div *ngIf=" this.allUserOrdersLabel == '' ">
+    <div class="elencoPiatti">
+        <div *ngFor="let piatto of allUsersOrder;">
+            <div class="contenitorePiattiMenu marginePiatti">
+                <img src={{servizioMenu.getImg(piatto.id)}} class="imgPiatti">
+            
+                    <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+
+                </div>
+            </div>
+        </div>
 
     
     <button mat-stroked-button color="#176B87">
