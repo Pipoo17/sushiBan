@@ -11,7 +11,7 @@ import { LottieTransferState } from 'ngx-lottie';
   styleUrls: ['./ordini.component.css']
 })
 export class OrdiniComponent {
-  userOrder :any= ''
+  userOrder :any= []
 
   constructor(
     public servizioMenu: MenuService, 
@@ -44,17 +44,17 @@ export class OrdiniComponent {
            this.userOrder = []
         }
         else{
-          //for (const piatto of ordine) {
-          //  let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
-          //  this.userOrder.push({
-          //    idPiatto: nomePiatto.idPiatto,
-          //    numeroPiatto: piatto.numeroPiatti
-          //  });
-          //  console.log("idPiatto: ", piatto.idPiatto);
-          //  console.log("numeroPiatti: ", piatto.numeroPiatti);
-          //  console.log("------------------");
-          //}
-          this.userOrder = ordine
+          for (const piatto of ordine) {
+            let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
+            this.userOrder.push({
+              idPiatto: nomePiatto.idPiatto,
+              numeroPiatto: piatto.numeroPiatti
+            });
+            console.log("idPiatto: ", piatto.idPiatto);
+            console.log("numeroPiatti: ", piatto.numeroPiatti);
+            console.log("------------------");
+          }
+          //this.userOrder = ordine
 
         }
 
