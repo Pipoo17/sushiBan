@@ -312,16 +312,11 @@ async restorePassword(paramJson : any){
       .delete()
       .eq("idOrdine",orderId)
 
-    
       
       const { data: deleteData2, error: deleteError2 } = await this.supabase
       .from('Ordini')
       .delete()
       .eq("idOrdine",orderId)
-
-      
-
-
     }
 
 

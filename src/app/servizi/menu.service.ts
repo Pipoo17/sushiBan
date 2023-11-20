@@ -5,6 +5,7 @@ import { Data } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../modelli/user.model';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
+import { LoginComponent } from '../pagine/login/login.component';
 
 
 
@@ -50,6 +51,8 @@ export class MenuService {
       .then(data => {
         if (Array.isArray(data)) {
           data.forEach((piatto: any) => {
+            console.log("piatto : ",piatto);
+            
             let ImgUrl = this.supabaseService.getImmagineUrlFromName("immaginiPiatti",piatto.codice)
             ImgUrl.then(urlData => {
               this.menu.push({
@@ -163,6 +166,8 @@ export class MenuService {
     return this.menu[index].nome;
   }
   getImg(index : number){
+    console.log(this.menu);
+    
     return this.menu[index].img;
   }
   isAuthenticated(){

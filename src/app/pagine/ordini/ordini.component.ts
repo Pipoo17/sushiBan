@@ -34,69 +34,86 @@ export class OrdiniComponent {
   async ngOnInit(){
     this.quantiClienti = await this.supabaseService.getQuantiClienti();
     //TRY ORDINE PERSONALE
-    try{
-        let idUser  = await this.supabaseService.getUserId();
-        let ordine = await this.supabaseService.getThisUserOrder(idUser)
-
-        //console.log("ordine : ",ordine);
-        if(ordine.length == 0){
-          this.userOrder = []
-          this.userOrderLabel = 'Qui potrai visualizzare il tuo ordine una volta fatto'
-        }
-       else if(ordine[0].idPiatto == 'error'){
-         //TODO : gestione errore
-       }
-        else{
-          for (const piatto of ordine) {
-            let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
-            this.userOrder.push({
-              id: piatto.idPiatto,
-              idPiatto: nomePiatto.idPiatto,
-              numeroPiatto: piatto.numeroPiatti
-            });
-          }
-          console.log(this.userOrder);
-          
-
-        }
-       
-    }catch(error){
-      console.error(error);
-      this.userOrderLabel = 'ERRORE : '+error
-      
-    }
+    this.thisUserOrder();
     //TRY ORDINE GENERALE
-    try{
-      let allUsersOrder : any = []
-      allUsersOrder = await this.supabaseService.getAllUsersOrder()
-      console.log("allUsersOrder : ",allUsersOrder);
+   this.allUsersOrders();
+  }
 
-      if(allUsersOrder.length == 0){
-         this.allUsersOrder = []
-         this.allUserOrdersLabel = 'Qui potrai vedere gli ordini di tutti i partecipanti'
+
+
+
+async thisUserOrder(){
+    this.userOrder = []; 
+    try{
+      let idUser  = await this.supabaseService.getUserId();
+      let ordine = await this.supabaseService.getThisUserOrder(idUser)
+
+      //console.log("ordine : ",ordine);
+      if(ordine.length == 0){
+        this.userOrder = []
+        this.userOrderLabel = 'Qui potrai visualizzare il tuo ordine una volta fatto'
       }
+     else if(ordine[0].idPiatto == 'error'){
+       //TODO : gestione errore
+     }
       else{
-        for (const piatto of allUsersOrder) {
-          this.allUsersOrder.push({
-            id : piatto.id,
-            idPiatto: piatto.codice,
-            numeroPiatto: piatto.numeropiatti
+        for (const piatto of ordine) {
+          let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
+          this.userOrder.push({
+            id: piatto.idPiatto,
+            idPiatto: nomePiatto.idPiatto,
+            numeroPiatto: piatto.numeroPiatti
           });
         }
       }
-
-    }catch(error){
-      console.error(error);
-      this.allUserOrdersLabel = 'ERRORE : '+error;
-      
+     
+  }catch(error){
+    console.error(error);
+    this.userOrderLabel = 'ERRORE : '+error
     }
+
   }
+
+async allUsersOrders(){
+  this.allUsersOrder = []; 
+
+  try{
+    let allUsersOrder : any = []
+    allUsersOrder = await this.supabaseService.getAllUsersOrder()
+    console.log("allUsersOrder : ",allUsersOrder);
+
+    if(allUsersOrder.length == 0){
+       this.allUsersOrder = []
+       this.allUserOrdersLabel = 'Qui potrai vedere gli ordini di tutti i partecipanti'
+    }
+    else{
+      for (const piatto of allUsersOrder) {
+        this.allUsersOrder.push({
+          id : piatto.id,
+          idPiatto: piatto.codice,
+          numeroPiatto: piatto.numeropiatti
+        });
+      }
+    }
+
+  }catch(error){
+    console.error(error);
+    this.allUserOrdersLabel = 'ERRORE : '+error;
+    
+  }
+}
 
 
 async deleteOrdine(){
   this.supabaseService.deleteOrder();
   this.userOrder = []
   this.userOrderLabel = 'Ordine annullato correttamente!'
+  this.allUsersOrders();
 }
-  
+
+async getImmagineUrlFromName(nomePiatto: string){
+  return await this.supabaseService.getImmagineUrlFromName("immaginiPiatti", nomePiatto);
+}
+
+
 }
