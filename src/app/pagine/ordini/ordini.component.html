@@ -11,6 +11,7 @@ palette :
 
 <div class="left-div">
     <h2>Il tuo ordine</h2>
+
     <div *ngIf="userOrder.length == 0">
         <p class="label">Qui potrai visualizzare il tuo ordine una volta fatto</p>
     </div>
@@ -28,6 +29,7 @@ palette :
             <!-- Aggiungi altre informazioni del piatto che desideri visualizzare -->
              </div>
          </div>
+
         <button mat-stroked-button color="#176B87">
             Annulla Ordine<mat-icon>delete</mat-icon>
         </button>
@@ -39,6 +41,8 @@ palette :
 
 <div class="right-div">
     <h2>Tutti gli ordini</h2>
+
+    
     <button mat-stroked-button color="#176B87">
         Copia Ordine<mat-icon>file_copy</mat-icon>
     </button>
@@ -46,25 +50,4 @@ palette :
 </div>
 
 
-<!--
-
-<div class="ordinePersonale">
-    <p class="elencoPiatti">elenco piatti presi dal db</p>
-    
-    <button mat-stroked-button color="primary">
-        Annulla Ordine<mat-icon>delete</mat-icon>
-    </button>
-    
-</div>
-
-
-<h1 class="title">Tutti gli ordini</h1>
-
-<div class="ordinePersonale">
-    <p class="elencoPiatti">elenco piatti presi dal db</p>
-    <button mat-stroked-button color="primary">
-        Copia Ordine<mat-icon>file_copy</mat-icon>
-    </button>
-</div>
--->
 

@@ -32,12 +32,6 @@ body {
 }
 
 
-@media (max-width: 1100px) {
-    .container {
-        flex-direction: column;
-    }
-}
-
 button[color="#176B87"] {
     background-color: #176B87;
     color: white; /* Cambia il colore del testo */
@@ -83,4 +77,14 @@ button[color="#176B87"] {
   }
 .codicePiatto{
     color: #176B87;
+}
+
+
+@media (max-width: 1050px) {
+    .container {
+        flex-direction: column;
+    }
+    .elencoPiatti {
+        height: 100%; /* Regola l'altezza sottraendo l'altezza del titolo e del contenitore pulsante */
+      }
 }
