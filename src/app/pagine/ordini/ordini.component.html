@@ -12,11 +12,11 @@ palette :
 <div class="left-div">
     <h2>Il tuo ordine</h2>
 
-    <div *ngIf="userOrder.length == 0">
-        <p class="label">Qui potrai visualizzare il tuo ordine una volta fatto</p>
+    <div *ngIf=" this.userOrderLabel != '' ">
+        <p class="label">{{this.userOrderLabel}}</p>
     </div>
 
-    <div *ngIf="userOrder.length > 0">
+    <div *ngIf=" this.allUserOrdersLabel == '' ">
         <div class="elencoPiatti">
             <div *ngFor="let piatto of userOrder; let i = index">
                 <div class="contenitorePiattiMenu marginePiatti">
@@ -39,11 +39,11 @@ palette :
 
 <div class="right-div">
     <h2>Tutti gli ordini</h2>
-    <div *ngIf="allUsersOrder.length == 0">
+    <div *ngIf=" this.allUserOrdersLabel != '' ">
         <p class="label">{{this.allUserOrdersLabel}}</p>
     </div>
 
-    <div *ngIf="allUsersOrder.length > 0">
+    <div *ngIf=" this.allUserOrdersLabel == '' ">
         <div class="elencoPiatti">
             <div *ngFor="let piatto of allUsersOrder;">
                 <div class="contenitorePiattiMenu marginePiatti">

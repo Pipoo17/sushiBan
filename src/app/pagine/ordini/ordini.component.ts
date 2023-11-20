@@ -43,6 +43,7 @@ export class OrdiniComponent {
        else{
         if(ordine.length == 0){
            this.userOrder = []
+           this.userOrderLabel = 'Qui potrai visualizzare il tuo ordine una volta fatto'
         }
         else{
           for (const piatto of ordine) {
@@ -62,6 +63,7 @@ export class OrdiniComponent {
        
     }catch(error){
       console.error(error);
+      this.userOrderLabel = 'ERRORE : '+error
       
     }
     //TRY ORDINE GENERALE
