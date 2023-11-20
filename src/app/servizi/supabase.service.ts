@@ -266,11 +266,10 @@ async restorePassword(paramJson : any){
     }
 
 
-//TODO : CONTROLLARE CHE CI SIA ALMENO UN ORDINE
+
     async getThisUserOrder(idUtente : string){
       
       let idOrdine = await this.getLastOrdineId(idUtente)
-      console.log("idOrdine : ",idOrdine);
       
       /*
       
@@ -288,14 +287,22 @@ async restorePassword(paramJson : any){
       .select('idPiatto,numeroPiatti')
       .eq('idOrdine', idOrdine.idOrdine) 
       
-      console.log("selectData : ",selectData);
-      console.log("selectData : ",selectError);
-      
       if(selectError){
         return [{idPiatto : 'error',numeroPiatti:"Errore nella visualizzazione dell'ordine : ",selectError}]
       }
     return selectData
     }
+
+
+    async getAllUsersOrder(){
+      let orders = await this.callStoredProcedure("getallusersorders");
+      return orders;
+      
+
+
+    }
+
+
 
 
 
@@ -435,15 +442,12 @@ async restorePassword(paramJson : any){
 
     //Ritorna l'id dell'ultimo ordine inserito
     async getLastOrdineId(idUtente : string){
-      console.log("getLastOrdineId");
       
       const { data: selectData, error: selectError } = await this.supabase
       .from('Ordini')
       .select('idOrdine')
       .eq('idutente', idUtente)
       .eq('dataOrdine', this.getData())
-    console.log(selectData);
-    console.log(selectError);
 
 
       if(selectData?.length == 0) {
@@ -453,7 +457,6 @@ async restorePassword(paramJson : any){
         return { idOrdine: -2, selectError };
       }
       const idOrdine = selectData[0].idOrdine;  
-      console.log("typeof idOrdine : ",typeof idOrdine);
       
       return { idOrdine, selectError};
       

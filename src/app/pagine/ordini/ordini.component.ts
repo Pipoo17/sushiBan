@@ -11,7 +11,8 @@ import { LottieTransferState } from 'ngx-lottie';
   styleUrls: ['./ordini.component.css']
 })
 export class OrdiniComponent {
-  userOrder :any= []
+  userOrder :any= [];
+  allUsersOrder: any=[];
 
   constructor(
     public servizioMenu: MenuService, 
@@ -26,16 +27,13 @@ export class OrdiniComponent {
   }
 
   async ngOnInit(){
+    //TRY ORDINE PERSONALE
     try{
-        console.log("test");
         let idUser  = await this.supabaseService.getUserId();
-        console.log("idUser : ",idUser);
-        
         let ordine = await this.supabaseService.getThisUserOrder(idUser)
+
         //console.log("ordine : ",ordine);
-        
-      console.log(ordine.length);
-      
+            
        if(ordine[0].idPiatto == 'error'){
          //TODO : gestione errore
        }
@@ -50,24 +48,36 @@ export class OrdiniComponent {
               idPiatto: nomePiatto.idPiatto,
               numeroPiatto: piatto.numeroPiatti
             });
-            console.log("idPiatto: ", piatto.idPiatto);
-            console.log("numeroPiatti: ", piatto.numeroPiatti);
-            console.log("------------------");
           }
-          //this.userOrder = ordine
 
         }
 
        }
 
-       //ordine.forEach(piatto => {
-       //    let nomePiatto = this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
-       //      this.userOrder.push({
-       //       idPiatto: nomePiatto,
-       //       numeroPiatto: piatto.numeroPiatti
-       //     });
-       //});
+
        
+    }catch(error){
+      console.error(error);
+      
+    }
+    //TRY ORDINE GENERALE
+    try{
+      let allUsersOrder : any = []
+      allUsersOrder = await this.supabaseService.getAllUsersOrder()
+      console.log("allUsersOrder : ",allUsersOrder);
+
+      if(allUsersOrder.length == 0){
+         this.userOrder = []
+      }
+      else{
+        for (const piatto of allUsersOrder) {
+          this.allUsersOrder.push({
+            idPiatto: piatto.codice,
+            numeroPiatto: piatto.numeropiatti
+          });
+        }
+      }
+
     }catch(error){
       console.error(error);
       
