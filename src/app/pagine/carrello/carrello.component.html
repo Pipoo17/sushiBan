@@ -4,7 +4,7 @@
     <form (ngSubmit)="onSubmit()">
     <div class="elencoPiatti">
         <div *ngFor="let piatto of servizioMenu.menu; let i = index">
-            <div *ngIf="servizioMenu.getCounter(i) != 0" class="contenitorePiattiMenu marginePiatti">
+            <div *ngIf="servizioMenu.getCounter(i) != 0" class="contenitorePiattiMenu ">
                 <img src={{servizioMenu.getImg(i)}} class="imgPiatti">
                 <p>{{servizioMenu.getCodice(i)}}</p>
         

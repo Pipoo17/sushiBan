@@ -187,10 +187,10 @@ async restorePassword(paramJson : any){
     try {
       
       //controllo che sia il primo ordine
-      //if (!await this.isFirstOrder()) {
-      //  console.error("Si è verificato un errore durante l'inserimento: E' possibile fare solo un ordine a persona",);
-      //  return { success: false, description: "E' possibile fare solo un ordine a persona" };
-      //}
+      if (!await this.isFirstOrder()) {
+        console.error("Si è verificato un errore durante l'inserimento: E' possibile fare solo un ordine a persona",);
+        return { success: false, description: "E' possibile fare solo un ordine a persona" };
+      }
 
       let UserId = await this.getUserId() + '';
 
