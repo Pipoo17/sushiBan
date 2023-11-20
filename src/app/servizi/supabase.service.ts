@@ -279,7 +279,7 @@ async restorePassword(paramJson : any){
       */ 
 
 
-      if(idOrdine.idOrdine == -1) {return [{idPiatto : '',numeroPiatti:""}]}
+      if(idOrdine.idOrdine == -1) {return []}
       if(idOrdine.idOrdine == -2) {return [{idPiatto : 'error',numeroPiatti:idOrdine.selectError?.message}]}
 
       const { data: selectData, error: selectError } = await this.supabase
@@ -331,7 +331,7 @@ async restorePassword(paramJson : any){
       }
   
       let numeroOrdini = countData.length;
-      if(numeroOrdini = 0 ) return true
+      if(numeroOrdini == 0 ){ return true }
       return false
 
 
