@@ -20,13 +20,11 @@ palette :
         <div class="elencoPiatti">
             <div *ngFor="let piatto of userOrder; let i = index">
                 <div class="contenitorePiattiMenu marginePiatti">
-                    <img src={{servizioMenu.getImg(i)}} class="imgPiatti">
+                    <img src={{servizioMenu.getImg(piatto.id)}} class="imgPiatti">
                 
                      <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
 
                  </div>
-           <!-- Piatto ID: {{ piatto.idPiatto }}, Quantità: {{ piatto.numeroPiatto }} -->
-            <!-- Aggiungi altre informazioni del piatto che desideri visualizzare -->
              </div>
          </div>
 
@@ -42,20 +40,18 @@ palette :
 <div class="right-div">
     <h2>Tutti gli ordini</h2>
     <div *ngIf="allUsersOrder.length == 0">
-        <p class="label">Qui potrai visualizzare il tuo ordine una volta fatto</p>
+        <p class="label">{{this.allUserOrdersLabel}}</p>
     </div>
 
     <div *ngIf="allUsersOrder.length > 0">
         <div class="elencoPiatti">
-            <div *ngFor="let piatto of allUsersOrder; let i = index">
+            <div *ngFor="let piatto of allUsersOrder;">
                 <div class="contenitorePiattiMenu marginePiatti">
-                    <img src={{servizioMenu.getImg(i)}} class="imgPiatti">
+                    <img src={{servizioMenu.getImg(piatto.id)}} class="imgPiatti">
                 
                      <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
 
                  </div>
-           <!-- Piatto ID: {{ piatto.idPiatto }}, Quantità: {{ piatto.numeroPiatto }} -->
-            <!-- Aggiungi altre informazioni del piatto che desideri visualizzare -->
              </div>
          </div>
 

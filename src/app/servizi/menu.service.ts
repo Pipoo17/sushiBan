@@ -172,6 +172,10 @@ export class MenuService {
     return this.isAdmin
   }
 
+  getImgFromCodicePiatto(codice: string){
+    this.supabaseService.getImmagineUrlFromName("immaginiPiatti",codice);
+  }
+
 
   createUser(email: string,id: string,_token: string,_expirationDate: Date){
     this.user = new User(email,id,_token,_expirationDate)

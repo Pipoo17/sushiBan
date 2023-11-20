@@ -14,6 +14,9 @@ export class OrdiniComponent {
   userOrder :any= [];
   allUsersOrder: any=[];
 
+  userOrderLabel: string = ''
+  allUserOrdersLabel: string = ''
+
   constructor(
     public servizioMenu: MenuService, 
     private supabaseService: SupabaseService,
@@ -45,6 +48,7 @@ export class OrdiniComponent {
           for (const piatto of ordine) {
             let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
             this.userOrder.push({
+              id: piatto.idPiatto,
               idPiatto: nomePiatto.idPiatto,
               numeroPiatto: piatto.numeroPiatti
             });
@@ -67,11 +71,13 @@ export class OrdiniComponent {
       console.log("allUsersOrder : ",allUsersOrder);
 
       if(allUsersOrder.length == 0){
-         this.userOrder = []
+         this.allUsersOrder = []
+         this.allUserOrdersLabel = 'Qui potrai vedere gli ordini di tutti i partecipanti'
       }
       else{
         for (const piatto of allUsersOrder) {
           this.allUsersOrder.push({
+            id : piatto.id,
             idPiatto: piatto.codice,
             numeroPiatto: piatto.numeropiatti
           });
@@ -80,6 +86,7 @@ export class OrdiniComponent {
 
     }catch(error){
       console.error(error);
+      this.allUserOrdersLabel = 'ERRORE : '+error;
       
     }
   }
