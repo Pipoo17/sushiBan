@@ -11,16 +11,25 @@ palette :
 
 <div class="left-div" style="background-color: #04364A;">
     <h2>Il tuo ordine</h2>
-    {{userOrder}}
-    <div *ngFor="let piatto of userOrder">
-        Piatto ID: {{ piatto.idPiatto }}, Quantità: {{ piatto.numeroPiatti }}
-        <!-- Aggiungi altre informazioni del piatto che desideri visualizzare -->
+    <div *ngIf="userOrder.length == 0">
+        <p class="label">Qui potrai visualizzare il tuo ordine una volta fatto</p>
     </div>
-    <button mat-stroked-button color="#176B87">
-        Annulla Ordine<mat-icon>delete</mat-icon>
-    </button>
+
+    <div *ngIf="userOrder.length > 0">
+        <div *ngFor="let piatto of userOrder">
+            Piatto ID: {{ piatto.idPiatto }}, Quantità: {{ piatto.numeroPiatti }}
+            <!-- Aggiungi altre informazioni del piatto che desideri visualizzare -->
+        </div>
+
+        <button mat-stroked-button color="#176B87">
+            Annulla Ordine<mat-icon>delete</mat-icon>
+        </button>
+    </div>
+    
     <br>
 </div>
+
+
 <div class="right-div" style="background-color: #04364A;">
     <h2>Tutti gli ordini</h2>
     <button mat-stroked-button color="#176B87">

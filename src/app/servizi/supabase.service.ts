@@ -270,11 +270,12 @@ async restorePassword(paramJson : any){
     async getThisUserOrder(idUtente : string){
       
       let idOrdine = await this.getLastOrdineId(idUtente)
+      console.log("idOrdine : ",idOrdine);
       
       /*
       
-      Codice -1 : Ordine non esistente
-      Codice -2 : Errore select ordice
+        Codice -1 : Ordine non esistente
+        Codice -2 : Errore select ordice
 
       */ 
 
@@ -286,6 +287,9 @@ async restorePassword(paramJson : any){
       .from('PiattiOrdine')
       .select('idPiatto,numeroPiatti')
       .eq('idOrdine', idOrdine.idOrdine) 
+      
+      console.log("selectData : ",selectData);
+      console.log("selectData : ",selectError);
       
       if(selectError){
         return [{idPiatto : 'error',numeroPiatti:"Errore nella visualizzazione dell'ordine : ",selectError}]

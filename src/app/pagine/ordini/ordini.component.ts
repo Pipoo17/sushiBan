@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router } from '@angular/router';
+import { LottieTransferState } from 'ngx-lottie';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class OrdiniComponent {
   {
     this.supabaseService.setUserLogged(true)
     this.supabaseService.checkIfUserAuth();
-    
+
 
   }
 
@@ -31,21 +32,45 @@ export class OrdiniComponent {
         console.log("idUser : ",idUser);
         
         let ordine = await this.supabaseService.getThisUserOrder(idUser)
-        console.log("ordine : ",ordine);
-
-        this.userOrder = ordine
-        //if(ordine[0].idPiatto = 'error'){
-        //  //TODO : gestione errore
-        //}
-
-       // ordine.forEach(piatto => {
-       //    // let nomePiatto = this.supabaseService.get
-       // });
+        //console.log("ordine : ",ordine);
         
- 
+      console.log(ordine.length);
+      
+       if(ordine[0].idPiatto == 'error'){
+         //TODO : gestione errore
+       }
+       else{
+        if(ordine.length == 0){
+           this.userOrder = []
+        }
+        else{
+          //for (const piatto of ordine) {
+          //  let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
+          //  this.userOrder.push({
+          //    idPiatto: nomePiatto.idPiatto,
+          //    numeroPiatto: piatto.numeroPiatti
+          //  });
+          //  console.log("idPiatto: ", piatto.idPiatto);
+          //  console.log("numeroPiatti: ", piatto.numeroPiatti);
+          //  console.log("------------------");
+          //}
+          this.userOrder = ordine
 
-    }catch{
-  
+        }
+
+       }
+
+       //ordine.forEach(piatto => {
+       //    let nomePiatto = this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
+       //      this.userOrder.push({
+       //       idPiatto: nomePiatto,
+       //       numeroPiatto: piatto.numeroPiatti
+       //     });
+       //});
+       
+    }catch(error){
+      console.error(error);
+      
     }
   }
 

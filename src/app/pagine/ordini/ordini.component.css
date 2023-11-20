@@ -46,3 +46,7 @@ button[color="#176B87"] {
     margin-right: 10px;
     /* Altri stili che desideri applicare */
 }
+.label{
+    font-size: medium;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
