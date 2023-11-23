@@ -51,7 +51,7 @@ export class MenuService {
       .then(data => {
         if (Array.isArray(data)) {
           data.forEach((piatto: any) => {
-            console.log("piatto : ",piatto);
+            //console.log("piatto : ",piatto);
             
             let ImgUrl = this.supabaseService.getImmagineUrlFromName("immaginiPiatti",piatto.codice)
             ImgUrl.then(urlData => {
@@ -166,7 +166,7 @@ export class MenuService {
     return this.menu[index].nome;
   }
   getImg(index : number){
-    console.log(this.menu);
+    //console.log(this.menu);
     
     return this.menu[index].img;
   }

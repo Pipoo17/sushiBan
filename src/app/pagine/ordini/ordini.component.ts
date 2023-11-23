@@ -32,7 +32,7 @@ export class OrdiniComponent {
   }
 
   async ngOnInit(){
-    this.quantiClienti = await this.supabaseService.getQuantiClienti();
+    //this.quantiClienti = await this.supabaseService.getQuantiClienti();
     //TRY ORDINE PERSONALE
     this.thisUserOrder();
     //TRY ORDINE GENERALE
@@ -75,8 +75,9 @@ async thisUserOrder(){
   }
 
 async allUsersOrders(){
+  this.allUserOrdersLabel = ''
   this.allUsersOrder = []; 
-
+  this.quantiClienti = await this.supabaseService.getQuantiClienti();
   try{
     let allUsersOrder : any = []
     allUsersOrder = await this.supabaseService.getAllUsersOrder()
@@ -105,10 +106,19 @@ async allUsersOrders(){
 
 
 async deleteOrdine(){
+  this.allUserOrdersLabel = ''
   this.supabaseService.deleteOrder();
   this.userOrder = []
   this.userOrderLabel = 'Ordine annullato correttamente!'
-  this.allUsersOrders();
+  
+  
+  this.allUsersOrder = await this.allUsersOrders();
+  
+
+  if (!this.allUsersOrder || this.allUsersOrder.length === 0) {
+    this.allUserOrdersLabel = 'Qui potrai vedere gli ordini di tutti i partecipanti'
+
+  }
 }
 
 async getImmagineUrlFromName(nomePiatto: string){
