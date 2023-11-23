@@ -116,7 +116,7 @@ async deleteOrdine(){
   this.userOrderLabel = 'Ordine annullato correttamente!'
   
   
-  this.allUsersOrder = await this.allUsersOrders();
+  await this.allUsersOrders();
   
 
   if (!this.allUsersOrder || this.allUsersOrder.length === 0) {
