@@ -125,9 +125,11 @@ async deleteOrdine(){
   }
 }
 
-async getImmagineUrlFromName(nomePiatto: string){
-  return await this.supabaseService.getImmagineUrlFromName("immaginiPiatti", nomePiatto);
+//Metodo getImmaginiPiatti
+getImmagineUrlFromName(nomePiatto: string){
+  return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/${nomePiatto}.jpg`;
 }
+
 
 
 }

@@ -21,10 +21,9 @@ palette :
         <div class="elencoPiatti">
             <div *ngFor="let piatto of userOrder; let i = index">
                 <div class="contenitorePiattiMenu marginePiatti">
-                    <img src={{servizioMenu.getImg(piatto.id)}} class="imgPiatti">
+                    <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
                 
                      <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
-                     <h3 class="codicePiatto">----     {{piatto.id}}</h3>
 
                  </div>
              </div>
@@ -53,13 +52,11 @@ palette :
     <div class="elencoPiatti">
         <div *ngFor="let piatto of allUsersOrder;">
             <div class="contenitorePiattiMenu marginePiatti">
-                <img src={{servizioMenu.getImg(piatto.id)}} class="imgPiatti">
-            
-                    <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
-                    <h3 class="codicePiatto">----     {{piatto.id}}</h3>
-                </div>
+                <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
+                <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
             </div>
         </div>
+    </div>
 
     
     <button mat-stroked-button color="#176B87">

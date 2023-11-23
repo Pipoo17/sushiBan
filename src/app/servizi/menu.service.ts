@@ -14,11 +14,11 @@ import { LoginComponent } from '../pagine/login/login.component';
 })
 export class MenuService {
 //urlDB
-  urlDBOrdini = 'https://sushiban-bb4e6-default-rtdb.firebaseio.com/ordini.json';
-  [x: string]: any;
-  ApiKey = "AIzaSyCbI_o81OeOlc_PC46Q6wVa96WPXNSImDQ"
-  urlRegister ="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="+this.ApiKey;
-  urlLogin ="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+this.ApiKey;
+  //urlDBOrdini = 'https://sushiban-bb4e6-default-rtdb.firebaseio.com/ordini.json';
+  //[x: string]: any;
+  //ApiKey = "AIzaSyCbI_o81OeOlc_PC46Q6wVa96WPXNSImDQ"
+  //urlRegister ="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="+this.ApiKey;
+  //urlLogin ="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+this.ApiKey;
   
   categorie: string[] = [];
   nPiatti = 0;
@@ -35,7 +35,11 @@ export class MenuService {
   constructor(
     private snackBar: MatSnackBar, 
     private http:HttpClient,
-    private supabaseService: SupabaseService) { }
+    private supabaseService: SupabaseService) { 
+
+      console.log(this.menu);
+      
+    }
   
   private menuSubject = new BehaviorSubject<any[]>(this.menu);
   
@@ -166,7 +170,7 @@ export class MenuService {
     return this.menu[index].nome;
   }
   getImg(index : number){
-    //console.log(this.menu);
+    console.log(this.menu[index].img);
     
     return this.menu[index].img;
   }
@@ -184,32 +188,10 @@ export class MenuService {
     this.user = new User(email,id,_token,_expirationDate)
   }
 
-  //  AUTENTICAZIONE // 
-  
-  //REGISTRAZIONE
-  signUp(email:string, password:string){
-    return this.http.post(this.urlRegister,{email: email, password:password, returnSecureToken:true})
-    
-  }
 
-  signIn(email:string, password:string){
-    return this.http.post(this.urlLogin,{email: email, password:password, returnSecureToken:true})
-  }
 
-  logout(){
-    this.isLogged = false
-    //this.user = null
-    localStorage.removeItem('user')
-  }
-  
-  //TODO : implementare auto login quando il profilo è ancora in sessione
 
-/*
-    salvaDatiAggiuntivi(email: string, nome: string, cognome: string) {
-      return this.firestore.collection('utenti').doc(email).set({ nome, cognome });
-    }
-*/
-  //  GESTIONE CRUD //
+
 
 
 }
