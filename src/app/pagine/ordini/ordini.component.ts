@@ -77,7 +77,11 @@ async thisUserOrder(){
 async allUsersOrders(){
   this.allUserOrdersLabel = ''
   this.allUsersOrder = []; 
+  console.log('this.quantiClienti : ',this.quantiClienti);
+  
   this.quantiClienti = await this.supabaseService.getQuantiClienti();
+  console.log('this.quantiClienti : ',this.quantiClienti);
+
   try{
     let allUsersOrder : any = []
     allUsersOrder = await this.supabaseService.getAllUsersOrder()
@@ -107,7 +111,7 @@ async allUsersOrders(){
 
 async deleteOrdine(){
   this.allUserOrdersLabel = ''
-  this.supabaseService.deleteOrder();
+  await this.supabaseService.deleteOrder();
   this.userOrder = []
   this.userOrderLabel = 'Ordine annullato correttamente!'
   
