@@ -20,10 +20,11 @@
         <ng-container *ngFor="let categoria of servizioMenu.getCategorie(); let categoriaIndex = index">
           <h1 class="titoloCategoria">{{ categoria }}</h1>
           <div *ngFor="let piatto of servizioMenu.menu; let i = index">
-            <div class="card" *ngIf="(piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || searchValue === '')">
-              <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i" ></app-card-piatto>
-          <!--    <app-card-piatto [piatto]=piatto.img [img]="getImmagineUrlFromName(piatto.codice)" [i]="i" ></app-card-piatto>   -->
-          </div>
+            <!--  Controllo che il piatto sia coerente con la ricerca dentro la searchbar  -->
+            <div class="card" *ngIf="(piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || piatto.nome.toLowerCase().includes(searchValue.toLowerCase()))">
+            <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i" ></app-card-piatto>
+            <!--    <app-card-piatto [piatto]=piatto.img [img]="getImmagineUrlFromName(piatto.codice)" [i]="i" ></app-card-piatto>   -->
+            </div>
           </div>
         </ng-container>
       </div>
@@ -42,7 +43,7 @@
           <ng-container *ngIf="servizioMenu.hasPreferitiInCategoria(categoria)">
             <h1 class="titoloCategoria">{{ categoria }}</h1>
             <div *ngFor="let piatto of servizioMenu.menu; let i = index">
-              <div class="card" *ngIf="piatto.preferito && (piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || searchValue === '')">
+              <div class="card" *ngIf="piatto.preferito && (piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || piatto.nome.toLowerCase().includes(searchValue.toLowerCase()))">
                 <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i"></app-card-piatto>
               </div>
             </div>
@@ -62,7 +63,7 @@
       <div class="card-container">
         <div *ngFor="let piatto of servizioMenu.menu; let i = index">
           <div class="card" *ngIf="piatto.categoria == servizioMenu.getCategorieFromIndex(categoriaIndex) ">
-            <div *ngIf="(piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || searchValue === '')">
+            <div *ngIf="(piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || piatto.nome.toLowerCase().includes(searchValue.toLowerCase()))">
               <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i"></app-card-piatto>
             </div>
           </div>

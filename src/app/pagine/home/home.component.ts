@@ -52,14 +52,16 @@ rimuoviPiatto(i: number) {
   this.servizioMenu.rimuoviPiatto(i);
 }
 
-filterMenuByCode(searchValue: string) { 
-    if (searchValue === '') {
-      this.filteredMenu = this.servizioMenu.menu; // Nessuna ricerca, mostra l'intero menu
+filterMenuByCodeOrName(searchValue: string) { 
+  if (searchValue === '') {
+    this.filteredMenu = this.servizioMenu.menu; // Nessuna ricerca, mostra l'intero menu
   } else {
-      this.filteredMenu = this.servizioMenu.menu.filter(piatto => piatto.codice === searchValue);
+    const searchLower = searchValue.toLowerCase();
+    this.filteredMenu = this.servizioMenu.menu.filter(piatto => 
+      piatto.codice.toLowerCase().includes(searchLower) || piatto.nome.toLowerCase().includes(searchLower)
+    );
   }
 }
-
 
   
 }

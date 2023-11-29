@@ -44,6 +44,10 @@
     padding-top: 15px;
     
   }
+  img {
+    width: 150px;
+    height: 150px;
+}
   .mat-form-field-label {
     text-align: center;
     align-items: center;
