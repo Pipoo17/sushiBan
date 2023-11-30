@@ -38,7 +38,7 @@ import { SupabaseService } from './servizi/supabase.service';
 import { OrdineSuccesComponent } from './animazioni/ordine-succes/ordine-succes.component';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
-
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 export function playerFactory(): any {  
   return import('lottie-web');
@@ -85,6 +85,7 @@ export function playerFactory(): any {
     MatSnackBarModule,
     HttpClientModule,
     LottieModule.forRoot({ player: playerFactory }),  
+    ToggleButtonModule,
   ],
 
   providers: [
