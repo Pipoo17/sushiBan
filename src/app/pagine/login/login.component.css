@@ -52,14 +52,24 @@
   font-size: 16px;
   transition: all 0.3s ease;
 }
-form .row input:focus{
+.wrapper form .row button{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  padding-left: 60px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+form .row button:focus{
   border-color: #253861;
   box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
 }
-form .row input::placeholder{
+form .row button::placeholder{
   color: #999;
 }
-.wrapper form .row i{
+.labelIcon{
   position: absolute;
   width: 47px;
   height: 100%;
@@ -83,7 +93,7 @@ form .row input::placeholder{
 .wrapper form .pass a:hover{
   text-decoration: underline;
 }
-.wrapper form .button input{
+.wrapper form .button button{
   color: #fff;
   font-size: 20px;
   font-weight: 500;
@@ -92,7 +102,7 @@ form .row input::placeholder{
   border: 1px solid #253861;
   cursor: pointer;
 }
-form .button input:hover{
+form .button button:hover{
   background: #253861;
 }
 .wrapper form .signup-link{

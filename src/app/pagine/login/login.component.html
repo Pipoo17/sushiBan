@@ -3,15 +3,17 @@
     <div class="title"><span>Accedi</span></div>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <div class="row">
-        <i class="fas fa-user"></i>
+        <i class="fas fa-user labelIcon"></i>
         <input type="email" placeholder="Email" required ngModel name="email">
       </div>
       <div class="row">
-        <i class="fas fa-lock"></i>
+        <i class="fas fa-lock labelIcon"></i>
         <input type="password" placeholder="Password" required ngModel name="password" minlength="6">
       </div>
       <div class="row button">
-        <input type="submit" value="Accedi">
+        <button type="submit">
+          <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>Accedi 
+        </button>
       </div>
       <div class="signup-link">Non hai un account? <a routerLink="/register">Crealo qui</a></div>
       <div class="signup-link"> <a routerLink="/recuperoPword">Hai dimenticato la Password?</a></div>

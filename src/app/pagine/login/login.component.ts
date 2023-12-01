@@ -14,6 +14,7 @@ export class LoginComponent {
   //registrationSuccess: boolean = false;
   //logoutSuccess: boolean = false;
   authError : boolean = false;
+  isLoading : boolean = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -22,16 +23,19 @@ export class LoginComponent {
     private route: ActivatedRoute // Importa ActivatedRoute per ottenere i query parameters
   ) {
     this.supabaseService.setUserLogged(false)
-
+    this.isLoading = false;
   }
 
 
 
   onSubmit(form: NgForm){
     try{
+      this.isLoading = true;
       let paramJson = form.value;
       this.supabaseService.login(paramJson)
         .then((data) => {
+          this.isLoading = false;
+
           if (!data.success) {
             this.authError = true
             this.message = this.getMessageError(data.description)
@@ -42,10 +46,12 @@ export class LoginComponent {
           }
         })
         .catch((error) => {
+          this.isLoading = false;
           console.error("Errore durante l'accesso:", error);
         });
-    }catch{
-  
+    }catch(error){
+      console.error("Errore durante l'accesso:", error);
+      this.isLoading = false;
     }
   }
   
