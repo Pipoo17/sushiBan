@@ -3,11 +3,11 @@
     <div class="title"><span>Accedi</span></div>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <div class="row">
-        <i class="fas fa-user labelIcon"></i>
+        <i class='bx bxs-user labelIcon'></i>
         <input type="email" placeholder="Email" required ngModel name="email">
       </div>
       <div class="row">
-        <i class="fas fa-lock labelIcon"></i>
+        <i class='bx bx-lock labelIcon'></i>
         <input type="password" placeholder="Password" required ngModel name="password" minlength="6">
       </div>
       <div class="row button">

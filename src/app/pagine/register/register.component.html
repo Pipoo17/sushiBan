@@ -14,23 +14,19 @@
         </div>
         -->
         <div class="row">
-          <i class="fas fa-user labelIcon"></i>
+          <i class='bx bxs-user labelIcon'></i>
           <input type="text" placeholder="Username" required ngModel name="username">
         </div>
         
         <div class="row">
-          <i class="fas fa-user labelIcon"></i>
+          <i class='bx bx-envelope labelIcon'></i>
           <input type="text" placeholder="Email" required ngModel name="email">
         </div>
         <div class="row">
-          <i class="fas fa-lock labelIcon"></i>
+          <i class="bx bx-lock labelIcon"></i>
           <input type="password" placeholder="Password" required ngModel name="password" minlength="6">
         </div>
-        <!--
-        <div class="row button">
-          <input type="submit" value="Registrati">
-        </div>
-        -->
+
         <div class="row button">
           <button type="submit">
             <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>Registrati
