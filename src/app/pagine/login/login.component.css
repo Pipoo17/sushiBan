@@ -105,18 +105,24 @@ form .row button::placeholder{
 form .button button:hover{
   background: #253861;
 }
-.wrapper form .signup-link{
+.wrapper form .link{
   text-align: center;
   margin-top: 20px;
   font-size: 17px;
 }
-.wrapper form .signup-link a{
+.wrapper form .link a{
   color: #253861;
   text-decoration: none;
 }
-form .signup-link a:hover{
+.wrapper form .link a:hover{
   text-decoration: underline;
+  color: darkcyan;
 }
+
+.ResetPword{
+  font-size: medium;
+}
+
 .errorMessage{
   text-align: center;
   color: red;
