@@ -20,10 +20,13 @@ export class RegisterComponent {
   ) {}
   message: string = '';
   authError : boolean = false;
-  isLoading : boolean = false
+  isLoading : boolean = false;
+  isBeforeLoading : boolean = true;
 
 onSubmit(form: NgForm){
   this.isLoading= true;
+  this.isBeforeLoading= false;
+  
   try{
     let paramJson = form.value;
     this.supabaseService.register(paramJson)

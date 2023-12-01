@@ -12,7 +12,9 @@
       </div>
       <div class="row button">
         <button type="submit">
-          <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>Accedi 
+          <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+          <i class='bx bx-log-in-circle' *ngIf="this.isLoading == false"></i>
+          Accedi 
         </button>
       </div>
       <div class="signup-link">Non hai un account? <a routerLink="/register">Crealo qui</a></div>

@@ -29,12 +29,17 @@
 
         <div class="row button">
           <button type="submit">
-            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>Registrati
+            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+            <i class='bx bx-user' *ngIf="this.isLoading == false && this.isBeforeLoading"></i>
+            <i class='bx bx-user-voice' *ngIf="this.isLoading == false && this.authError == false && this.isBeforeLoading == false"></i>
+            <i class='bx bx-user-x' *ngIf="this.isLoading == false && this.authError && this.isBeforeLoading == false"></i>
+
+            Registrati
           </button>
         </div>
         <div class="signup-link">Hai già un account? <a routerLink="/login">Accedi qui</a></div>
       </form>
-      <div *ngIf="this.authError == true" class="errorMessage">{{ message }}</div>
+      <div *ngIf="this.authError" class="errorMessage">{{ message }}</div>
       <div *ngIf="this.authError == false" class="successMessage">{{ message }}</div> 
     </div>
   </div>
