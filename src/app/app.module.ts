@@ -39,6 +39,8 @@ import { OrdineSuccesComponent } from './animazioni/ordine-succes/ordine-succes.
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { MessagesModule } from 'primeng/messages';
+
 
 export function playerFactory(): any {  
   return import('lottie-web');
@@ -86,6 +88,7 @@ export function playerFactory(): any {
     HttpClientModule,
     LottieModule.forRoot({ player: playerFactory }),  
     ToggleButtonModule,
+    MessagesModule,
   ],
 
   providers: [
