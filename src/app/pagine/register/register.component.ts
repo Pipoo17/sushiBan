@@ -20,19 +20,22 @@ export class RegisterComponent {
   ) {}
   message: string = '';
   authError : boolean = false;
-
+  isLoading : boolean = false
 
 onSubmit(form: NgForm){
+  this.isLoading= true;
   try{
     let paramJson = form.value;
     this.supabaseService.register(paramJson)
       .then((data) => {
+        this.isLoading = false;
         if (data.success == false) {
           this.authError = true,
           console.error("ERRORE : ", data.description);
           this.message = this.getMessageError(data.description)
 
         }else {
+          this.isLoading = false;
           this.message ="Conferma la mail per completare la registrazione";
           console.log('Conferma Mail')
       // Puoi gestire la conferma dell'email o altre azioni qui
@@ -42,10 +45,12 @@ onSubmit(form: NgForm){
 
       })
       .catch((error) => {
+        this.isLoading = false;
         console.error("Errore durante l'inserimento:", error);
       });
-  }catch{
-
+  }catch(error){
+    console.error("Errore durante l'inserimento:", error);
+    this.isLoading = false;
   }
 }
 
