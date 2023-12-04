@@ -170,8 +170,6 @@ export class MenuService {
     return this.menu[index].nome;
   }
   getImg(index : number){
-    console.log(this.menu[index].img);
-    
     return this.menu[index].img;
   }
   isAuthenticated(){

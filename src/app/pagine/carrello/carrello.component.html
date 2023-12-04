@@ -8,10 +8,11 @@
                 <img src={{servizioMenu.getImg(i)}} class="imgPiatti">
                 <p>{{servizioMenu.getCodice(i)}}</p>
         
-                <button mat-button (click)="servizioMenu.rimuoviPiatto(i)" #rimuoviBtn class="pulsateDec">-</button>
+                <button mat-button type="button" (click)="servizioMenu.rimuoviPiatto(i)" #rimuoviBtn class="pulsateDec">-</button>
                 <h3>{{servizioMenu.getCounter(i)}}</h3>
-                <button mat-button (click)="servizioMenu.aggiungiPiatto(i)" #rimuoviBtn class="pulsateInc">+</button>
-                <button mat-button class="pulsateX" (click)="servizioMenu.eliminaPiatto(i)"><mat-icon>delete</mat-icon></button>
+                <button mat-button type="button" (click)="servizioMenu.aggiungiPiatto(i)" #rimuoviBtn class="pulsateInc">+</button>
+                <button mat-button type="button" class="pulsateX" (click)="servizioMenu.eliminaPiatto(i)"><mat-icon>delete</mat-icon></button>
+                
             </div>
         </div>
     </div>
