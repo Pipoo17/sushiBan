@@ -4,7 +4,7 @@ import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MessageService } from 'src/app/servizi/message.service';
 
 @Component({
   selector: 'app-carrello',
@@ -20,6 +20,7 @@ export class CarrelloComponent {
     private dialogRef: MatDialogRef<CarrelloComponent>,
     private router: Router,
     private snackBar: MatSnackBar, 
+    private MessageService: MessageService, 
   ) {}
 
   ngOnInit(): void {}
@@ -44,9 +45,7 @@ export class CarrelloComponent {
         else{
           console.error(data.description)
           this.message = data.description;
-          this.snackBar.open(data.description, 'Close', {
-            duration: 5000, 
-          });
+          this.MessageService.showMessageWarning('Attenzione','Non puoi fare piu di un ordine alla volta')
           // if(data.description = ''){
         //     this.message
         // }else{
