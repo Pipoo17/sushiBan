@@ -45,7 +45,7 @@ export class CarrelloComponent {
         else{
           console.error(data.description)
           this.message = data.description;
-          this.MessageService.showMessageWarning('Attenzione','Non puoi fare piu di un ordine alla volta')
+          this.MessageService.showMessageWarning('Attenzione',this.message)
           // if(data.description = ''){
         //     this.message
         // }else{

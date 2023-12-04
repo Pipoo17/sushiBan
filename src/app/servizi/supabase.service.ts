@@ -186,6 +186,11 @@ async restorePassword(paramJson : any){
   async insertOrdine(paramJson: any){
     try {
       
+      if(paramJson.length == 0){
+        console.error("Impossibile inserire un ordine vuoto",);
+        return { success: false, description: "Inserisci almeno un piatto per poter fare un ordine" };
+      }
+
       //controllo che sia il primo ordine
       if (!await this.isFirstOrder()) {
         console.error("Si è verificato un errore durante l'inserimento: E' possibile fare solo un ordine a persona",);
