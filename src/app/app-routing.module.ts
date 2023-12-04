@@ -23,7 +23,7 @@ const routes: Routes = [
   {path:'accessoNegato', component: AccessoNegatoComponent},
   {path:'testAnimazioni', component: OrdineSuccesComponent},
   {path:'404', component: ErrorComponent, title: 'Pagina non trovata'},
-  //{path:'**', pathMatch: 'full', redirectTo : '/404' },
+  {path:'**', pathMatch: 'full', redirectTo : '/404' },
 
 ];
 
