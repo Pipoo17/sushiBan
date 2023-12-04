@@ -142,3 +142,13 @@
 
 
   /* Fine SearchBar */
+
+
+  .messages-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 10px; /* Aggiungi margine per separare dal bordo */
+    z-index: 1000; /* Imposta un valore di z-index appropriato */
+  }
+  

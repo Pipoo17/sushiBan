@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'src/app/servizi/message.service';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
     public servizioMenu: MenuService, 
     private supabaseService: SupabaseService,
     private router: Router,
+    public MessageService: MessageService,
     )
   {
     this.supabaseService.checkIfUserAuth();

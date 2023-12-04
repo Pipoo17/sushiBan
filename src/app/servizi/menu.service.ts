@@ -6,8 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { User } from '../modelli/user.model';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { LoginComponent } from '../pagine/login/login.component';
-
-
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +34,9 @@ export class MenuService {
   constructor(
     private snackBar: MatSnackBar, 
     private http:HttpClient,
-    private supabaseService: SupabaseService) { 
+    private supabaseService: SupabaseService,
+    private MessageService: MessageService,
+    ) { 
 
       console.log(this.menu);
       
@@ -135,9 +136,10 @@ export class MenuService {
       this.menuSubject.next(this.menu); // Emit updated menu
       this.nPiatti += 1;
     }else{
-      this.snackBar.open('Non puoi ordinare piu di 5 piatti', 'Close', {
-        duration: 2000, // Duration in milliseconds
-      });
+      this.MessageService.showMessageWarning('Attenzione','Non puoi inserire piu di 5 piatti al tuo ordine')
+      //this.snackBar.open('Non puoi ordinare piu di 5 piatti', 'Close', {
+      //  duration: 2000, // Duration in milliseconds
+      //});
     }
   }
 
