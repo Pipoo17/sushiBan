@@ -40,6 +40,7 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { MessagesModule } from 'primeng/messages';
+import { MessageComponentComponent } from './message-component/message-component.component';
 
 
 export function playerFactory(): any {  
@@ -68,7 +69,8 @@ export function playerFactory(): any {
     RegisterComponent,
     AccessoNegatoComponent,
     LogoutPopupComponent,
-    OrdineSuccesComponent
+    OrdineSuccesComponent,
+    MessageComponentComponent
     ],
   imports: [
     BrowserModule,
