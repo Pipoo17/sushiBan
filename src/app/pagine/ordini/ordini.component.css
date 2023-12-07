@@ -29,6 +29,7 @@ body {
     border-radius: 10px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Offset-x, offset-y, blur, colore */
     background-color: #04364A;
+    min-width: 380px;
 }
 
 
@@ -83,6 +84,19 @@ button[color="#176B87"] {
     margin-bottom: 20px;
     
 }
+.contenitoreNome,.contenitoreCodice{
+    text-align: left;
+    color: #176B87;
+    min-width: 100px;
+}
+
+
+.contenitoreNome{
+    width: 200px;
+  }
+  .contenitoreCodice{
+    width: 150px;
+  }
 
 
 @media (max-width: 1050px) {

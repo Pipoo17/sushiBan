@@ -130,10 +130,51 @@ async deleteOrdine(){
   }
 }
 
+async copyOrdine() {
+  let copyOrder: string = await this.orderToString(); // Attendi la risoluzione della Promise
+  copyOrder += ' per '+this.quantiClienti + ' persone';
+  this.saveTextToClipboard(copyOrder);
+  this.MessageService.showMessageSuccess('','Ordine Copiato')
+}
+
+async orderToString(): Promise<string> {
+  let copyOrder: string = '';
+  let allUsersOrder: any = [];
+  allUsersOrder = await this.supabaseService.getAllUsersOrder();
+
+  if (allUsersOrder.length == 0) {
+    this.allUsersOrder = [];
+    this.allUserOrdersLabel = 'Qui potrai vedere gli ordini di tutti i partecipanti';
+  } else {
+    let orderItems: string[] = [];
+
+    for (const piatto of allUsersOrder) {
+      orderItems.push(`${piatto.codice} x ${piatto.numeropiatti}`);
+    }
+
+    copyOrder = orderItems.join(', ');
+  }
+  return copyOrder; 
+}
+
+
+ saveTextToClipboard(testoDaCopiare: string): void {
+  // Utilizza l'API del documento per copiare il testo negli appunti
+  const textarea = document.createElement('textarea');
+  textarea.value = testoDaCopiare;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+
+}
+
+
 //Metodo getImmaginiPiatti
 getImmagineUrlFromName(nomePiatto: string){
   return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/${nomePiatto}.jpg`;
 }
+
 
 
 

@@ -23,7 +23,14 @@ palette :
                 <div class="contenitorePiattiMenu marginePiatti">
                     <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
                 
-                     <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+                    <div class="contenitoreCodice"> 
+                        <h3>{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+                    </div>
+    
+                    <div class="contenitoreNome"> 
+                        <h3>{{servizioMenu.getNome(i)}}</h3> 
+                    </div>
+
 
                  </div>
              </div>
@@ -52,16 +59,23 @@ palette :
 
   <div *ngIf=" this.allUserOrdersLabel == '' ">
     <div class="elencoPiatti">
-        <div *ngFor="let piatto of allUsersOrder;">
+        <div *ngFor="let piatto of allUsersOrder; let i = index">
             <div class="contenitorePiattiMenu marginePiatti">
                 <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
-                <h3 class="codicePiatto">{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+
+                <div class="contenitoreCodice"> 
+                    <h3>{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+                </div>
+
+                <div class="contenitoreNome"> 
+                    <h3>{{servizioMenu.getNome(i)}}</h3> 
+                </div>
             </div>
         </div>
     </div>
 
     
-    <button mat-stroked-button color="#176B87">
+    <button (click)="copyOrdine()" mat-stroked-button color="#176B87">
         Copia Ordine<mat-icon>file_copy</mat-icon>
     </button>
     <br>
