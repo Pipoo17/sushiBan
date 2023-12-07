@@ -81,9 +81,15 @@ button[color="#176B87"] {
 }
 .intestazioneDiv{
     height: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+
+}
+.titoloContainer{
+    padding: 10px;
     
 }
+
+
 .contenitoreNome,.contenitoreCodice{
     text-align: left;
     color: #176B87;
@@ -97,7 +103,6 @@ button[color="#176B87"] {
   .contenitoreCodice{
     width: 150px;
   }
-
 
 @media (max-width: 1050px) {
     .container {
