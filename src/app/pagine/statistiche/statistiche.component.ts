@@ -18,5 +18,17 @@ export class StatisticheComponent {
   {
     this.supabaseService.checkAuth();
   }
+  basicData:any
 
+  ngOnInit(){
+    this.basicData ={
+      labels : ['q1','q2','q3'],
+      datasets: [{
+          label: 'Nome grafico',
+          data: [12,22,233],
+          borderWidth: 1
+        }
+      ]
+    }
+  }
 }
