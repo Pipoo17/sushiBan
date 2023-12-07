@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
+import { MessageService } from 'src/app/servizi/message.service';
+
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,8 @@ export class LoginComponent {
     private supabaseService: SupabaseService,
     private servizioMenu: MenuService,
     private router: Router,
-    private route: ActivatedRoute // Importa ActivatedRoute per ottenere i query parameters
+    private route: ActivatedRoute ,// Importa ActivatedRoute per ottenere i query parameters
+    private MessageService: MessageService,
   ) {
     this.supabaseService.setUserLogged(false)
     this.isLoading = false;
@@ -38,20 +41,24 @@ export class LoginComponent {
 
           if (!data.success) {
             this.authError = true
-            this.message = this.getMessageError(data.description)
+            this.MessageService.showMessageError('',this.getMessageError(data.description))
             this.router.navigate(['/login']);
           }
           else{
+            this.MessageService.deleteMessage();
+            this.MessageService.showMessageSuccess('','Accesso avvenuto con successo')
             this.router.navigate(['/home']);
           }
         })
         .catch((error) => {
           this.isLoading = false;
+          this.MessageService.showMessageError('',this.getMessageError(error))
           console.error("Errore durante l'accesso:", error);
         });
     }catch(error){
-      console.error("Errore durante l'accesso:", error);
       this.isLoading = false;
+      this.MessageService.showMessageError('',this.getMessageError(error))
+      console.error("Errore durante l'accesso:", error);
     }
   }
   

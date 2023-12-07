@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { Router } from '@angular/router';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
+import { MessageService } from 'src/app/servizi/message.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -15,7 +17,8 @@ export class RegisterComponent {
   constructor(
     public servizioMenu: MenuService,
     private supabaseService: SupabaseService,
-    private router: Router
+    private router: Router,
+    private MessageService: MessageService,
     
   ) {}
   message: string = '';
@@ -35,11 +38,10 @@ onSubmit(form: NgForm){
         if (data.success == false) {
           this.authError = true,
           console.error("ERRORE : ", data.description);
-          this.message = this.getMessageError(data.description)
-
+          this.MessageService.showMessageError('',this.getMessageError(data.description))
         }else {
           this.isLoading = false;
-          this.message ="Conferma la mail per completare la registrazione";
+          this.MessageService.showMessageInfo('',"Conferma la mail per completare la registrazione")
           console.log('Conferma Mail')
       // Puoi gestire la conferma dell'email o altre azioni qui
     }
@@ -69,7 +71,7 @@ getMessageError(descErrore : any){
     return"Questo utente è gia registrato.";
   }
   else if (descErrore == 'duplicate key value violates unique constraint "profiles_username_key'){
-    return "Esista già un utente con questo Username.";
+    return "Esiste già un utente con questo Username.";
   }
   else if (descErrore == 'Email rate limit exceeded'){
     return "Troppe richieste in arrivo : riprova tra un po." ;

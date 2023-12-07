@@ -11,6 +11,10 @@ export class MessageService {
   warningMessages: Message[] = [];
   errorMessages: Message[] = [];
 
+  //timeout per la chiusura dei messaggi 
+  defaultTimeout = 10000;
+  longTimeout = 20000;
+
   constructor() { }
 
 
@@ -22,7 +26,7 @@ export class MessageService {
       }
     ]
     
-    this.hideMessage(3000);
+    this.hideMessage(this.longTimeout);
   }
   
   showMessageSuccess(header : string, message : string){    
@@ -33,7 +37,7 @@ export class MessageService {
       }
     ]
 
-    this.hideMessage(3000);
+    this.hideMessage(this.defaultTimeout);
   }
 
   showMessageWarning(header : string, message : string){    
@@ -44,7 +48,7 @@ export class MessageService {
       }
     ]
 
-    this.hideMessage(3000)
+    this.hideMessage(this.defaultTimeout)
   }
   
   showMessageError(header : string, message : string){    
@@ -55,10 +59,18 @@ export class MessageService {
       }
     ]
 
-    this.hideMessage(3000);
+    this.hideMessage(this.defaultTimeout);
   }
-  
-  hideMessage(delay : number) {
+
+
+  deleteMessage(){
+    this.infoMessages = []
+    this.successMessages = []
+    this.warningMessages = []
+    this.errorMessages = []
+  }
+
+  private hideMessage(delay : number) {
     setTimeout(() => {
       this.infoMessages = []
       this.successMessages = []
@@ -66,5 +78,7 @@ export class MessageService {
       this.errorMessages = []
     }, delay);
   }
+
+
 
 }

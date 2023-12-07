@@ -20,7 +20,6 @@
       <div class="link">Non hai un account? <a routerLink="/register">Crealo qui</a></div>
       <div class="link"><a routerLink="/recuperoPword" class="ResetPword">Hai dimenticato la Password?</a></div>
     </form>
-    <div *ngIf="this.authError" class="errorMessage">{{ message }}</div> 
     <div *ngIf-else>{{ message }}</div>
   </div>
 </div>
