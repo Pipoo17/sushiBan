@@ -15,6 +15,7 @@
  img {
 	max-width: 100%;
 	display: block;
+	height: 200px;
  }
  
  .card-list {
