@@ -16,7 +16,7 @@ export class StatisticheComponent {
     private supabaseService: SupabaseService,
   )
   {
-    this.supabaseService.checkIfUserAuth();
+    this.supabaseService.checkAuth();
   }
 
 }

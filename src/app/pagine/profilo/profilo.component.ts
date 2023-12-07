@@ -22,7 +22,7 @@ export class ProfiloComponent {
   ) {
     this.getProfilePic();
     this.setProfileData();
-    this.supabaseService.checkIfUserAuth();
+    this.supabaseService.checkAuth();
   }
 
 

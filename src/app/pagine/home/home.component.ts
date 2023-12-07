@@ -26,11 +26,11 @@ export class HomeComponent implements OnInit {
     public MessageService: MessageService,
     )
   {
-    this.supabaseService.checkIfUserAuth();
-    this.supabaseService.setUserLogged(true)
+    this.supabaseService.checkAuth();
 
   }
 
+  
 
 
 

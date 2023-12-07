@@ -42,6 +42,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { MessagesModule } from 'primeng/messages';
 import { MessageComponentComponent } from './message-component/message-component.component';
 import { ButtonModule } from 'primeng/button';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 
 export function playerFactory(): any {  
@@ -93,6 +95,7 @@ export function playerFactory(): any {
     ToggleButtonModule,
     MessagesModule,
     ButtonModule,
+    NgxChartsModule,
   ],
 
   providers: [

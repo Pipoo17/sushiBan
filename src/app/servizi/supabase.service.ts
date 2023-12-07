@@ -141,6 +141,11 @@ async getSession(){
   
 }
 
+async checkAuth(){
+  this.checkIfUserAuth();
+  this.setUserLogged(true)
+}
+
 //TODO : QUANDO IL FRONTAND SI RESETTA A CAUSA DI ANGULAR (IL CODICE VIENE MODIFICATO)
 //       NON VIENNE MOSTRATA LA BARRA LATERALE
 async checkIfUserAuth() {
