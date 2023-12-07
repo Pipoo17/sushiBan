@@ -27,8 +27,7 @@ export class OrdiniComponent {
     private MessageService: MessageService,
     )
   {
-    this.supabaseService.setUserLogged(true)
-    this.supabaseService.checkIfUserAuth();
+    this.supabaseService.checkAuth();
 
     
   }
