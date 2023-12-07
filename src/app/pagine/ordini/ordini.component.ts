@@ -12,7 +12,7 @@ import { Injectable } from '@angular/core';
 })
 export class OrdiniComponent {
   quantiClienti: any 
-
+  isLoading : boolean = false;
   userOrder :any= [];
   allUsersOrder: any=[];
 
@@ -110,8 +110,10 @@ async allUsersOrders(){
 
 
 async deleteOrdine(){
+  this.isLoading = true;
   this.allUserOrdersLabel = ''
   await this.supabaseService.deleteOrder();
+  this.isLoading = false;
   this.userOrder = []
   this.userOrderLabel = 'Ordine annullato correttamente!'
   

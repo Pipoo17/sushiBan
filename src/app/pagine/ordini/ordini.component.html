@@ -30,7 +30,9 @@ palette :
          </div>
 
         <button (click)="deleteOrdine()" mat-stroked-button color="#176B87">
-            Annulla Ordine<mat-icon>delete</mat-icon>
+            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+            <i class='bx bx-trash' *ngIf="this.isLoading == false"></i>
+            Annulla Ordine
         </button>
     </div>
     
