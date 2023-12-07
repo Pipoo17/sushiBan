@@ -12,6 +12,8 @@ export class MessageService {
   errorMessages: Message[] = [];
 
   constructor() { }
+
+
   showMessageInfo(header : string, message : string){
     this.infoMessages = [{
       severity: 'info',
@@ -19,6 +21,8 @@ export class MessageService {
       detail: message
       }
     ]
+    
+    this.hideMessage(3000);
   }
   
   showMessageSuccess(header : string, message : string){    
@@ -28,6 +32,8 @@ export class MessageService {
       detail: message
       }
     ]
+
+    this.hideMessage(3000);
   }
 
   showMessageWarning(header : string, message : string){    
@@ -37,6 +43,8 @@ export class MessageService {
       detail: message
       }
     ]
+
+    this.hideMessage(3000)
   }
   
   showMessageError(header : string, message : string){    
@@ -46,27 +54,17 @@ export class MessageService {
       detail: message
       }
     ]
+
+    this.hideMessage(3000);
   }
   
+  hideMessage(delay : number) {
+    setTimeout(() => {
+      this.infoMessages = []
+      this.successMessages = []
+      this.warningMessages = []
+      this.errorMessages = []
+    }, delay);
+  }
 
 }
-
-
-/*
-html : 
- <div class="messages-container">
-  <p-messages [(value)]="this.MessageService.messages" [enableService]="false" [closable]="false"></p-messages>
-</div>
-
-css :   
-.messages-container {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 10px; 
-    z-index: 1000; 
-  }
-  
-
-*/
-

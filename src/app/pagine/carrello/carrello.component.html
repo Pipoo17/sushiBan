@@ -18,7 +18,11 @@
     </div>
 <!--     <div *ngIf="servizioMenu.carrelloVuoto()" class="nessunPiatto">Nessun piatto</div> -->
     <div class="contenitorePulsante">
-        <button mat-raised-button class="inviaForm">Invia Ordine</button>
+        <button pButton pRipple class="p-button-success inviaForm"> 
+            <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
+            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+            Invia Ordine 
+        </button>
     </div>
 </form>
 </div>

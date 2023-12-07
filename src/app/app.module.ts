@@ -41,7 +41,7 @@ import player from 'lottie-web';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { MessagesModule } from 'primeng/messages';
 import { MessageComponentComponent } from './message-component/message-component.component';
-
+import { ButtonModule } from 'primeng/button';
 
 export function playerFactory(): any {  
   return import('lottie-web');
@@ -91,6 +91,7 @@ export function playerFactory(): any {
     LottieModule.forRoot({ player: playerFactory }),  
     ToggleButtonModule,
     MessagesModule,
+    ButtonModule,
   ],
 
   providers: [

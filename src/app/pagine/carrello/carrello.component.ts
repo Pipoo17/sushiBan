@@ -5,6 +5,8 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MessageService } from 'src/app/servizi/message.service';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
   selector: 'app-carrello',
@@ -21,14 +23,17 @@ export class CarrelloComponent {
     private router: Router,
     private snackBar: MatSnackBar, 
     private MessageService: MessageService, 
+    private ButtonModule: ButtonModule, 
   ) {}
 
   ngOnInit(): void {}
 
-
+  isLoading : boolean = false;
 
   onSubmit() {
     let paramJson = this.servizioMenu.getOrdine();
+    this.isLoading = true;
+
     this.supabaseService.insertOrdine(paramJson)
       .then((data) => {
 
@@ -44,6 +49,7 @@ export class CarrelloComponent {
 
         else{
           console.error(data.description)
+          this.isLoading = false;
           this.message = data.description;
           this.MessageService.showMessageWarning('Attenzione',this.message)
           // if(data.description = ''){
@@ -55,6 +61,8 @@ export class CarrelloComponent {
         
       })
       .catch((error) => {
+        this.isLoading = false;
+        this.MessageService.showMessageError('Errore',error)
         console.error("Errore durante l'inserimento:", error);
       });
   }
