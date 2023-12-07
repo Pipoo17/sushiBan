@@ -44,6 +44,8 @@ export class CarrelloComponent {
           console.log("Animazione:");
 
           this.dialogRef.close();
+          this.MessageService.showMessageSuccess('','Ordine inserito correttamente!')
+
           this.router.navigate(['/ordini']);
         }
 

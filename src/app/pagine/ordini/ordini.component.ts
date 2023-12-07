@@ -4,6 +4,7 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router } from '@angular/router';
 import { LottieTransferState } from 'ngx-lottie';
 import { Injectable } from '@angular/core';
+import { MessageService } from 'src/app/servizi/message.service';
 
 @Component({
   selector: 'app-ordini',
@@ -23,6 +24,7 @@ export class OrdiniComponent {
     public servizioMenu: MenuService, 
     private supabaseService: SupabaseService,
     private router: Router,
+    private MessageService: MessageService,
     )
   {
     this.supabaseService.setUserLogged(true)
@@ -115,7 +117,8 @@ async deleteOrdine(){
   await this.supabaseService.deleteOrder();
   this.isLoading = false;
   this.userOrder = []
-  this.userOrderLabel = 'Ordine annullato correttamente!'
+  this.userOrderLabel = 'Qui potrai vedere gli ordini di tutti i partecipanti'
+  this.MessageService.showMessageSuccess('','Ordine annullato correttamente!')
   
   
   await this.allUsersOrders();
