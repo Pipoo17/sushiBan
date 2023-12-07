@@ -171,7 +171,34 @@ async restorePassword(paramJson : any){
   /*====================================*/ 
   /*=============  QUERY  =============*/
   /*===================================*/ 
+  async addPreferiti(idPiatto : string){
+    let UserId = await this.getUserId() + '';
 
+    const { data: ordineData, error: insertError } = await this.supabase
+    .from('Preferiti')
+    .insert({ idUtente: UserId, idPiatto: idPiatto });
+
+    if(!insertError){
+      return { success: true, description: "Piatto aggiunto ai preferiti" };
+    }    
+    return { success: false, description: insertError.message };
+  }
+
+  async removePreferiti(idPiatto : string){
+    let UserId = await this.getUserId() + '';
+
+    const { data: ordineData, error: insertError } = await this.supabase
+    .from('Preferiti')
+    .delete()
+    .eq('idUtente', UserId)
+    .eq('idPiatto', idPiatto)
+
+    if(!insertError){
+      return { success: true, description: "Piatto rimosso dai preferiti" };
+    }
+    
+    return { success: false, description: insertError.message };
+  }
 
   //  Chiamata alle Stored Procedure sul db Supabase (per elenco guardare evernote)
   async callStoredProcedure<T>(procedureName: string): Promise<T> {

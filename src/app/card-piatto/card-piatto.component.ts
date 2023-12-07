@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MenuService } from '../servizi/menu.service';
 import { MessageService } from '../servizi/message.service';
+import { SupabaseService } from '../servizi/supabase.service';
+
 
 @Component({
   selector: 'app-card-piatto',
@@ -14,24 +16,51 @@ export class CardPiattoComponent {
 
   constructor(
     public servizioMenu: MenuService,
-    public MessageService: MessageService
+    public MessageService: MessageService,
+    public SupabaseService: SupabaseService,
     ){}
 
   isClicked: boolean = false;
 
   pulsantePreferiti(index : number) {
-    this.servizioMenu.menu[index].preferito = !this.servizioMenu.menu[index].preferito
-    console.log(this.servizioMenu.menu)
-    this.isClicked = !this.isClicked;
 
+    if(this.servizioMenu.menu[index].preferito){
+      this.SupabaseService.removePreferiti(this.servizioMenu.menu[index].codice)
+      .then((data) => {
+        console.log(data);
+        
+        if(data.success == false){
+          this.MessageService.showMessageError('',data.description)
+        }else{
+        this.servizioMenu.menu[index].preferito = !this.servizioMenu.menu[index].preferito
+        this.isClicked = !this.isClicked;
+        }
+    })
+  }else{
+    this.SupabaseService.addPreferiti(this.servizioMenu.menu[index].codice)
+    .then((data) => {
+      console.log(data);
+      
+      if(data.success == false){
+        this.MessageService.showMessageError('',data.description)
+      }else{
+
+      this.servizioMenu.menu[index].preferito = !this.servizioMenu.menu[index].preferito
+      this.isClicked = !this.isClicked;
+      }
+    })
+    .catch((error) => {
+      this.MessageService.showMessageError('','error.description')
+    });
+}
+
+
+
+  
   }
 
   aggiungiPiatto(i: number) {
     this.servizioMenu.aggiungiPiatto(i);
-    //this.MessageService.showMessageInfo('sdsd','sdsd')
-    //this.MessageService.showMessageSuccess('sdsd','sdsd')
-    //this.MessageService.showMessageWarning('sdsd','sdsd')
-    //this.MessageService.showMessageError('sdsd','sdsd')
   }
 
   rimuoviPiatto(i: number) {
