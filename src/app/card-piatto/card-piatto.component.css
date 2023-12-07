@@ -79,7 +79,6 @@
 	flex-shrink: 0;
 	font-size: 1.25rem;
 	transition: .25s ease;
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
 	z-index: 1;
 	cursor: pointer;
 	color: #565656;
@@ -89,10 +88,7 @@
 	   height: 1em;
 	}
  
-	&:hover, &:focus {
-	   background-color: #EC4646;
-	   color: #FFF;
-	}
+
  }
  
  .card-footer {
