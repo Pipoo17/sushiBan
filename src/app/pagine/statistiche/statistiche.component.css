@@ -4,11 +4,14 @@
     border-radius: 10px;
     padding: 20px;
 }
-.contenitoreordiniPerUtente {
+.contenitoreordiniPerUtente, .contenitorePiattiPiuMangiati {
     display: flex;
     justify-content: space-between;
     align-items: center;
     /* Aggiungi altri stili o regole secondo necessità */
+}
+.contenitorePiattiPiuMangiati{
+    margin-bottom: 20px;
 }
 
 .tabellaOrdini {

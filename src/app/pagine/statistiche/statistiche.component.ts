@@ -10,45 +10,65 @@ import { TableModule } from 'primeng/table';
 })
 export class StatisticheComponent {
   options: any;
-  classificaOrdiniPerUtente: any;
+  graficoclassificaOrdiniPerUtente: any;
   tabellaclassificaOrdiniPerUtente: any;
+
+  graficoPiattiPiuOrdinati : any;
+  tabellaPiattiPiuOrdinati : any;
 
   constructor(
     public servizioMenu: MenuService, 
     private supabaseService: SupabaseService,
   ) {
     this.supabaseService.checkAuth();
-    this.initDatiTabella();
+   
+    // Classifica e tabella numero piatti per ogni utente
+    this.initDatiTabellaOrdiniPerUtente();
+    this.initGraficoTortaOrdiniPerUtente();
 
-    // Inizializza il grafico a torta classificaOrdiniPerUtente 
-
-        this.options = {
-            title: {
-                display: true,
-                text: 'My Title',
-                fontSize: 16
-            },
-            legend: {
-                position: 'bottom'
-            },
-            scale: {
-              gridLines: {
-                display: false,
-              }
-            }
-        };
-        
-    this.initGraficoTorta();
-
+    // Classifica e tabella piatti piu ordinati
+  
+    this.initDatiTabellaPiattiPiuOrdinati();
+    this.initGraficoPiattiPiuOrdinati()
   }
 
-  private async initGraficoTorta() {
+// metodi PiattiPiuOrdinati
+  private async initDatiTabellaPiattiPiuOrdinati(){
+    console.log(await this.supabaseService.getMostOrderedDishes());
+    this.tabellaPiattiPiuOrdinati = await this.supabaseService.getMostOrderedDishes();
+
+  }
+  private async initGraficoPiattiPiuOrdinati() {
+    let JsonclassificaPiattiPiuOrdinati: any[] = await this.supabaseService.getMostOrderedDishes();
+
+    const labels = JsonclassificaPiattiPiuOrdinati.map(item => item.id);
+    const data = JsonclassificaPiattiPiuOrdinati.map(item => item.numeroordinazioni);
+
+    this.graficoPiattiPiuOrdinati = {
+      labels: labels,
+      datasets: [{
+        label: 'Numero Ordini',
+        data: data,
+        backgroundColor: [
+          "#ffd700",
+          "#c0c0c0",
+          "#cd7f32",
+          "#26C6DA",
+          "#7E57C2"
+        ],
+        borderWidth: 1
+      }]
+    };
+  }
+
+  // metodi OrdiniPerUtente
+  private async initGraficoTortaOrdiniPerUtente() {
     let JsonclassificaOrdiniPerUtente: any[] = await this.supabaseService.getUserMostActive();
 
     const labels = JsonclassificaOrdiniPerUtente.map(item => item.username);
     const data = JsonclassificaOrdiniPerUtente.map(item => item.numeroordini);
 
-    this.classificaOrdiniPerUtente = {
+    this.graficoclassificaOrdiniPerUtente = {
       labels: labels,
       datasets: [{
         label: 'Numero Ordini',
@@ -66,7 +86,7 @@ export class StatisticheComponent {
   }
 
 
-  private async initDatiTabella() {
+  private async initDatiTabellaOrdiniPerUtente() {
     this.tabellaclassificaOrdiniPerUtente = await this.supabaseService.getUserMostActive();
   }
 

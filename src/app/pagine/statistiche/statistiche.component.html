@@ -1,8 +1,8 @@
 <h1 class="titlo"> Classifiche </h1>
 <br><br>
-<h1 class="sottotitolo">Numero Ordini</h1>
+<h1 class="sottotitolo">Gli utenti piu affamati</h1>
 <hr>
-
+<br>
 <div class="contenitoreordiniPerUtente">
     <div class="tabellaOrdini">
         <p-table [value]="tabellaclassificaOrdiniPerUtente" [tableStyle]="{ 'min-width': '25rem' }">
@@ -27,6 +27,45 @@
     </div>
 
     <div class="classificaOrdiniPerUtente">
-        <p-chart type="pie" [data]="classificaOrdiniPerUtente" [options]="options" height="40vh"></p-chart>
+        <p-chart type="pie" [data]="graficoclassificaOrdiniPerUtente" [options]="options" height="40vh"></p-chart>
     </div>
 </div>
+
+
+
+<h1 class="sottotitolo">I Piatti Piu Mangiati</h1>
+<hr>
+<br>
+
+
+<div class="contenitorePiattiPiuMangiati">
+    <div class="tabellaOrdini">
+        <p-table [value]="tabellaPiattiPiuOrdinati" [tableStyle]="{ 'min-width': '25rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Codice</th>
+                    <th>Nome</th>
+                    <th>Piatti Ordinati</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user let-i="rowIndex">
+                <tr [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}">
+                    <td>
+                        {{ user.id }}
+                        <span *ngIf="i === 0">
+                            <i class='bx bx-crown'></i>
+                        </span>
+                    </td>
+                    <td>{{ user.descrizione }}</td>
+                    <td>{{ user.numeroordinazioni }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="classificaOrdiniPerUtente">
+        <p-chart type="polarArea" [data]="graficoPiattiPiuOrdinati" [options]="options" height="40vh"></p-chart>
+    </div>
+</div>
+<p>.</p>
+

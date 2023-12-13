@@ -367,6 +367,12 @@ async restorePassword(paramJson : any){
 
     }
 
+    async getMostOrderedDishes(){
+    let classifica : any = await this.callStoredProcedure("mostordereddishes");
+    return classifica;
+
+    }
+
 
 
   /*====================================*/ 
