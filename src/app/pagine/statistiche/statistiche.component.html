@@ -1,1 +1,10 @@
-<p-chart type="pie" [data]="basicData" height="50vh"></p-chart>
+<div style="color: aliceblue; text-align: center;">
+    <P>TODO : </P>
+    <p>utenti con piu ordini(totale, mese)</p>
+    <p>piatti piu ordinati (totale,mese)</p>
+    <p>numero ordini totali nelle ultime x(8?) settimane</p>
+</div>
+
+<div class="classificaOrdiniPerUtente">
+    <p-chart type="pie" [data]="classificaOrdiniPerUtente" [options]="this.options" height="40vh"></p-chart>
+</div>

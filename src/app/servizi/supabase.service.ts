@@ -357,6 +357,15 @@ async restorePassword(paramJson : any){
       .eq("idOrdine",orderId)
     }
 
+  /*============================================*/ 
+  /*==========  METODI PER I GRAFICI  ==========*/
+  /*============================================*/ 
+  //classifica degli utenti che hanno ordinato maggiormente  
+  async getUserMostActive(){
+    let classifica : any = await this.callStoredProcedure("classificaordiniperutente");
+    return classifica;
+
+    }
 
 
 
