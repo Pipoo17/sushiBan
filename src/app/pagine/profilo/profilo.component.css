@@ -43,25 +43,67 @@ body {
     z-index: -1;
 }
 
-@media (max-width: 1100px) {
+.divContainer{
+    display: flex; /* or inline-flex */
+    flex-direction: row
+}
+
+.ultimoOrdine, .ElencoOrdiniSalvati{
+    background-color: #04364A;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    min-height: 50vh;
+}
+.ultimoOrdine{
+    width: 20vw;
+    background-color: aliceblue;
+    min-width: 220px;
+}
+
+.ElencoOrdiniSalvati{
+    flex-grow: 1;
+}
+
+
+@media (max-width: 1300px) {
     .profile-image {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
     }
     .immageContainer{
         display: inline-block;
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
         border-radius: 50%;
         object-fit: cover;
         box-shadow: 0 0 0 10px #04364A; /* Margine colorato */
     }
 }
 
+@media (max-width: 800px) {
+    .divContainer{
+        display: flex; /* or inline-flex */
+        flex-direction: column
+    }
+    .ultimoOrdine,.ElencoOrdiniSalvati{
+        width: 100%;
+        
+    }
+    
+
+    
+}
+
 
 .username{
     color: aliceblue;
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
     padding: 10px;
 }
+.title{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+

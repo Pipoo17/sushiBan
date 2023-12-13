@@ -24,6 +24,7 @@
     "@supabase/supabase-js": "^2.38.1",
     "chart.js": "^4.4.1",
     "lottie-web": "^5.12.2",
+    "ng2-charts": "^5.0.4",
     "ngx-lottie": "^10.0.0",
     "ngx-pipes": "^3.2.2",
     "primeng": "^16.0.1",
