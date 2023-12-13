@@ -1,10 +1,32 @@
-<div style="color: aliceblue; text-align: center;">
-    <P>TODO : </P>
-    <p>utenti con piu ordini(totale, mese)</p>
-    <p>piatti piu ordinati (totale,mese)</p>
-    <p>numero ordini totali nelle ultime x(8?) settimane</p>
-</div>
+<h1 class="titlo"> Classifiche </h1>
+<br><br>
+<h1 class="sottotitolo">Numero Ordini</h1>
+<hr>
 
-<div class="classificaOrdiniPerUtente">
-    <p-chart type="pie" [data]="classificaOrdiniPerUtente" [options]="this.options" height="40vh"></p-chart>
+<div class="contenitoreordiniPerUtente">
+    <div class="tabellaOrdini">
+        <p-table [value]="tabellaclassificaOrdiniPerUtente" [tableStyle]="{ 'min-width': '25rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome</th>
+                    <th>Ordini</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user let-i="rowIndex">
+                <tr [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}">
+                    <td>
+                        {{ user.username }}
+                        <span *ngIf="i === 0">
+                            <i class='bx bx-crown'></i>
+                        </span>
+                    </td>
+                    <td>{{ user.numeroordini }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="classificaOrdiniPerUtente">
+        <p-chart type="pie" [data]="classificaOrdiniPerUtente" [options]="options" height="40vh"></p-chart>
+    </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
-import {ChartModule} from 'primeng/chart';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-statistiche',
@@ -11,12 +11,14 @@ import {ChartModule} from 'primeng/chart';
 export class StatisticheComponent {
   options: any;
   classificaOrdiniPerUtente: any;
+  tabellaclassificaOrdiniPerUtente: any;
 
   constructor(
     public servizioMenu: MenuService, 
     private supabaseService: SupabaseService,
   ) {
     this.supabaseService.checkAuth();
+    this.initDatiTabella();
 
     // Inizializza il grafico a torta classificaOrdiniPerUtente 
 
@@ -52,19 +54,23 @@ export class StatisticheComponent {
         label: 'Numero Ordini',
         data: data,
         backgroundColor: [
-          "#42A5F5",
-          "#66BB6A",
-          "#FFA726",
+          "#ffd700",
+          "#c0c0c0",
+          "#cd7f32",
           "#26C6DA",
           "#7E57C2"
         ],
-        hoverBackgroundColor: [
-          "#64B5F6",
-          "#81C784",
-          "#FFB74D"
-      ],
         borderWidth: 1
       }]
     };
   }
+
+
+  private async initDatiTabella() {
+    this.tabellaclassificaOrdiniPerUtente = await this.supabaseService.getUserMostActive();
+  }
+
+
+
+
 }

@@ -4,3 +4,53 @@
     border-radius: 10px;
     padding: 20px;
 }
+.contenitoreordiniPerUtente {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Aggiungi altri stili o regole secondo necessità */
+}
+
+.tabellaOrdini {
+    flex-grow: 1;
+    margin: 0 20px; /* Aggiungi margine ai lati */
+    margin-top: 15px;
+}
+
+
+.classificaOrdiniPerUtente {
+    margin: 10px;    
+    margin: 10px;    
+}
+.titlo{
+    color: rgb(255, 255, 255);
+    font-family: 'Noto Sans JP';
+    font-size: 50px;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    margin-top: 3vh;
+}
+
+
+.sottotitolo{
+    color: rgb(255, 255, 255);
+    font-family: 'Noto Sans JP';
+    font-size: 30px;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    margin-top: 3vh;
+}
+
+.oro {
+    background-color: #ffd700; /* colore oro */
+}
+
+.argento {
+    background-color: #c0c0c0; /* colore argento */
+}
+
+.bronzo {
+    background-color: #cd7f32; /* colore bronzo */
+}

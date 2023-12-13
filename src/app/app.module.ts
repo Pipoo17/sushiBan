@@ -43,7 +43,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageComponentComponent } from './message-component/message-component.component';
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
-
+import { TableModule } from 'primeng/table';
 
 export function playerFactory(): any {  
   return import('lottie-web');
@@ -72,7 +72,7 @@ export function playerFactory(): any {
     AccessoNegatoComponent,
     LogoutPopupComponent,
     OrdineSuccesComponent,
-    MessageComponentComponent
+    MessageComponentComponent,
     ],
   imports: [
     BrowserModule,
@@ -95,6 +95,7 @@ export function playerFactory(): any {
     MessagesModule,
     ButtonModule,
     ChartModule,
+    TableModule,
   ],
 
   providers: [
