@@ -1,23 +1,25 @@
 <div class="profile-section">
     <div class="center-line"></div>
     <div class="immageContainer">
-        <img class="profile-image" src={{immagineProfilo}} alt="Foto Profilo" >
+        <img class="profile-image" [src]="immagineProfilo" alt="Foto Profilo">
     </div>
 </div>
 <div>
-    <h1 class="username">{{username}}</h1>
+    <h1 class="username">{{ username }}</h1>
+</div>
+<div class="containerPulsanti d-flex justify-content-center">
+    <input type="file" accept=".jpg" (change)="onFileSelected($event)" style="display: none" #fileInput>
+    <p-button label="Cambia immagine Profilo" [rounded]="true" severity="help" (click)="fileInput.click()" size="small" class="text-center"></p-button>
 </div>
 
 <div class="divContainer">
-
     <div class="ElencoOrdiniSalvati">
         <h1 class="title" style="color: aliceblue;">Elenco Ordini Salvati</h1>
         <p>WORK IN PROGRESS</p>
     </div>
 
     <div class="ultimoOrdine">
-        <h1 class="title">ultimo Ordine</h1>    
+        <h1 class="title">ultimo Ordine</h1>
         <p>WORK IN PROGRESS</p>
     </div>
-
 </div>

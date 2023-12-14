@@ -582,6 +582,10 @@ async getPiatti(){
     let  dataSession = await this.getSession();
     return dataSession.session?.user.id + ''
   }
+  async getUserName(){
+    let  dataSession = await this.getSession();
+    return dataSession.session?.user.user_metadata['username'] + ''
+  }
 
   setUserLogged(isLogged : boolean){
     this.isThisUserLogged = isLogged;
@@ -591,6 +595,50 @@ async getPiatti(){
     return this.isThisUserLogged
   }
   
+ async uploadImage(bucket : string,imageName : string, imageFile : any){
+
+  const { data, error } = await this.supabase
+    .storage
+    .from(bucket)
+    .upload(imageName +'.png', imageFile, {
+      cacheControl: '3600',
+      upsert: false
+    })
+
+  }
+
+  async deleteImmage(bucket : string, imageName : string){
+
+    const { data : deleteData, error: errorData } = await this.supabase
+    .storage
+    .from(bucket)
+    .remove([imageName])
+
+    console.log("immagine eliminata : ", imageName);
+    
+    console.log("deleteData : ",deleteData);
+    console.log("errorData : ",errorData);
+    
+  }
+
+  async insertProfileImage(bucket : string, imageFile : any){
+    let username = await this.getUserName()
+    const { data, error } = await this.supabase
+      .storage
+      .from(bucket)
+      .upload(username+'.jpg', imageFile, {
+        cacheControl: '3600',
+        upsert: false
+      })
+  
+     const { data: ordineData, error: insertError } = await this.supabase
+           .from('profiles')
+           .update([{avatar_url: username+'.jpg'}])
+           .eq('username', username)
+           .select()
+    
+      
+  }
 
 
 }

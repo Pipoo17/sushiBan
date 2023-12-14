@@ -29,9 +29,6 @@ body {
     position: relative;
 }
 
-.profile-image:hover {
-    filter: grayscale(70%);
-}
 
 .center-line {
     position: absolute;
@@ -107,3 +104,7 @@ body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
+.containerPulsanti {
+    display: flex;
+    justify-content: center;
+}
