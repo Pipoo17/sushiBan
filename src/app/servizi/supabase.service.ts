@@ -171,6 +171,59 @@ async restorePassword(paramJson : any){
   /*====================================*/ 
   /*=============  QUERY  =============*/
   /*===================================*/ 
+/*
+async getPiatti(){
+  console.log("getPiatti");
+  
+  let menu = [{}]
+  let idutente = await this.getUserId()
+
+  this.supabase.rpc('getpiatti', { idutente: await this.getUserId() }).then((data) => {
+
+    if (Array.isArray(data)) {
+      data.forEach((piatto: any) => {
+        //console.log("piatto : ",piatto);
+        
+        let ImgUrl = this.getImmagineUrlFromName("immaginiPiatti",piatto.codice)
+        ImgUrl.then(urlData => {
+          menu.push({
+            codice: piatto.codice,
+            nome: piatto.nome,
+            categoria: piatto.categoria,
+            counter: 0,
+            preferito: false,
+            img: urlData
+          });       
+        })
+        console.log("menu : ",menu);
+        
+    });
+  }
+  return menu
+  })
+
+}*/
+
+
+
+async getPiatti(){
+  console.log("getPiatti");
+  
+  let menu = [{}]
+  let idutente = await this.getUserId()
+
+  const { data, error } = await this.supabase.rpc('getpiatti', { idutente: idutente })
+  if(error){ return [{}] }
+  return data
+
+}
+
+
+
+
+
+
+
   async addPreferiti(idPiatto : string){
     let UserId = await this.getUserId() + '';
 
@@ -209,6 +262,7 @@ async restorePassword(paramJson : any){
       console.error('Errore durante la chiamata alla procedura:', error);
       throw error;
     }
+    
 
     return data;
   }

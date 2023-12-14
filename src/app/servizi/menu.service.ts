@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MenuService {
+export  class MenuService {
 //urlDB
   //urlDBOrdini = 'https://sushiban-bb4e6-default-rtdb.firebaseio.com/ordini.json';
   //[x: string]: any;
@@ -26,9 +26,7 @@ export class MenuService {
   isLogged=true;
   isAdmin=true;
   user!: User; 
-
   menu = this.riempiMenu();
-
 
 
   constructor(
@@ -41,6 +39,10 @@ export class MenuService {
       console.log(this.menu);
       
     }
+
+    async ngOnInit(){
+      let menu = await this.supabaseService.getPiatti();
+    }
   
   private menuSubject = new BehaviorSubject<any[]>(this.menu);
   
@@ -51,7 +53,7 @@ export class MenuService {
   //  Creazione Menu
   //TODO
   //UNA VOLTA CREATI I PROFILI NEL NUOVO DB IMPLEMENTARE I PREFERITI
-  riempiMenu(): any[]{
+/*  riempiMenu(): any[]{
     this.supabaseService.callStoredProcedure("getpiatti")
       .then(data => {
         if (Array.isArray(data)) {
@@ -75,6 +77,37 @@ export class MenuService {
       })
       .catch(error => {
         console.error('Errore durante l\'esecuzione della query SQL:', error);
+      });
+    return this.menu = [];
+  }*/
+
+  riempiMenu(): any[]{
+    this.supabaseService.getPiatti()
+      .then((data) => {
+        console.log("data : ");
+        
+        if (Array.isArray(data)) {
+          data.forEach((piatto: any) => {
+            //console.log("piatto : ",piatto);
+            
+            let ImgUrl = this.supabaseService.getImmagineUrlFromName("immaginiPiatti",piatto.codice)
+            ImgUrl.then(urlData => {
+              this.menu.push({
+                codice: piatto.codice,
+                nome: piatto.nome,
+                categoria: piatto.categoria,
+                counter: 0,
+                preferito: piatto.preferito,
+                img: urlData
+              });       
+            })
+        });
+      }
+      return this.menu
+      })
+      .catch((error: any) => {
+        console.error('Errore durante l\'esecuzione della query SQL:', error);
+        return this.menu = [];
       });
     return this.menu = [];
   }
