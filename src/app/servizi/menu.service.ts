@@ -41,7 +41,7 @@ export  class MenuService {
     }
 
     async ngOnInit(){
-      let menu = await this.supabaseService.getPiatti();
+      // let menu = await this.supabaseService.getPiatti();
     }
   
   private menuSubject = new BehaviorSubject<any[]>(this.menu);
@@ -51,35 +51,9 @@ export  class MenuService {
 
 
   //  Creazione Menu
-  //TODO
-  //UNA VOLTA CREATI I PROFILI NEL NUOVO DB IMPLEMENTARE I PREFERITI
-/*  riempiMenu(): any[]{
-    this.supabaseService.callStoredProcedure("getpiatti")
-      .then(data => {
-        if (Array.isArray(data)) {
-          data.forEach((piatto: any) => {
-            //console.log("piatto : ",piatto);
-            
-            let ImgUrl = this.supabaseService.getImmagineUrlFromName("immaginiPiatti",piatto.codice)
-            ImgUrl.then(urlData => {
-              this.menu.push({
-                codice: piatto.codice,
-                nome: piatto.nome,
-                categoria: piatto.categoria,
-                counter: 0,
-                preferito: false,
-                img: urlData
-              });       
-            })
-        });
-      }
-      return this.menu
-      })
-      .catch(error => {
-        console.error('Errore durante l\'esecuzione della query SQL:', error);
-      });
-    return this.menu = [];
-  }*/
+
+
+
 
   riempiMenu(): any[]{
     this.supabaseService.getPiatti()

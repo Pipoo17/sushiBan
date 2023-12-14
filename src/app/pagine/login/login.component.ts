@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { MessageService } from 'src/app/servizi/message.service';
-
+//import { ResponsiveSidebarComponent } from 'src/app/responsive-sidebar/responsive-sidebar.component';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +24,8 @@ export class LoginComponent {
     private router: Router,
     private route: ActivatedRoute ,// Importa ActivatedRoute per ottenere i query parameters
     private MessageService: MessageService,
+    //private ResponsiveSidebarComponent: ResponsiveSidebarComponent,
+
   ) {
     this.supabaseService.setUserLogged(false)
     this.isLoading = false;
@@ -41,12 +43,14 @@ export class LoginComponent {
 
           if (!data.success) {
             this.authError = true
-            this.MessageService.showMessageError('',this.getMessageError(data.description))
+            this.MessageService.showMessageError('',this.getMessageError(data.description)) 
             this.router.navigate(['/login']);
           }
           else{
             this.MessageService.deleteMessage();
             this.MessageService.showMessageSuccess('','Accesso avvenuto con successo')
+            //this.ResponsiveSidebarComponent.getProfilePic();
+            this.servizioMenu.riempiMenu();
             this.router.navigate(['/home']);
           }
         })
