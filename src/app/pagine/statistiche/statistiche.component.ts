@@ -91,6 +91,16 @@ export class StatisticheComponent {
   }
 
 
+  getImages(bucket : string, nomeImmagine : string){
+      return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/${bucket}/${nomeImmagine}.jpg`;
+    }
 
 
-}
+
+
+
+
+  }
+
+
+

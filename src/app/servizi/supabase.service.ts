@@ -87,17 +87,11 @@ export class SupabaseService {
           {
             id: userId,
             username: paramJson.username,
-            avatar_url: "Empty.jpg",
+            avatar_url: paramJson.username + ".jpg",
           },
         ]);
-
-console.log(userId)
-      // const { data: ordineData, error: insertError } = await this.supabase
-      //   .from('profiles')
-      //   .update([{username: paramJson.username,
-      //             avatar_url: "Empty.jpg",},])
-      //   .eq('id', userId)
-      //   .select()
+//todo : aguardare se l'immagine viene caricata correttamente quando si crea un profilo
+        this.copyImage(paramJson.username);
   
        if (insertError) {
          return { success: false, description: insertError.message };
@@ -640,5 +634,12 @@ async getPiatti(){
       
   }
 
+  async copyImage(username : string){
+    
+  const { data, error } = await this.supabase
+  .storage
+  .from('avatars')
+  .copy('Empty.jpg', username + '.jpg')
+  }
 
 }

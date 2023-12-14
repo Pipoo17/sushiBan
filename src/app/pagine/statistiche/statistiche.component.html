@@ -8,12 +8,14 @@
         <p-table [value]="tabellaclassificaOrdiniPerUtente" [tableStyle]="{ 'min-width': '25rem' }">
             <ng-template pTemplate="header">
                 <tr>
+                    <th></th>
                     <th>Nome</th>
                     <th>Ordini</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-user let-i="rowIndex">
                 <tr [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}">
+                    <td><img src="{{getImages('avatars',user.username)}}" class="immginiProflo"></td>
                     <td>
                         {{ user.username }}
                         <span *ngIf="i === 0">
@@ -43,21 +45,23 @@
         <p-table [value]="tabellaPiattiPiuOrdinati" [tableStyle]="{ 'min-width': '25rem' }">
             <ng-template pTemplate="header">
                 <tr>
+                    <th></th>
                     <th>Codice</th>
                     <th>Nome</th>
                     <th>Piatti Ordinati</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-user let-i="rowIndex">
+            <ng-template pTemplate="body" let-piatto let-i="rowIndex">
                 <tr [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}">
+                    <td><img src="{{getImages('immaginiPiatti',piatto.id)}}" class="immginiProflo"></td>
                     <td>
-                        {{ user.id }}
+                        {{ piatto.id }}
                         <span *ngIf="i === 0">
                             <i class='bx bx-crown'></i>
                         </span>
                     </td>
-                    <td>{{ user.descrizione }}</td>
-                    <td>{{ user.numeroordinazioni }}</td>
+                    <td>{{ piatto.descrizione }}</td>
+                    <td>{{ piatto.numeroordinazioni }}</td>
                 </tr>
             </ng-template>
         </p-table>
