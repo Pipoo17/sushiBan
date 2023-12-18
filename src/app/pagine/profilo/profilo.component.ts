@@ -17,6 +17,8 @@ export class ProfiloComponent {
   username: any;
   ultimoOrdine : any
   isLoading = false
+  ordiniSalvati:any 
+
   constructor(
     public servizioMenu: MenuService,
     private supabaseService: SupabaseService,
@@ -26,12 +28,18 @@ export class ProfiloComponent {
     this.getProfilePic();
     this.setProfileData();
     this.supabaseService.checkAuth();
+
+    
   }
 
 async ngOnInit(){
   this.ultimoOrdine = await this.supabaseService.getLastOrder(await this.supabaseService.getUserId());
   console.log("ultimoOrdine : ",this.ultimoOrdine);
   
+
+  
+  this.ordiniSalvati = await this.supabaseService.getOrdiniRapidi();
+  console.log("ordiniSalvati : ",this.ordiniSalvati);
 
 }
 

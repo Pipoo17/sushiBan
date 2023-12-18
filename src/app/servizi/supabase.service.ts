@@ -753,5 +753,37 @@ async getPiatti(){
     return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/${bucket}/${nomeImmagine}.jpg`;
   }
 
+
+  async getOrdiniRapidi(){
+    let oggettoOrdineRapido: any = []
+    let idUtente = await this.getUserId();
+
+    const { data, error } = await this.supabase
+    .from('OrdiniRapidi')
+    .select('id')
+    .eq('idutente', idUtente) 
+
+    if(error){ return [{}] }    
+
+console.log("data : ",data);
+
+    for (const ordineRapido of data) {
+      let idOrdine = ordineRapido.id
+      console.log("ordine : ",idOrdine);
+      
+
+      const { data, error } = await this.supabase.rpc('getordinerapido', { idordineparam: idOrdine })
+      if(error){ return [{}] }
+      oggettoOrdineRapido.push(data)
+      //return data
+    
+      
+    };
+
+
+    console.log("oggettoOrdineRapido : ",oggettoOrdineRapido);
+    return oggettoOrdineRapido
+
+  }
 }
 
