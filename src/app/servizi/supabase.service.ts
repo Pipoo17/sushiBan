@@ -374,6 +374,29 @@ async getPiatti(){
       .eq("idOrdine",orderId)
     }
 
+
+    async salvataggioOrdine(paramJson: any){
+      console.log(paramJson);
+      try{
+        if(paramJson.length == 0){
+          console.error("Impossibile inserire un ordine vuoto",);
+          return { success: false, description: "Inserisci almeno un piatto per poter salvare un ordine" };
+        }
+
+
+        return { success: true, description: 'Salvataggio Completato' };
+      }catch(error){
+        console.error("ERRORE : ",error);
+        return { success: false, description: error };
+        
+
+      }
+
+
+    }
+
+    
+
   /*============================================*/ 
   /*==========  METODI PER I GRAFICI  ==========*/
   /*============================================*/ 

@@ -1,7 +1,9 @@
+<app-message-component></app-message-component>
+
 <div class="carrello">
     
     <h1 class="titolo">Carrello</h1>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit('azione')">
     <div class="elencoPiatti">
         <div *ngFor="let piatto of servizioMenu.menu; let i = index">
             <div *ngIf="servizioMenu.getCounter(i) != 0" class="contenitorePiattiMenu ">
@@ -25,11 +27,16 @@
     </div>
 <!--     <div *ngIf="servizioMenu.carrelloVuoto()" class="nessunPiatto">Nessun piatto</div> -->
     <div class="contenitorePulsante">
-        <button pButton pRipple class="p-button-success inviaForm"> 
+        <button pButton pRipple class="p-button-success inviaForm" (click)="onSubmit('invia')" > 
             <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
             <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
             Invia Ordine 
         </button>
+        <button pButton pRipple label="" class="p-button font-bold inviaForm" (click)="onSubmit('salva')">
+            <i class='bx bx-save' *ngIf="this.isLoading == false"></i>
+        <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+        Salva Ordine 
+       </button>
     </div>
 </form>
 </div>

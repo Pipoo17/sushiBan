@@ -30,14 +30,14 @@ export class CarrelloComponent {
 
   isLoading : boolean = false;
 
-  onSubmit() {
+  onSubmit(azione: string) {
     let paramJson = this.servizioMenu.getOrdine();
     this.isLoading = true;
 
+    // inserimento ordine
+    if(azione == 'invia'){
     this.supabaseService.insertOrdine(paramJson)
       .then((data) => {
-
-        console.log("data : ",data);
 
         if(data.success){
           console.log("Inserimento riuscito");
@@ -45,13 +45,11 @@ export class CarrelloComponent {
 
           this.dialogRef.close();
           this.MessageService.showMessageSuccess('','Ordine inserito correttamente!')
-
           this.router.navigate(['/ordini']);
         }
 
         else{
           console.error(data.description)
-          this.isLoading = false;
           this.message = data.description;
           this.MessageService.showMessageWarning('Attenzione',this.message)
           // if(data.description = ''){
@@ -63,9 +61,45 @@ export class CarrelloComponent {
         
       })
       .catch((error) => {
-        this.isLoading = false;
         this.MessageService.showMessageError('Errore',error)
         console.error("Errore durante l'inserimento:", error);
       });
+    }
+    // salvataggio ordine
+    else if(azione == 'salva'){
+      console.log("salva");
+      
+      this.supabaseService.salvataggioOrdine(paramJson)
+      .then((data) => {
+        if(data.success){
+          console.log("Salvataggio riuscito");
+
+
+          this.MessageService.showMessageSuccess('','Ordine salvato correttamente!')
+        }
+
+        else{
+          console.error(data.description)
+          this.MessageService.showMessageWarning('Attenzione',data.description+'')
+
+        }
+      })
+      .catch((error) => {
+        this.MessageService.showMessageError('Errore',error)
+        console.error("Errore durante l'inserimento:", error);
+      });
+
+      
+    }
+    this.isLoading = false;
   }
+
+
+  salvaOrdine(){
+    console.log("salvaOrdine");
+    
+  }
+
+
+
 }
