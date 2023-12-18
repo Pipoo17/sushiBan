@@ -15,7 +15,8 @@ export class ProfiloComponent {
   immagineProfilo: any;
   profileSession: any;
   username: any;
-
+  ultimoOrdine : any
+  isLoading = false
   constructor(
     public servizioMenu: MenuService,
     private supabaseService: SupabaseService,
@@ -26,6 +27,51 @@ export class ProfiloComponent {
     this.setProfileData();
     this.supabaseService.checkAuth();
   }
+
+async ngOnInit(){
+  this.ultimoOrdine = await this.supabaseService.getLastOrder(await this.supabaseService.getUserId());
+  console.log("ultimoOrdine : ",this.ultimoOrdine);
+  
+
+}
+
+async duplicaOrdine() {
+  console.log("onssubmit");
+  console.log("ultimoOrdine : ",this.ultimoOrdine);
+  
+  let paramJson = JSON.parse(JSON.stringify(this.ultimoOrdine));
+  paramJson.counter = paramJson.numerordine;
+  delete paramJson.numerordine;
+
+  this.isLoading = true;
+
+  this.supabaseService.insertOrdine(paramJson)
+    .then((data) => {
+
+      console.log("data : ",data);
+
+      if(data.success){
+        console.log("Inserimento riuscito");
+        console.log("Animazione:");
+
+        this.MessageService.showMessageSuccess('','Ordine inserito correttamente!')
+
+        this.router.navigate(['/ordini']);
+      } else{
+        console.error(data.description)
+        this.isLoading = false;
+        this.MessageService.showMessageWarning('Attenzione',data.description)
+
+      }
+      
+    })
+    .catch((error) => {
+      this.isLoading = false;
+      this.MessageService.showMessageError('Errore',error)
+      console.error("Errore durante l'inserimento:", error);
+    });
+}
+
 
   async getProfilePic() {
     this.immagineProfilo = await this.supabaseService.getProfilePic() + `?timestamp=${new Date().getTime()}`;
@@ -51,5 +97,10 @@ export class ProfiloComponent {
       this.getProfilePic(); // Aggiungi questo per aggiornare l'URL dell'immagine
       this.MessageService.showMessageSuccess('','Immagine profilo modificata con successo')
     }
+  }
+
+
+  getImages(bucket : string, nomeImmagine : string){
+    return this.supabaseService.getImages(bucket,nomeImmagine)
   }
 }

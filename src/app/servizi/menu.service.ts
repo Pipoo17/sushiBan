@@ -36,7 +36,7 @@ export  class MenuService {
     private MessageService: MessageService,
     ) { 
 
-      console.log(this.menu);
+      //console.log(this.menu);
       
     }
 

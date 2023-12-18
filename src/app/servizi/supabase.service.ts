@@ -5,6 +5,7 @@ import { OrdineSuccesComponent } from '../animazioni/ordine-succes/ordine-succes
 import { EnvironmentService } from '../environment/environment.service';
 import { Router } from '@angular/router';
 import { MessageService } from './message.service';
+import { DatasetController, LogarithmicScale } from 'chart.js';
 
 
 
@@ -228,6 +229,8 @@ async getPiatti(){
   //Inserimento ordini
   //TODO : RIFARE METODO
   async insertOrdine(paramJson: any){
+    console.log(paramJson);
+    
     try {
       
       if(paramJson.length == 0){
@@ -267,10 +270,13 @@ async getPiatti(){
             this.rollBackOrdine(idOrdine);
             return { success: false, description: selectError.message };
         } else {
-          
+          let numeroPiatti = piatto.counter != null || piatto.counter != undefined ? piatto.counter : piatto.numeropiatti
           const { data: ordineData, error: insertError } = await this.supabase
             .from('PiattiOrdine')
-            .insert({ idOrdine: idOrdine, idPiatto: idPiatto, numeroPiatti: piatto.counter });
+            .insert({ 
+              idOrdine: idOrdine, 
+              idPiatto: idPiatto, 
+              numeroPiatti: numeroPiatti });
 
           if (insertError) {
             console.error("Si è verificato un errore durante l'inserimento:", insertError);
@@ -642,4 +648,18 @@ async getPiatti(){
   .copy('Empty.jpg', username + '.jpg')
   }
 
+
+  async getLastOrder(idUtente : string){
+
+    const { data, error } = await this.supabase.rpc('getlastorder', { idutenteparam: idUtente })
+    if(error){ return [{}] }
+    console.log("data : ",data);
+    
+    return data
+  }
+  getImages(bucket : string, nomeImmagine : string){
+    return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/${bucket}/${nomeImmagine}.jpg`;
+  }
+
 }
+

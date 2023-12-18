@@ -19,7 +19,26 @@
     </div>
 
     <div class="ultimoOrdine">
-        <h1 class="title">ultimo Ordine</h1>
-        <p>WORK IN PROGRESS</p>
+        <h1 class="title">Ultimo Ordine</h1>
+        <div class="elencoPiatti">
+            <div *ngFor="let piatto of this.ultimoOrdine let i = index" class="contenitorePiattiMenu ">
+                <img [src]="this.getImages('immaginiPiatti', piatto.codice)" class="imgPiatti">
+                
+                <div class="contenitoreCodice"> 
+                    <p>{{piatto.codice}} x {{piatto.numeropiatti}}</p>
+                </div>
+
+                <div class="contenitoreNome"> 
+                    <p>{{piatto.descrizione}}</p> 
+                </div>
+            </div>
+        </div>
+        <div class="containerPulsantiDiv">
+            <button pButton pRipple label="" class="p-button font-bold" (click)="duplicaOrdine()">
+                <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
+            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+            Ordina ancora 
+           </button>
+        </div>
     </div>
 </div>
