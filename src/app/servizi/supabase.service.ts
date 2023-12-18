@@ -320,8 +320,7 @@ async getPiatti(){
       }
     }
 
-
-
+    
     async getThisUserOrder(idUtente : string){
       
       let idOrdine = await this.getLastOrdineId(idUtente)
@@ -382,6 +381,61 @@ async getPiatti(){
           console.error("Impossibile inserire un ordine vuoto",);
           return { success: false, description: "Inserisci almeno un piatto per poter salvare un ordine" };
         }
+
+        let UserId = await this.getUserId();
+
+        const { data: insertData, error: insertError } = await this.supabase
+          .from('OrdiniRapidi')
+          .insert({ idutente: UserId });
+
+          if (insertError) {
+            console.error("Si è verificato un errore durante l'inserimento:", insertError);
+            return { success: false, description: insertError.message };
+          }
+
+
+          const { data: selectData, error: selectError } = await this.supabase
+          .from('OrdiniRapidi')
+          .select("id")
+          .eq("idutente",UserId)
+          .order('id', { ascending: false, nullsFirst: false })
+          .limit(1);
+
+
+
+          if (selectError) {
+            console.error("Si è verificato un errore durante l'inserimento:", insertError);
+            return { success: false, description: selectError.message };
+          }
+          
+          let idOrdine = selectData[0].id;
+
+
+          for (const piatto of paramJson) {
+            // Prendi l'id di ogni piatto
+            const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
+    
+            if (selectError) {
+              console.error("Si è verificato un errore durante l'inserimento:", selectError);
+              return { success: false, description: selectError.message };
+            } 
+
+            let numeroPiatti = piatto.counter != null || piatto.counter != undefined ? piatto.counter : piatto.numeropiatti
+
+            const { data: ordineData, error: insertError } = await this.supabase
+              .from('PiattiOrdineRapido')
+              .insert({ 
+                idOrdine: idOrdine, 
+                idPiatto: idPiatto, 
+                numeroPiatti: numeroPiatti });
+  
+            if (insertError) {
+              console.error("Si è verificato un errore durante l'inserimento:", insertError);
+              this.rollBackOrdine(idOrdine);
+              return { success: false, description: insertError.message };
+            }
+          }
+
 
 
         return { success: true, description: 'Salvataggio Completato' };
