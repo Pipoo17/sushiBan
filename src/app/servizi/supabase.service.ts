@@ -602,6 +602,21 @@ async getPiatti(){
         return { idPiatto: null, selectError };
       }
     }
+    //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)
+    async getDescrizionePiattoFromId(idPiatto:String){
+      const { data: piattoData, error: selectError } = await this.supabase
+      .from('Piatti')
+      .select('descrizione')
+      .eq('id', idPiatto) 
+    
+      if (piattoData && piattoData.length > 0) {
+        const descrizione = piattoData[0].descrizione;
+        return { descrizione, selectError};
+      } else {
+        // Gestisci il caso in cui piattoData sia nullo o vuoto
+        return { descrizione: null, selectError };
+      }
+    }
 
     //Ritorna l'id dell'ultimo ordine inserito
     async getLastOrdineId(idUtente : string){

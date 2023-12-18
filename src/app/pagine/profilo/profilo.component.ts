@@ -39,10 +39,7 @@ async duplicaOrdine() {
   console.log("onssubmit");
   console.log("ultimoOrdine : ",this.ultimoOrdine);
   
-  let paramJson = JSON.parse(JSON.stringify(this.ultimoOrdine));
-  paramJson.counter = paramJson.numerordine;
-  delete paramJson.numerordine;
-
+  let paramJson = this.ultimoOrdine
   this.isLoading = true;
 
   this.supabaseService.insertOrdine(paramJson)

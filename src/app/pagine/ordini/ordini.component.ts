@@ -49,7 +49,7 @@ async thisUserOrder(){
       let idUser  = await this.supabaseService.getUserId();
       let ordine = await this.supabaseService.getThisUserOrder(idUser)
 
-      //console.log("ordine : ",ordine);
+      console.log("ordine : ",ordine);
       if(ordine.length == 0){
         this.userOrder = []
         this.userOrderLabel = 'Qui potrai visualizzare il tuo ordine una volta fatto'
@@ -60,10 +60,13 @@ async thisUserOrder(){
       else{
         for (const piatto of ordine) {
           let nomePiatto = await this.supabaseService.getCodicePiattoFromId(piatto.idPiatto)
+          let descrizionePiatto = await this.supabaseService.getDescrizionePiattoFromId(piatto.idPiatto)
+          
           this.userOrder.push({
             id: piatto.idPiatto,
             idPiatto: nomePiatto.idPiatto,
-            numeroPiatto: piatto.numeroPiatti
+            numeroPiatto: piatto.numeroPiatti,
+            descrizione: descrizionePiatto.descrizione
           });
         }
       }
@@ -97,7 +100,8 @@ async allUsersOrders(){
         this.allUsersOrder.push({
           id : piatto.id,
           idPiatto: piatto.codice,
-          numeroPiatto: piatto.numeropiatti
+          numeroPiatto: piatto.numeropiatti,
+          descrizione: piatto.descrizione
         });
       }
     }
