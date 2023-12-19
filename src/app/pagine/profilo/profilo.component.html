@@ -15,10 +15,26 @@
 <div class="divContainer">
     <div class="ElencoOrdiniSalvati">
         <h1 class="title" style="color: aliceblue;">Elenco Ordini Salvati</h1>
-        <p>WORK IN PROGRESS</p>
         <div *ngFor="let ordiniRapidi of this.ordiniSalvati let i = index" class="contenitorePiattiMenu " >
-            <div *ngFor="let piatto of this.ordiniRapidi">
-                <p>{{ piatto.id }} || {{ piatto.descrizione }}</p>
+            <div *ngFor="let piatto of this.ordiniRapidi" class="ordineContainer">
+                <img [src]="this.getImages('immaginiPiatti', piatto.codice)" class="imgPiatti">
+                <div class="testoPiatti">
+                    <p>{{piatto.codice}} x {{piatto.numeropiatti}}</p>
+                    <!-- <p>{{piatto.descrizione}}</p> -->
+                </div>
+            </div>
+
+            <div class="containerPulsantiOrdineRapido">
+                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small">
+                    <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
+                    <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+                    Ordina Ora 
+                </p-button>
+                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small" severity="danger" [rounded]="true">
+                    <i class='bx bxs-trash' *ngIf="this.isLoading == false"></i>
+                    <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+                </p-button>
+
             </div>
         </div>
     </div>

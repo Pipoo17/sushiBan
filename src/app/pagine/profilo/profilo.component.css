@@ -121,7 +121,7 @@ body {
     margin-right: 20px;
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1300px) {
     .divContainer {
         flex-direction: column;
     }
@@ -133,6 +133,9 @@ body {
 }
 
 .contenitorePiattiMenu {
+    display: flex;
+    justify-content: space-between; /* Spazia gli elementi flessibili il più possibile l'uno dall'altro */
+    align-items: center; /* Allinea verticalmente al centro */
     margin-top: 20px;
     display: flex;
     align-items: center;
@@ -158,4 +161,23 @@ body {
     position: relative;
     overflow: auto;
     padding-top: 5px;
+}
+.testoPiatti {
+    flex-grow: 1;  /* Fai espandere il contenuto testuale per occupare lo spazio rimanente */
+}
+.ordineContainer {
+    display: flex;  
+    align-items: center;
+    width: 160px;  
+    margin-right: 10px; /* Aggiunge uno spazio tra gli ordini */
+
+}
+
+.containerPulsantiOrdineRapido {
+    display: flex;
+    margin-left: auto; /* Sposta il container pulsanti a destra */
+    align-items:center;
+    gap: 10px;
+    min-width: 190px;
+    
 }
