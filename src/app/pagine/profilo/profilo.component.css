@@ -57,12 +57,14 @@ body {
     width: 20vw;
     background-color: aliceblue;
     min-width: 220px;
-    height: 500px;
+    min-height: 40vh;
 }
 
 .ElencoOrdiniSalvati{
     flex-grow: 1;
     min-height: 200px;
+    
+
 }
 
 
@@ -156,7 +158,14 @@ body {
     margin-top: 10px;
 }
 .elencoPiatti{
-    height: 380px;
+    max-height: 380px;
+    padding: 10px;
+    position: relative;
+    overflow: auto;
+    padding-top: 5px;
+}
+.elencoOrdiniRapidi{
+    max-height: 400px;
     padding: 10px;
     position: relative;
     overflow: auto;
@@ -180,4 +189,16 @@ body {
     gap: 10px;
     min-width: 190px;
     
+}
+
+
+.contenitorePiattiOrdiniSalvati {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    height: 80px;
+    background-color: rgb(218, 218, 218);  
+    border-radius: 10px;
+    border: 2px solid purple; /* Sostituisci 'your_color' con il colore desiderato */
+    margin: 10px;
 }

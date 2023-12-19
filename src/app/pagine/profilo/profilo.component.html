@@ -13,10 +13,12 @@
 </div>
 
 <div class="divContainer">
+
     <div class="ElencoOrdiniSalvati">
         <h1 class="title" style="color: aliceblue;">Elenco Ordini Salvati</h1>
+        <div class="elencoOrdiniRapidi">
         <div *ngFor="let ordiniRapidi of this.ordiniSalvati let i = index" class="contenitorePiattiMenu " >
-            <div *ngFor="let piatto of this.ordiniRapidi" class="ordineContainer">
+            <div *ngFor="let piatto of this.ordiniRapidi" class="ordineContainer" >
                 <img [src]="this.getImages('immaginiPiatti', piatto.codice)" class="imgPiatti">
                 <div class="testoPiatti">
                     <p>{{piatto.codice}} x {{piatto.numeropiatti}}</p>
@@ -36,13 +38,14 @@
                 </p-button>
 
             </div>
+            </div>
         </div>
     </div>
 
     <div class="ultimoOrdine">
         <h1 class="title">Ultimo Ordine</h1>
         <div class="elencoPiatti">
-            <div *ngFor="let piatto of this.ultimoOrdine let i = index" class="contenitorePiattiMenu ">
+            <div *ngFor="let piatto of this.ultimoOrdine let i = index" class="contenitorePiattiOrdiniSalvati ">
                 <img [src]="this.getImages('immaginiPiatti', piatto.codice)" class="imgPiatti">
                 
                 <div class="contenitoreCodice"> 
