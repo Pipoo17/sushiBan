@@ -27,14 +27,17 @@
     </div>
 <!--     <div *ngIf="servizioMenu.carrelloVuoto()" class="nessunPiatto">Nessun piatto</div> -->
     <div class="contenitorePulsante">
-        <button pButton pRipple class="p-button-success inviaForm" (click)="onSubmit('invia')" [loading]="isLoading" > 
-            <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
+
+        <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="onSubmit('invia')" [loading]="this.isLoading" severity="success">
             Invia Ordine 
-        </button>
-        <button pButton pRipple label="" class="p-button font-bold inviaForm" (click)="onSubmit('salva')" [loading]="isLoading">
-            <i class='bx bx-save' *ngIf="this.isLoading == false"></i>
-        Salva Ordine 
-       </button>
+            <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
+         </p-button>
+  
+         <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="onSubmit('salva')" [loading]="this.isLoading" severity="info">
+          Salva Ordine 
+          <i class='bx bx-save' *ngIf="this.isLoading == false"></i>
+       </p-button>
+       
     </div>
 </form>
 </div>

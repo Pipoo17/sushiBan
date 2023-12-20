@@ -27,14 +27,12 @@
             </div>
 
             <div class="containerPulsantiOrdineRapido">
-                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small">
-                    <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
-                    <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small" [loading]="this.isLoading">
                     Ordina Ora 
+                    <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
                 </p-button>
-                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small" severity="danger" [rounded]="true">
+                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small" severity="danger" [rounded]="true" [loading]="this.isLoading">
                     <i class='bx bxs-trash' *ngIf="this.isLoading == false"></i>
-                    <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
                 </p-button>
 
             </div>
@@ -58,11 +56,10 @@
             </div>
         </div>
         <div class="containerPulsantiDiv">
-            <button pButton pRipple label="" class="p-button font-bold" (click)="duplicaOrdine()">
-                <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
-            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+           <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" [loading]="this.isLoading">
             Ordina ancora 
-           </button>
+            <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
+        </p-button>
         </div>
     </div>
 </div>

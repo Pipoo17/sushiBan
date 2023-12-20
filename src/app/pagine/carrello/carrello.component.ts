@@ -33,66 +33,54 @@ export class CarrelloComponent {
   onSubmit(azione: string) {
     let paramJson = this.servizioMenu.getOrdine();
     this.isLoading = true;
-
+  
     // inserimento ordine
-    if(azione == 'invia'){
-    this.supabaseService.insertOrdine(paramJson)
-      .then((data) => {
-
-        if(data.success){
-          console.log("Inserimento riuscito");
-          console.log("Animazione:");
-
-          this.dialogRef.close();
-          this.MessageService.showMessageSuccess('','Ordine inserito correttamente!')
-          this.router.navigate(['/ordini']);
-        }
-
-        else{
-          console.error(data.description)
-          this.message = data.description;
-          this.MessageService.showMessageWarning('Attenzione',this.message)
-          // if(data.description = ''){
-        //     this.message
-        // }else{
-        //   this.message = data.description;
-        // }
-        }
-        
-      })
-      .catch((error) => {
-        this.MessageService.showMessageError('Errore',error)
-        console.error("Errore durante l'inserimento:", error);
-      });
+    if (azione == 'invia') {
+      this.supabaseService.insertOrdine(paramJson)
+        .then((data) => {
+          if (data.success) {
+            console.log("Inserimento riuscito");
+            this.dialogRef.close();
+            this.MessageService.showMessageSuccess('', 'Ordine inserito correttamente!')
+            this.router.navigate(['/ordini']);
+          } else {
+            console.error(data.description)
+            this.message = data.description;
+            this.MessageService.showMessageWarning('Attenzione', this.message)
+          }
+        })
+        .catch((error) => {
+          this.MessageService.showMessageError('Errore', error)
+          console.error("Errore durante l'inserimento:", error);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     }
     // salvataggio ordine
-    else if(azione == 'salva'){
+    else if (azione == 'salva') {
       console.log("salva");
-      
+  
       this.supabaseService.salvataggioOrdine(paramJson)
-      .then((data) => {
-        if(data.success){
-          console.log("Salvataggio riuscito");
-
-
-          this.MessageService.showMessageSuccess('','Ordine salvato correttamente!')
-        }
-
-        else{
-          console.error(data.description)
-          this.MessageService.showMessageWarning('Attenzione',data.description+'')
-
-        }
-      })
-      .catch((error) => {
-        this.MessageService.showMessageError('Errore',error)
-        console.error("Errore durante l'inserimento:", error);
-      });
-
-      
+        .then((data) => {
+          if (data.success) {
+            console.log("Salvataggio riuscito");
+            this.MessageService.showMessageSuccess('', 'Ordine salvato correttamente!')
+          } else {
+            console.error(data.description)
+            this.MessageService.showMessageWarning('Attenzione', data.description + '')
+          }
+        })
+        .catch((error) => {
+          this.MessageService.showMessageError('Errore', error)
+          console.error("Errore durante l'inserimento:", error);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     }
-    this.isLoading = false;
   }
+  
 
 
   salvaOrdine(){

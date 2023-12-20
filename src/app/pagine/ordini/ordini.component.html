@@ -34,11 +34,10 @@ palette :
              </div>
          </div>
 
-        <button (click)="deleteOrdine()" mat-stroked-button color="#176B87">
-            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
-            <i class='bx bx-trash' *ngIf="this.isLoading == false"></i>
+         <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="deleteOrdine()" size="small" severity="danger" [loading]="this.isLoading">
             Annulla Ordine
-        </button>
+            <i class='bx bx-trash' *ngIf="this.isLoading == false"></i>
+        </p-button>
     </div>
     
     <br>
@@ -74,9 +73,10 @@ palette :
     </div>
 
     
-    <button (click)="copyOrdine()" mat-stroked-button color="#176B87">
-        Copia Ordine<mat-icon>file_copy</mat-icon>
-    </button>
+    <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="copyOrdine()" size="small" severity="info">
+        Copia Ordine
+        <i class='bx bx-copy-alt'></i>
+    </p-button>
     <br>
 </div>
 
