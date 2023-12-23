@@ -34,7 +34,7 @@ palette :
              </div>
          </div>
 
-         <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="deleteOrdine()" size="small" severity="danger" [loading]="this.isLoading">
+         <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="popupDeleteOrdine()" size="small" severity="danger" [loading]="this.isLoading">
             Annulla Ordine
             <i class='bx bx-trash' *ngIf="this.isLoading == false"></i>
         </p-button>

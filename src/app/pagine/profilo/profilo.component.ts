@@ -91,6 +91,8 @@ async insertLastOrder() {
 
     this.Ordina(piattiOrdine)
   }
+
+  
   eliminaOrdineRapido(idOrdine : string, piattiOrdine : string){
     console.log(idOrdine);
     console.log(piattiOrdine);

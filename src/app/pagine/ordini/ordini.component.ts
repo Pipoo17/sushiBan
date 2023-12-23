@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { LottieTransferState } from 'ngx-lottie';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'src/app/servizi/message.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-ordini',
@@ -25,6 +27,7 @@ export class OrdiniComponent {
     private supabaseService: SupabaseService,
     private router: Router,
     private MessageService: MessageService,
+    public dialog: MatDialog,
     )
   {
     this.supabaseService.checkAuth();
@@ -112,13 +115,29 @@ async allUsersOrders(){
     
   }
 }
+popupDeleteOrdine(){
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: 'Sei sicuro di voler eliminare questo ordine?',
+      buttonText: {
+        ok: 'Conferma',
+        cancel: 'Annulla'
+      }
+    }
+  });
 
+  dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+    this.isLoading = true;
+    if (confirmed) {
+      this.deleteOrdine();
+    }
+    this.isLoading = false;
+  });
+}
 
 async deleteOrdine(){
-  this.isLoading = true;
   this.allUserOrdersLabel = ''
   await this.supabaseService.deleteOrder();
-  this.isLoading = false;
   this.userOrder = []
   this.userOrderLabel = 'Qui potrai vedere gli ordini di tutti i partecipanti'
   this.MessageService.showMessageSuccess('','Ordine annullato correttamente!')
