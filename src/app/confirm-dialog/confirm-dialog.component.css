@@ -1,0 +1,8 @@
+.containerPulsantiDiv {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: calc(100% - 20px); /* Calcola la larghezza sottraendo il padding del contenitore */
+    height: 50px;
+    margin-top: 10px;
+}

@@ -371,6 +371,23 @@ async getPiatti(){
       .eq("idOrdine",orderId)
     }
 
+    async deleteOrderRapido(idOrdineRapido : string){
+      let orderId = await (await this.getLastOrdineId(await this.getUserId())).idOrdine
+
+      
+      const { data: deleteData1, error: deleteError1 } = await this.supabase
+      .from('PiattiOrdineRapido')
+      .delete()
+      .eq("idOrdine",idOrdineRapido)
+
+      
+      const { data: deleteData2, error: deleteError2 } = await this.supabase
+      .from('OrdiniRapidi')
+      .delete()
+      .eq("id",idOrdineRapido)
+    }
+
+    
 
     async salvataggioOrdine(paramJson: any){
       console.log(paramJson);
@@ -447,6 +464,7 @@ async getPiatti(){
 
     }
 
+    
 
   /*============================================*/ 
   /*==========  METODI PER I GRAFICI  ==========*/

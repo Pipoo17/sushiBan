@@ -14,7 +14,7 @@ import { OrdineSuccesComponent } from './animazioni/ordine-succes/ordine-succes.
 
 const routes: Routes = [
   {path:'', component: HomeComponent, title: 'Sushiban'},
-  {path:'profilo', component: ProfiloComponent, title: 'Il Tuo Profilo'},
+  {path:'profilo', component: ProfiloComponent, title: 'Profilo'},
   {path:'ordini', component: OrdiniComponent, title: 'Ordini'},
   {path:'statistiche', component: StatisticheComponent, title: 'Statistiche'},
   {path:'home', component: HomeComponent},

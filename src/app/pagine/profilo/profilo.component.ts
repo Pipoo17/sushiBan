@@ -5,6 +5,8 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/servizi/message.service';
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profilo',
@@ -24,6 +26,8 @@ export class ProfiloComponent {
     private supabaseService: SupabaseService,
     private router: Router,
     private MessageService: MessageService,
+    public dialog: MatDialog,
+
   ) {
     this.getProfilePic();
     this.setProfileData();
@@ -86,18 +90,38 @@ async insertLastOrder() {
     this.isLoading = true;
 
     this.Ordina(piattiOrdine)
-    
   }
   eliminaOrdineRapido(idOrdine : string, piattiOrdine : string){
     console.log(idOrdine);
     console.log(piattiOrdine);
+    
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: 'Sei sicuro di voler eliminare questo ordine rapido?',
+        buttonText: {
+          ok: 'Conferma',
+          cancel: 'Annulla'
+        }
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+      this.isLoading = true;
+      if (confirmed) {
+        await this.supabaseService.deleteOrderRapido(idOrdine);
+        this.ordiniSalvati = await this.supabaseService.getOrdiniRapidi();
+        this.MessageService.showMessageSuccess('','Ordine Rapido cancellato con successo')
+      }
+      this.isLoading = false;
+    });
   }
+  
 
 
 
 
   Ordina(piattiOrdine : any){
+    this.isLoading = true;
     this.supabaseService.insertOrdine(piattiOrdine)
     .then((data) => {
 

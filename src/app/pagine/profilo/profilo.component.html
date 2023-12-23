@@ -16,29 +16,32 @@
 
     <div class="ElencoOrdiniSalvati">
         <h1 class="title" style="color: aliceblue;">Elenco Ordini Salvati</h1>
-        <div class="elencoOrdiniRapidi">
-        <div *ngFor="let ordiniRapidi of this.ordiniSalvati let i = index" class="contenitorePiattiMenu " >
-            <div *ngFor="let piatto of this.ordiniRapidi.data" class="ordineContainer" >
-                <img [src]="this.getImages('immaginiPiatti', piatto.codice)" class="imgPiatti">
+    
+        <div *ngIf="ordiniSalvati.length === 0" class="contenitorePiattiMenu">
+            <p>Salva un ordine per poterlo vedere qua</p>
+        </div>
+    
+        <div *ngFor="let ordiniRapidi of ordiniSalvati; let i = index" class="contenitorePiattiMenu">
+            <div *ngFor="let piatto of ordiniRapidi.data" class="ordineContainer">
+                <img [src]="getImages('immaginiPiatti', piatto.codice)" class="imgPiatti">
                 <div class="testoPiatti">
-                    <p>{{piatto.codice}} x {{piatto.numeropiatti}}</p>
-                    <!-- <p>{{piatto.descrizione}}</p> -->
+                    <p>{{ piatto.codice }} x {{ piatto.numeropiatti }}</p>
+                    <!-- <p>{{ piatto.descrizione }}</p> -->
                 </div>
             </div>
-
+    
             <div class="containerPulsantiOrdineRapido">
-                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="ordinaOrdineRapido(ordiniRapidi.idOrdine,this.ordiniRapidi.data)" size="small" [loading]="this.isLoading">
+                <p-button label="" class="font-bold pulsanteOrdineRapido" (click)="ordinaOrdineRapido(ordiniRapidi.idOrdine, ordiniRapidi.data)" size="small" [loading]="isLoading">
                     Ordina Ora 
-                    <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
+                    <i class='bx bx-cart' *ngIf="!isLoading"></i>
                 </p-button>
-                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="eliminaOrdineRapido(ordiniRapidi.idOrdine,this.ordiniRapidi.data)" size="small" severity="danger" [rounded]="true" [loading]="this.isLoading">
-                    <i class='bx bxs-trash' *ngIf="this.isLoading == false"></i>
+                <p-button label="" class="font-bold pulsanteOrdineRapido" (click)="eliminaOrdineRapido(ordiniRapidi.idOrdine, ordiniRapidi.data)" size="small" severity="danger" [rounded]="true" [loading]="isLoading">
+                    <i class='bx bxs-trash' *ngIf="!isLoading"></i>
                 </p-button>
-
-              </div>
             </div>
         </div>
     </div>
+    
 
     <div class="ultimoOrdine">
         <h1 class="title">Ultimo Ordine</h1>

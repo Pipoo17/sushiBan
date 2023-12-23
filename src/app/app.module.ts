@@ -44,6 +44,7 @@ import { MessageComponentComponent } from './message-component/message-component
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 export function playerFactory(): any {  
   return import('lottie-web');
@@ -73,6 +74,7 @@ export function playerFactory(): any {
     LogoutPopupComponent,
     OrdineSuccesComponent,
     MessageComponentComponent,
+    ConfirmDialogComponent,
     ],
   imports: [
     BrowserModule,
