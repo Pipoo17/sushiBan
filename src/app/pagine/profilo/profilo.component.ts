@@ -34,47 +34,18 @@ export class ProfiloComponent {
 
 async ngOnInit(){
   this.ultimoOrdine = await this.supabaseService.getLastOrder(await this.supabaseService.getUserId());
-  console.log("ultimoOrdine : ",this.ultimoOrdine);
-  
-
-  
   this.ordiniSalvati = await this.supabaseService.getOrdiniRapidi();
-  console.log("ordiniSalvati : ",this.ordiniSalvati);
 
 }
 
-async duplicaOrdine() {
+async insertLastOrder() {
   console.log("onssubmit");
   console.log("ultimoOrdine : ",this.ultimoOrdine);
   
   let paramJson = this.ultimoOrdine
   this.isLoading = true;
 
-  this.supabaseService.insertOrdine(paramJson)
-    .then((data) => {
-
-      console.log("data : ",data);
-
-      if(data.success){
-        console.log("Inserimento riuscito");
-        console.log("Animazione:");
-
-        this.MessageService.showMessageSuccess('','Ordine inserito correttamente!')
-
-        this.router.navigate(['/ordini']);
-      } else{
-        console.error(data.description)
-        this.isLoading = false;
-        this.MessageService.showMessageWarning('Attenzione',data.description)
-
-      }
-      
-    })
-    .catch((error) => {
-      this.isLoading = false;
-      this.MessageService.showMessageError('Errore',error)
-      console.error("Errore durante l'inserimento:", error);
-    });
+  this.Ordina(paramJson)
 }
 
 
@@ -108,4 +79,57 @@ async duplicaOrdine() {
   getImages(bucket : string, nomeImmagine : string){
     return this.supabaseService.getImages(bucket,nomeImmagine)
   }
+
+  ordinaOrdineRapido(idOrdine : string, piattiOrdine : string){
+    console.log(idOrdine);
+    console.log(piattiOrdine);
+    this.isLoading = true;
+
+    this.Ordina(piattiOrdine)
+    
+  }
+  eliminaOrdineRapido(idOrdine : string, piattiOrdine : string){
+    console.log(idOrdine);
+    console.log(piattiOrdine);
+
+  }
+
+
+
+
+  Ordina(piattiOrdine : any){
+    this.supabaseService.insertOrdine(piattiOrdine)
+    .then((data) => {
+
+      console.log("data : ",data);
+
+      if(data.success){
+        console.log("Inserimento riuscito");
+        console.log("Animazione:");
+
+        this.MessageService.showMessageSuccess('','Ordine inserito correttamente!')
+
+        this.router.navigate(['/ordini']);
+      } else{
+        console.error(data.description)
+        this.isLoading = false;
+        this.MessageService.showMessageWarning('Attenzione',data.description)
+
+      }
+      
+    })
+    .catch((error) => {
+      this.isLoading = false;
+      this.MessageService.showMessageError('Errore',error)
+      console.error("Errore durante l'inserimento:", error);
+    });
+
+  }
+
+
+
+
+
+
+
 }

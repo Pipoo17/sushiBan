@@ -18,7 +18,7 @@
         <h1 class="title" style="color: aliceblue;">Elenco Ordini Salvati</h1>
         <div class="elencoOrdiniRapidi">
         <div *ngFor="let ordiniRapidi of this.ordiniSalvati let i = index" class="contenitorePiattiMenu " >
-            <div *ngFor="let piatto of this.ordiniRapidi" class="ordineContainer" >
+            <div *ngFor="let piatto of this.ordiniRapidi.data" class="ordineContainer" >
                 <img [src]="this.getImages('immaginiPiatti', piatto.codice)" class="imgPiatti">
                 <div class="testoPiatti">
                     <p>{{piatto.codice}} x {{piatto.numeropiatti}}</p>
@@ -27,15 +27,15 @@
             </div>
 
             <div class="containerPulsantiOrdineRapido">
-                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small" [loading]="this.isLoading">
+                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="ordinaOrdineRapido(ordiniRapidi.idOrdine,this.ordiniRapidi.data)" size="small" [loading]="this.isLoading">
                     Ordina Ora 
                     <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
                 </p-button>
-                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" size="small" severity="danger" [rounded]="true" [loading]="this.isLoading">
+                <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="eliminaOrdineRapido(ordiniRapidi.idOrdine,this.ordiniRapidi.data)" size="small" severity="danger" [rounded]="true" [loading]="this.isLoading">
                     <i class='bx bxs-trash' *ngIf="this.isLoading == false"></i>
                 </p-button>
 
-            </div>
+              </div>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="containerPulsantiDiv">
-           <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="duplicaOrdine()" [loading]="this.isLoading">
+           <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="insertLastOrder()" [loading]="this.isLoading">
             Ordina ancora 
             <i class='bx bx-cart' *ngIf="this.isLoading == false"></i>
         </p-button>

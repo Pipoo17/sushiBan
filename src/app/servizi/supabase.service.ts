@@ -321,7 +321,7 @@ async getPiatti(){
     }
 
     
-    async getThisUserOrder(idUtente : string){
+  async getThisUserOrder(idUtente : string){
       
       let idOrdine = await this.getLastOrdineId(idUtente)
       
@@ -348,12 +348,10 @@ async getPiatti(){
     }
 
 
-    async getAllUsersOrder(){
-      let orders = await this.callStoredProcedure("getallusersorders");
-      return orders;
+  async getAllUsersOrder(){
+    let orders = await this.callStoredProcedure("getallusersorders");
+    return orders;
       
-
-
     }
 
 
@@ -449,7 +447,6 @@ async getPiatti(){
 
     }
 
-    
 
   /*============================================*/ 
   /*==========  METODI PER I GRAFICI  ==========*/
@@ -461,7 +458,7 @@ async getPiatti(){
 
     }
 
-    async getMostOrderedDishes(){
+  async getMostOrderedDishes(){
     let classifica : any = await this.callStoredProcedure("mostordereddishes");
     return classifica;
 
@@ -506,8 +503,6 @@ async getPiatti(){
     }
   }
   
-  
-
   //Genera l'url delle immagini partendo dal codice del piatto(es A1, B9...)
   async getImmagineUrlFromName(nomeContainerSupabase: string, nome: string, ): Promise<string> {
     // Utilizza la funzione getPublicUrl per ottenere l'URL pubblico dell'immagine.
@@ -549,8 +544,6 @@ async getPiatti(){
       return "Error.jpg"
   }
 
-
-
   async isUsernameFree(username: string) {
     const { data: imageData, error: selectError } = await this.supabase
       .from('profiles')
@@ -568,11 +561,8 @@ async getPiatti(){
 
   }
 
-
-
-
     //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)
-    async getidPiattoFromCodice(codicePiatto:String){
+  async getidPiattoFromCodice(codicePiatto:String){
       const { data: piattoData, error: selectError } = await this.supabase
       .from('Piatti')
       .select('id')
@@ -588,7 +578,7 @@ async getPiatti(){
     }
 
     //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)
-    async getCodicePiattoFromId(idPiatto:String){
+  async getCodicePiattoFromId(idPiatto:String){
       const { data: piattoData, error: selectError } = await this.supabase
       .from('Piatti')
       .select('codice')
@@ -602,8 +592,9 @@ async getPiatti(){
         return { idPiatto: null, selectError };
       }
     }
+
     //Ritorna l'id del piatto partendo dal codice del piatto(es A1, B9...)
-    async getDescrizionePiattoFromId(idPiatto:String){
+  async getDescrizionePiattoFromId(idPiatto:String){
       const { data: piattoData, error: selectError } = await this.supabase
       .from('Piatti')
       .select('descrizione')
@@ -619,7 +610,7 @@ async getPiatti(){
     }
 
     //Ritorna l'id dell'ultimo ordine inserito
-    async getLastOrdineId(idUtente : string){
+  async getLastOrdineId(idUtente : string){
       
       const { data: selectData, error: selectError } = await this.supabase
       .from('Ordini')
@@ -651,8 +642,6 @@ async getPiatti(){
     return selectData?.length;
 
   }
-
-
     //return data
   private getData(): string {
     const oggi = new Date();
@@ -674,6 +663,7 @@ async getPiatti(){
     let  dataSession = await this.getSession();
     return dataSession.session?.user.id + ''
   }
+
   async getUserName(){
     let  dataSession = await this.getSession();
     return dataSession.session?.user.user_metadata['username'] + ''
@@ -740,19 +730,17 @@ async getPiatti(){
   .copy('Empty.jpg', username + '.jpg')
   }
 
-
   async getLastOrder(idUtente : string){
 
     const { data, error } = await this.supabase.rpc('getlastorder', { idutenteparam: idUtente })
     if(error){ return [{}] }
-    console.log("data : ",data);
     
     return data
   }
+
   getImages(bucket : string, nomeImmagine : string){
     return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/${bucket}/${nomeImmagine}.jpg`;
   }
-
 
   async getOrdiniRapidi(){
     let oggettoOrdineRapido: any = []
@@ -765,23 +753,16 @@ async getPiatti(){
 
     if(error){ return [{}] }    
 
-console.log("data : ",data);
-
     for (const ordineRapido of data) {
       let idOrdine = ordineRapido.id
-      console.log("ordine : ",idOrdine);
       
-
       const { data, error } = await this.supabase.rpc('getordinerapido', { idordineparam: idOrdine })
       if(error){ return [{}] }
-      oggettoOrdineRapido.push(data)
-      //return data
-    
-      
+      oggettoOrdineRapido.push({idOrdine,data})
+
     };
 
 
-    console.log("oggettoOrdineRapido : ",oggettoOrdineRapido);
     return oggettoOrdineRapido
 
   }
