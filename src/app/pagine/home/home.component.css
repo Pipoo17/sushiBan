@@ -143,6 +143,10 @@
 
   /* Fine SearchBar */
 
+  .fonttabs{
+    font-family: 'sf wasabi', sans-serif;
+
+  }
 
   .messages-container {
     position: fixed;

@@ -15,7 +15,7 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <span class="matTabLable">Tutti</span>
+        <span class="matTabLable fonttabs">Tutti</span>
     </ng-template>
       <div class="card-container">
         <ng-container *ngFor="let categoria of servizioMenu.getCategorie(); let categoriaIndex = index">
@@ -34,7 +34,7 @@
 
     <mat-tab>
       <ng-template mat-tab-label>
-        <span class="matTabLable">Preferiti</span>
+        <span class="matTabLable fonttabs">Preferiti</span>
       </ng-template>
       <div *ngIf="servizioMenu.getQuantiPreferiti() <= 0" class="centered-alert">
         <h1 class="alertPreferiti">Aggiungi dei piatti ai preferiti per poterli selezionare più facilmente!</h1>
@@ -59,7 +59,7 @@
   <div *ngFor="let categoria of servizioMenu.getCategorie(); let categoriaIndex = index">
     <mat-tab>
       <ng-template mat-tab-label>
-        <span class="matTabLable">{{servizioMenu.getCategorieFromIndex(categoriaIndex)}}</span>
+        <span class="matTabLable fonttabs">{{servizioMenu.getCategorieFromIndex(categoriaIndex)}}</span>
       </ng-template>
       <div class="card-container">
         <div *ngFor="let piatto of servizioMenu.menu; let i = index">
