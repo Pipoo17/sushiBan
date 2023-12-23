@@ -103,10 +103,12 @@ body {
     font-size: 30px;
     text-align: center;
     padding: 10px;
+    font-family: 'sf wasabi', sans-serif;
 }
 .title{
+    padding: 10px;
     text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family: 'sf wasabi', sans-serif;
 }
 
 .containerPulsanti,.containerPulsantiDiv {
