@@ -17,9 +17,10 @@
     <div class="ElencoOrdiniSalvati">
         <h1 class="title" style="color: aliceblue;">Elenco Ordini Salvati</h1>
     
-        <div *ngIf="ordiniSalvati.length === 0" class="contenitorePiattiMenu">
+        <div class="contenitorePiattiMenu" *ngIf="ordiniSalvati && ordiniSalvati.length === 0">
             <p>Salva un ordine per poterlo vedere qua</p>
         </div>
+        
     
         <div *ngFor="let ordiniRapidi of ordiniSalvati; let i = index" class="contenitorePiattiMenu">
             <div *ngFor="let piatto of ordiniRapidi.data" class="ordineContainer">

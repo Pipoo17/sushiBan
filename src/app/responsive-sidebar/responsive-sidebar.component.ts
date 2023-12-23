@@ -32,9 +32,7 @@ isLogged: any;
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        // Esegui qui il codice per la logout
         console.log('Logout eseguito!');
-        // Aggiungi il codice effettivo per la logout, come svuotare le credenziali di autenticazione, ecc.
       } else {
         console.log('Logout annullato');
       }
