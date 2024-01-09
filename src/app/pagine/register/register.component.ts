@@ -76,6 +76,9 @@ getMessageError(descErrore : any){
   else if (descErrore == 'Email rate limit exceeded'){
     return "Troppe richieste in arrivo : riprova tra un po." ;
   }
+  else if (descErrore == 'insert or update on table "profiles" violates foreign key constraint "profiles_id_fkey"'){
+    return "Esiste già un profilo connesso con questa email" ;
+  }
   else{
     return "Errore nella registrazione : "+ descErrore;
   }
