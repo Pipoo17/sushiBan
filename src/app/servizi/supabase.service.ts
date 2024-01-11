@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { AuthChangeEvent, createClient, Session, SupabaseClient, User, PostgrestResponse } from '@supabase/supabase-js';
 import { HttpClient } from '@angular/common/http';
 import { OrdineSuccesComponent } from '../animazioni/ordine-succes/ordine-succes.component';
-import { EnvironmentService } from '../environment/environment.service';
+//import { EnvironmentService } from '../environment/environment.service';
 import { Router } from '@angular/router';
 import { MessageService } from './message.service';
 import { DatasetController, LogarithmicScale } from 'chart.js';
-
-
+import { EnvironmentService } from './environment.service';
 
 export interface IUser {
   email: string;
@@ -30,8 +29,11 @@ export interface IUser {
 //    Configurazione DB Supabase
 export class SupabaseService {
   //private supabase = this.EnvironmentService.getSupabaseParams
-  private supabaseUrl = 'https://lcitxbybmixksqmlyyzb.supabase.co';
-  private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjaXR4YnlibWl4a3NxbWx5eXpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczMDA0MTksImV4cCI6MjAxMjg3NjQxOX0.Gr20DaBG56cYTTuPF_pceqvA8lpiG4D-bizhqBRDf2o';
+  //private supabaseUrl = 'https://lcitxbybmixksqmlyyzb.supabase.co';
+  //private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjaXR4YnlibWl4a3NxbWx5eXpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczMDA0MTksImV4cCI6MjAxMjg3NjQxOX0.Gr20DaBG56cYTTuPF_pceqvA8lpiG4D-bizhqBRDf2o';
+  private supabaseUrl = this.EnvironmentService.getSupabaseUrl()
+  private supabaseKey = this.EnvironmentService.getSupabaseKey()
+
   private supabase = createClient(this.supabaseUrl, this.supabaseKey);
   
   private isThisUserLogged : boolean = false
@@ -41,6 +43,7 @@ export class SupabaseService {
     private http: HttpClient,
     private router: Router,
     private MessageService: MessageService,
+    private EnvironmentService: EnvironmentService,
     ) {
 
    }
