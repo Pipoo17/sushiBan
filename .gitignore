@@ -1,4 +1,4 @@
 node_modules
 .vscode
 .angular
-Dockerfile
+src/app/servizi/environment.service.ts
