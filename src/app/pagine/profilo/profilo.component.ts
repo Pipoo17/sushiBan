@@ -54,7 +54,7 @@ async insertLastOrder() {
 
 
   async getProfilePic() {
-    this.immagineProfilo = this.supabaseService.getPictureURL('avatars',await this.supabaseService.getUserName())
+    this.immagineProfilo = this.supabaseService.getPictureURL('avatars',await this.supabaseService.getUserName())+ `?timestamp=${new Date().getTime()}`
     //this.immagineProfilo = await this.supabaseService.getProfilePic() + `?timestamp=${new Date().getTime()}`;
   }
 
