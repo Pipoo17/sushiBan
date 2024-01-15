@@ -28,17 +28,16 @@ export interface IUser {
 
 //    Configurazione DB Supabase
 export class SupabaseService {
-  //private supabase = this.EnvironmentService.getSupabaseParams
-  //private supabaseUrl = 'https://lcitxbybmixksqmlyyzb.supabase.co';
-  //private supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjaXR4YnlibWl4a3NxbWx5eXpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTczMDA0MTksImV4cCI6MjAxMjg3NjQxOX0.Gr20DaBG56cYTTuPF_pceqvA8lpiG4D-bizhqBRDf2o';
   private supabaseUrl = this.EnvironmentService.getSupabaseUrl()
   private supabaseKey = this.EnvironmentService.getSupabaseKey()
-
   private supabase = createClient(this.supabaseUrl, this.supabaseKey);
+
+
+  private storageURL = this.setStorageURL();
+
   
   private isThisUserLogged : boolean = false
 
-  private urlImgNotFound = "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/default.jpg.jpg"
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -144,8 +143,7 @@ async checkAuth(){
   this.setUserLogged(true)
 }
 
-//TODO : QUANDO IL FRONTAND SI RESETTA A CAUSA DI ANGULAR (IL CODICE VIENE MODIFICATO)
-//       NON VIENNE MOSTRATA LA BARRA LATERALE
+
 async checkIfUserAuth() {
   const isUserLoggedIn = await this.isUserLogged();
   if (!isUserLoggedIn) {
@@ -358,114 +356,114 @@ async getPiatti(){
     }
 
 
-    async deleteOrder(){
-      let orderId = await (await this.getLastOrdineId(await this.getUserId())).idOrdine
-      console.log(orderId);
-      
-      const { data: deleteData1, error: deleteError1 } = await this.supabase
-      .from('PiattiOrdine')
-      .delete()
-      .eq("idOrdine",orderId)
+  async deleteOrder(){
+    let orderId = await (await this.getLastOrdineId(await this.getUserId())).idOrdine
+    console.log(orderId);
+    
+    const { data: deleteData1, error: deleteError1 } = await this.supabase
+    .from('PiattiOrdine')
+    .delete()
+    .eq("idOrdine",orderId)
 
-      
-      const { data: deleteData2, error: deleteError2 } = await this.supabase
-      .from('Ordini')
-      .delete()
-      .eq("idOrdine",orderId)
-    }
+    
+    const { data: deleteData2, error: deleteError2 } = await this.supabase
+    .from('Ordini')
+    .delete()
+    .eq("idOrdine",orderId)
+  }
 
-    async deleteOrderRapido(idOrdineRapido : string){
-      let orderId = await (await this.getLastOrdineId(await this.getUserId())).idOrdine
+  async deleteOrderRapido(idOrdineRapido : string){
+    let orderId = await (await this.getLastOrdineId(await this.getUserId())).idOrdine
 
-      
-      const { data: deleteData1, error: deleteError1 } = await this.supabase
-      .from('PiattiOrdineRapido')
-      .delete()
-      .eq("idOrdine",idOrdineRapido)
+    
+    const { data: deleteData1, error: deleteError1 } = await this.supabase
+    .from('PiattiOrdineRapido')
+    .delete()
+    .eq("idOrdine",idOrdineRapido)
 
-      
-      const { data: deleteData2, error: deleteError2 } = await this.supabase
-      .from('OrdiniRapidi')
-      .delete()
-      .eq("id",idOrdineRapido)
-    }
+    
+    const { data: deleteData2, error: deleteError2 } = await this.supabase
+    .from('OrdiniRapidi')
+    .delete()
+    .eq("id",idOrdineRapido)
+  }
 
     
 
-    async salvataggioOrdine(paramJson: any){
-      console.log(paramJson);
-      try{
-        if(paramJson.length == 0){
-          console.error("Impossibile inserire un ordine vuoto",);
-          return { success: false, description: "Inserisci almeno un piatto per poter salvare un ordine" };
+  async salvataggioOrdine(paramJson: any){
+    console.log(paramJson);
+    try{
+      if(paramJson.length == 0){
+        console.error("Impossibile inserire un ordine vuoto",);
+        return { success: false, description: "Inserisci almeno un piatto per poter salvare un ordine" };
+      }
+
+      let UserId = await this.getUserId();
+
+      const { data: insertData, error: insertError } = await this.supabase
+        .from('OrdiniRapidi')
+        .insert({ idutente: UserId });
+
+        if (insertError) {
+          console.error("Si è verificato un errore durante l'inserimento:", insertError);
+          return { success: false, description: insertError.message };
         }
 
-        let UserId = await this.getUserId();
 
-        const { data: insertData, error: insertError } = await this.supabase
-          .from('OrdiniRapidi')
-          .insert({ idutente: UserId });
+        const { data: selectData, error: selectError } = await this.supabase
+        .from('OrdiniRapidi')
+        .select("id")
+        .eq("idutente",UserId)
+        .order('id', { ascending: false, nullsFirst: false })
+        .limit(1);
+
+
+
+        if (selectError) {
+          console.error("Si è verificato un errore durante l'inserimento:", insertError);
+          return { success: false, description: selectError.message };
+        }
+        
+        let idOrdine = selectData[0].id;
+
+
+        for (const piatto of paramJson) {
+          // Prendi l'id di ogni piatto
+          const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
+  
+          if (selectError) {
+            console.error("Si è verificato un errore durante l'inserimento:", selectError);
+            return { success: false, description: selectError.message };
+          } 
+
+          let numeroPiatti = piatto.counter != null || piatto.counter != undefined ? piatto.counter : piatto.numeropiatti
+
+          const { data: ordineData, error: insertError } = await this.supabase
+            .from('PiattiOrdineRapido')
+            .insert({ 
+              idOrdine: idOrdine, 
+              idPiatto: idPiatto, 
+              numeroPiatti: numeroPiatti });
 
           if (insertError) {
             console.error("Si è verificato un errore durante l'inserimento:", insertError);
+            this.rollBackOrdine(idOrdine);
             return { success: false, description: insertError.message };
           }
-
-
-          const { data: selectData, error: selectError } = await this.supabase
-          .from('OrdiniRapidi')
-          .select("id")
-          .eq("idutente",UserId)
-          .order('id', { ascending: false, nullsFirst: false })
-          .limit(1);
+        }
 
 
 
-          if (selectError) {
-            console.error("Si è verificato un errore durante l'inserimento:", insertError);
-            return { success: false, description: selectError.message };
-          }
-          
-          let idOrdine = selectData[0].id;
-
-
-          for (const piatto of paramJson) {
-            // Prendi l'id di ogni piatto
-            const { idPiatto, selectError } = await this.getidPiattoFromCodice(piatto.codice); // Chiamata asincrona
-    
-            if (selectError) {
-              console.error("Si è verificato un errore durante l'inserimento:", selectError);
-              return { success: false, description: selectError.message };
-            } 
-
-            let numeroPiatti = piatto.counter != null || piatto.counter != undefined ? piatto.counter : piatto.numeropiatti
-
-            const { data: ordineData, error: insertError } = await this.supabase
-              .from('PiattiOrdineRapido')
-              .insert({ 
-                idOrdine: idOrdine, 
-                idPiatto: idPiatto, 
-                numeroPiatti: numeroPiatti });
-  
-            if (insertError) {
-              console.error("Si è verificato un errore durante l'inserimento:", insertError);
-              this.rollBackOrdine(idOrdine);
-              return { success: false, description: insertError.message };
-            }
-          }
-
-
-
-        return { success: true, description: 'Salvataggio Completato' };
-      }catch(error){
-        console.error("ERRORE : ",error);
-        return { success: false, description: error };
-        
-
-      }
-
+      return { success: true, description: 'Salvataggio Completato' };
+    }catch(error){
+      console.error("ERRORE : ",error);
+      return { success: false, description: error };
+      
 
     }
+
+
+  }
 
     
 
@@ -490,6 +488,10 @@ async getPiatti(){
   /*====================================*/ 
   /*==========  METODI UTILS  ==========*/
   /*====================================*/ 
+
+  setStorageURL(){
+    return this.EnvironmentService.getSupabaseUrl() + '/storage/v1/object/public/'
+  }
 
   async isFirstOrder() {
     try {
@@ -524,46 +526,16 @@ async getPiatti(){
     }
   }
   
-  //Genera l'url delle immagini partendo dal codice del piatto(es A1, B9...)
-  async getImmagineUrlFromName(nomeContainerSupabase: string, nome: string, ): Promise<string> {
-    // Utilizza la funzione getPublicUrl per ottenere l'URL pubblico dell'immagine.
-    const response = await this.supabase.storage.from(nomeContainerSupabase).getPublicUrl(`${nome}.jpg`);
 
-    try {
-      const imageUrl = response.data.publicUrl;
-      return imageUrl;
-    } catch (error) {
-      // Se si verifica un errore, restituisci l'URL statico impostato.
-      return this.urlImgNotFound;
-    }
+
+  getPictureURL(bucket : string, nome: string){
+      const randomParam = Math.random(); // Genera un parametro casuale
+      return `${this.storageURL}/${bucket}/${nome}.jpg`;
+    
+    
+    //return this.storageURL + '/' + bucket + '/' + nome + '.jpg' //+ `?timestamp=${new Date().getTime()}`
   }
-
-
-  async getProfilePic() {
-   let data = await this.getSession()
-   let idUtente = data.session?.user.id
-   if (idUtente) {
-     let picName = await this.getProfilePicName(idUtente);
-     let URL = await this.supabase.storage.from('avatars').getPublicUrl(picName);
-     return URL.data.publicUrl
-   } else {
-     //immagine standard
-    return "https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/avatars/Empty.jpg"
-  }
-
-
-}
-
-  async getProfilePicName(idUtente : string){
-    const { data: imageData, error: selectError } = await this.supabase
-    .from('profiles')
-    .select('avatar_url')
-    .eq('id', idUtente) 
-    if(imageData != null){
-      return imageData[0].avatar_url
-    }
-      return "Error.jpg"
-  }
+  
 
   async isUsernameFree(username: string) {
     const { data: imageData, error: selectError } = await this.supabase
@@ -759,9 +731,6 @@ async getPiatti(){
     return data
   }
 
-  getImages(bucket : string, nomeImmagine : string){
-    return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/${bucket}/${nomeImmagine}.jpg`;
-  }
 
   async getOrdiniRapidi(){
     let oggettoOrdineRapido: any = []

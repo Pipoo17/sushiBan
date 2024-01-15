@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
   @Input() searchValue: string = '';
   title = 'NomeBase';
   isDisabled = false;
-  immagine = 'https://www.costacrociere.it/content/dam/costa/costa-magazine/photo/hub-photo/lisbon/foto-lisbona.jpg.image.750.563.low.jpg';
   i = '';
   
   filteredMenu: any[] = [];
@@ -42,9 +41,6 @@ export class HomeComponent implements OnInit {
   }
 
 
- getImmagineUrlFromName(codicePiatto: string){
-    this.supabaseService.getImmagineUrlFromName("immaginiPiatti", codicePiatto)
-}
 
 aggiungiPiatto(i: number) {
   this.servizioMenu.aggiungiPiatto(i);

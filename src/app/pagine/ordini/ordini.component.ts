@@ -194,7 +194,7 @@ async orderToString(): Promise<string> {
 
 //Metodo getImmaginiPiatti
 getImmagineUrlFromName(nomePiatto: string){
-  return `https://lcitxbybmixksqmlyyzb.supabase.co/storage/v1/object/public/immaginiPiatti/${nomePiatto}.jpg`;
+  return this.supabaseService.getPictureURL('immaginiPiatti',nomePiatto)
 }
 
 

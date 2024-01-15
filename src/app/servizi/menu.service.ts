@@ -64,17 +64,15 @@ export  class MenuService {
           data.forEach((piatto: any) => {
             //console.log("piatto : ",piatto);
             
-            let ImgUrl = this.supabaseService.getImmagineUrlFromName("immaginiPiatti",piatto.codice)
-            ImgUrl.then(urlData => {
+            let ImgUrl = this.supabaseService.getPictureURL("immaginiPiatti",piatto.codice)
               this.menu.push({
                 codice: piatto.codice,
                 nome: piatto.nome,
                 categoria: piatto.categoria,
                 counter: 0,
                 preferito: piatto.preferito,
-                img: urlData
+                img: ImgUrl
               });       
-            })
         });
       }
       return this.menu

@@ -54,7 +54,8 @@ async insertLastOrder() {
 
 
   async getProfilePic() {
-    this.immagineProfilo = await this.supabaseService.getProfilePic() + `?timestamp=${new Date().getTime()}`;
+    this.immagineProfilo = this.supabaseService.getPictureURL('avatars',await this.supabaseService.getUserName())
+    //this.immagineProfilo = await this.supabaseService.getProfilePic() + `?timestamp=${new Date().getTime()}`;
   }
 
   async setProfileData() {
@@ -63,6 +64,7 @@ async insertLastOrder() {
     this.username = sessionData.session?.user.user_metadata['username'];
   }
 
+  //Aggiornamento foto profilo
   async onFileSelected(event: any) {
     console.log("onFileSelected");
     
@@ -81,7 +83,7 @@ async insertLastOrder() {
 
 
   getImages(bucket : string, nomeImmagine : string){
-    return this.supabaseService.getImages(bucket,nomeImmagine)
+    return this.supabaseService.getPictureURL(bucket,nomeImmagine)
   }
 
   ordinaOrdineRapido(idOrdine : string, piattiOrdine : string){

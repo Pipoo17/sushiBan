@@ -40,9 +40,9 @@ isLogged: any;
   }
 
   async getProfilePic() {
-    this.immagineProfilo =  await this.supabaseService.getProfilePic()
-
-}
+    this.immagineProfilo = this.supabaseService.getPictureURL('avatars',await this.supabaseService.getUserName())
+    //this.immagineProfilo = await this.supabaseService.getProfilePic() + `?timestamp=${new Date().getTime()}`;
+  }
 
 getIsUserLogged(){
   return this.supabaseService.getUserLogged();

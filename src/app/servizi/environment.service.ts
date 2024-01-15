@@ -30,6 +30,10 @@ export class EnvironmentService {
     }
   }
 
+  getIsProd(){
+    return this.isProd;
+  }
+
   getSupabaseUrl(){
     return this.supabaseUrl 
   }
