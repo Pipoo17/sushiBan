@@ -6,6 +6,7 @@
     margin-top: 20px;
     padding: 10px;
     margin-top: 3vh;
+    font-family: 'sf wasabi', sans-serif;
 }
 
 body {
@@ -80,9 +81,7 @@ button[color="#176B87"] {
     padding-top: 5px;
 
   }
-.codicePiatto{
 
-}
 .intestazioneDiv{
     height: 50px;
     margin-bottom: 50px;
