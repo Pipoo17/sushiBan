@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Data } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../modelli/user.model';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
-import { LoginComponent } from '../pagine/login/login.component';
+import { LoginComponent } from '../auth/login/login.component';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -25,7 +24,6 @@ export  class MenuService {
   counterPref = 0;
   isLogged=true;
   isAdmin=true;
-  user!: User; 
   menu = this.riempiMenu();
 
 
@@ -185,18 +183,6 @@ export  class MenuService {
   isRoleAdmin(){
     return this.isAdmin
   }
-
-
-
-
-  createUser(email: string,id: string,_token: string,_expirationDate: Date){
-    this.user = new User(email,id,_token,_expirationDate)
-  }
-
-
-
-
-
 
 
 }

@@ -6,7 +6,7 @@ import { LottieTransferState } from 'ngx-lottie';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'src/app/servizi/message.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-ordini',

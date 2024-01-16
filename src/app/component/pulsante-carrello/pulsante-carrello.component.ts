@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CarrelloComponent } from '../pagine/carrello/carrello.component';
+import { CarrelloComponent } from '../../pagine/carrello/carrello.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
