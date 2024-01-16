@@ -118,3 +118,23 @@ button[color="#176B87"] {
         height: 100%; /* Regola l'altezza sottraendo l'altezza del titolo e del contenitore pulsante */
       }
 }
+
+
+@media (max-width: 800px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-div, .right-div {
+        min-width: auto; /* Rimuovi la larghezza minima impostata inizialmente */
+    }
+
+    .imgPiatti {
+        width: 50px; /* Riduci la larghezza delle immagini per dispositivi mobili */
+        height: 50px; /* Riduci l'altezza delle immagini per dispositivi mobili */
+    }
+
+    .contenitoreNome, .contenitoreCodice {
+        width: auto; /* Imposta la larghezza automatica per dispositivi mobili */
+    }
+}

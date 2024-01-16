@@ -80,3 +80,67 @@ margin-bottom: 10px;
 .contenitoreCodice{
   width: 50px;
 }
+/* Stili per schermi più piccoli come quelli dei dispositivi mobili */
+@media only screen and (max-width: 800px) {
+  .carrello {
+    width: 80vw; /* Riduci la larghezza del carrello per schermi più piccoli */
+    height: auto; /* Imposta l'altezza automatica per adattarsi al contenuto */
+    min-width: initial; /* Rimuovi la larghezza minima */
+    min-height: 350px; /* Rimuovi l'altezza minima */
+  }
+
+  .contenitorePulsante {
+    flex-direction: column; /* Modifica l'orientamento dei pulsanti in una colonna */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .elencoPiatti {
+    width: 100%; /* Utilizza tutta la larghezza disponibile */
+    min-height: initial; /* Rimuovi l'altezza minima */
+    margin: 0; /* Rimuovi il margine laterale */
+    padding: 5px; /* Riduci il padding */
+    overflow: auto;
+  }
+
+  .pulsanteInc,
+  .pulsanteDec {
+    width: 20px; /* Aumenta la larghezza dei pulsanti +/- */
+  }
+  .contenitorePiattiMenu {
+    height: auto; /* Imposta l'altezza automatica per adattarsi al contenuto */
+    margin-top: 10px; /* Riduci il margine superiore */
+    flex-wrap: wrap;
+  }
+  .contenitorePulsanti {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex-direction: row; /* Aggiunto per allineare i pulsanti sulla stessa linea */
+}
+h3{
+  width: min-content;
+}
+.infoPiatto{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex-direction: row;
+}
+.contenitoreCodice,
+.contenitoreNome{
+width: max-content;
+}
+.imgPiatti{
+  width: 70px;
+  height: 70px;
+  margin-left: 5px;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+}

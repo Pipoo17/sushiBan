@@ -68,34 +68,9 @@ body {
 }
 
 
-@media (max-width: 1300px) {
-    .profile-image {
-        width: 130px;
-        height: 130px;
-    }
-    .immageContainer{
-        display: inline-block;
-        width: 130px;
-        height: 130px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 0 0 10px #04364A; /* Margine colorato */
-    }
-}
 
-@media (max-width: 800px) {
-    .divContainer{
-        display: flex; /* or inline-flex */
-        flex-direction: column
-    }
-    .ultimoOrdine,.ElencoOrdiniSalvati{
-        width: 100%;
-        
-    }
-    
 
-    
-}
+
 
 
 .username{
@@ -125,16 +100,7 @@ body {
     margin-right: 20px;
   }
 
-  @media (max-width: 1300px) {
-    .divContainer {
-        flex-direction: column;
-    }
 
-    .ultimoOrdine, .ElencoOrdiniSalvati {
-        width: 95%;
-        margin: 20px;
-    }
-}
 
 .contenitorePiattiMenu {
     display: flex;
@@ -203,4 +169,78 @@ body {
     border-radius: 10px;
     border: 2px solid purple; /* Sostituisci 'your_color' con il colore desiderato */
     margin: 10px;
+}
+
+@media (max-width: 1300px) {
+    .profile-image {
+        width: 130px;
+        height: 130px;
+    }
+    .immageContainer{
+        display: inline-block;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 0 0 10px #04364A; /* Margine colorato */
+    }
+        .ultimoOrdine,.ElencoOrdiniSalvati{
+        width: 100%;
+        margin: 0px;
+        
+    }
+    
+}
+
+@media (max-width: 800px) {
+    .divContainer{
+        display: flex; /* or inline-flex */
+        flex-direction: column
+    }
+    .ultimoOrdine,.ElencoOrdiniSalvati{
+        width: 100%;
+        margin: 3px;
+        flex-wrap: wrap;
+        
+    }
+    .ordineContainer {
+        display: flex;  
+        align-items: center;
+        width: 100%;  
+        margin-top: 10px; /* Aggiunge uno spazio tra gli ordini */
+
+    }
+    .containerPulsantiDiv,.containerPulsantiOrdineRapido{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .elencoPiatti {
+        width: 100%; /* Utilizza tutta la larghezza disponibile */
+        min-height: initial; /* Rimuovi l'altezza minima */
+        margin: 0; /* Rimuovi il margine laterale */
+        padding: 5px; /* Riduci il padding */
+        overflow: auto;
+      }
+    
+      .contenitorePiattiMenu {
+        height: auto; /* Imposta l'altezza automatica per adattarsi al contenuto */
+        margin-top: 10px; /* Riduci il margine superiore */
+        flex-wrap: wrap;
+      }
+    
+    
+
+    
+}
+
+
+/* Stili per schermi più piccoli come quelli dei dispositivi mobili */
+@media only screen and (max-width: 600px) {
+
+
+
 }

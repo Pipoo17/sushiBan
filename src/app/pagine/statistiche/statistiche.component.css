@@ -62,3 +62,28 @@
 .bronzo {
     background-color: #cd7f32; /* colore bronzo */
 }
+.classifiche{
+    min-width: '25rem'
+}
+/* Aggiungi questo codice alla fine del tuo file di stile CSS o nel tag style nel tuo HTML */
+
+@media (max-width: 800px) {
+    .contenitoreordiniPerUtente, .contenitorePiattiPiuMangiati {
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%; /* Imposta la larghezza massima della tabella al 100% del contenitore */
+        overflow-x: auto; /* Aggiunge uno scroll orizzontale se la tabella è più ampia del contenitore */
+    
+    }
+
+    .classificaOrdiniPerUtente, .contenitorePiattiPiuMangiati {
+        width: auto;
+    }
+
+    .tabellaOrdini, .tabellaPiattiPiuMangiati {
+        margin: 0;
+    }
+    .p-table {
+        min-width: initial !important; /* Rimuove il min-width impostato da PrimeNG */
+    }
+}

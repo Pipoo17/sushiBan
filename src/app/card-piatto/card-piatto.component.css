@@ -156,4 +156,13 @@
  .material-icons {
 	transition: color 0.5s ease;
  }
+
  
+ /* Stili per schermi più piccoli come quelli dei dispositivi mobili */
+@media only screen and (max-width: 600px) {
+	img {
+	  height: auto; /* Imposta l'altezza in modo che l'immagine si adatti proporzionalmente alla larghezza */
+	  max-width: 100%; /* Imposta la larghezza massima al 100% del contenitore genitore */
+	}
+  }
+  
