@@ -192,7 +192,7 @@ body {
     
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1500px) {
     .divContainer{
         display: flex; /* or inline-flex */
         flex-direction: column
