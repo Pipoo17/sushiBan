@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
 
 
 
+
   ngOnInit(): void {
     //console.log(this.servizioMenu.getCategorie())
     this.servizioMenu.menu$.subscribe((menu) => {
@@ -60,6 +61,10 @@ filterMenuByCodeOrName(searchValue: string) {
     );
   }
 }
-
-  
+//nasconde le categorie che non hanno piatti
+esistonoCard(categoria: string): boolean {
+  return this.servizioMenu.menu.some(piatto =>
+    (piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(this.searchValue.toUpperCase()) || piatto.nome.toLowerCase().includes(this.searchValue.toLowerCase()))
+  );
+}
 }
