@@ -5,6 +5,17 @@
     min-height: 300px;
 
 }
+.contenitorePulsanti {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.infoPiatto{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: min-content;
+}
 .elencoPiatti {
     width: 35vw;; /* Calcola la larghezza sottraendo il padding del contenitore */
     height: calc(71vh - 130px); /* Regola l'altezza sottraendo l'altezza del titolo e del contenitore pulsante */
@@ -75,11 +86,30 @@ margin-bottom: 10px;
 }
 
 .contenitoreNome{
-  width: 200px;
+  width: max-content;
+  min-width: 150px;
 }
 .contenitoreCodice{
   width: 50px;
 }
+@media  (max-width: 1500px) {
+  .contenitorePiattiMenu {
+    height: auto; /* Imposta l'altezza automatica per adattarsi al contenuto */
+    margin-top: 10px; /* Riduci il margine superiore */
+    flex-wrap: wrap;
+  }
+  .contenitorePulsanti {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    flex-direction: row; /* Aggiunto per allineare i pulsanti sulla stessa linea */
+  }
+
+
+}
+
 /* Stili per schermi più piccoli come quelli dei dispositivi mobili */
 @media only screen and (max-width: 800px) {
   .carrello {
@@ -108,19 +138,8 @@ margin-bottom: 10px;
   .pulsanteDec {
     width: 20px; /* Aumenta la larghezza dei pulsanti +/- */
   }
-  .contenitorePiattiMenu {
-    height: auto; /* Imposta l'altezza automatica per adattarsi al contenuto */
-    margin-top: 10px; /* Riduci il margine superiore */
-    flex-wrap: wrap;
-  }
-  .contenitorePulsanti {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  flex-direction: row; /* Aggiunto per allineare i pulsanti sulla stessa linea */
-}
+
+
 h3{
   width: min-content;
 }
