@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthChangeEvent, createClient, Session, SupabaseClient, User, PostgrestResponse } from '@supabase/supabase-js';
 import { HttpClient } from '@angular/common/http';
-import { OrdineSuccesComponent } from '../animazioni/ordine-succes/ordine-succes.component';
 //import { EnvironmentService } from '../environment/environment.service';
 import { Router } from '@angular/router';
 import { MessageService } from './message.service';

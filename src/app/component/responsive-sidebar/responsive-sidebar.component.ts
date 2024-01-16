@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LogoutPopupComponent } from '../pagine/logout-popup/logout-popup.component';
+import { LogoutPopupComponent } from '../../auth/logout-popup/logout-popup.component';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 
 @Component({

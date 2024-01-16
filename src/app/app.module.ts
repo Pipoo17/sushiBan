@@ -8,44 +8,37 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
-import { NavbarComponent } from './navbar/navbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatDividerModule} from '@angular/material/divider';
-import { ResponsiveSidebarComponent } from './responsive-sidebar/responsive-sidebar.component';
+import { ResponsiveSidebarComponent } from './component/responsive-sidebar/responsive-sidebar.component';
 import { ProfiloComponent } from './pagine/profilo/profilo.component';
 import { HomeComponent } from './pagine/home/home.component';
 import { OrdiniComponent } from './pagine/ordini/ordini.component';
-import { SearchbarComponent } from './searchbar/searchbar.component';
 import { StatisticheComponent } from './pagine/statistiche/statistiche.component';
-import { FooterComponent } from './footer/footer.component';
-import { LoginComponent } from './pagine/login/login.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { LoginComponent } from './auth/login/login.component';
 import { ErrorComponent } from './pagine/error/error.component';
-import { ErrorLayoutComponent } from './pagine/error-layout/error-layout.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { CarrelloComponent } from './pagine/carrello/carrello.component';
-import { PulsanteCarrelloComponent } from './pulsante-carrello/pulsante-carrello.component';
+import { PulsanteCarrelloComponent } from './component/pulsante-carrello/pulsante-carrello.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { CardPiattoComponent } from './card-piatto/card-piatto.component';
-import { CategoriePiattiComponent } from './categorie-piatti/categorie-piatti.component';
+import { CardPiattoComponent } from './component/card-piatto/card-piatto.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
-import { RegisterComponent } from './pagine/register/register.component';
-import { AccessoNegatoComponent } from './pagine/accesso-negato/accesso-negato.component';
-import { LogoutPopupComponent } from './pagine/logout-popup/logout-popup.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { LogoutPopupComponent } from './auth/logout-popup/logout-popup.component';
 import { SupabaseService } from './servizi/supabase.service';
-import { OrdineSuccesComponent } from './animazioni/ordine-succes/ordine-succes.component';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { MessagesModule } from 'primeng/messages';
-import { MessageComponentComponent } from './message-component/message-component.component';
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-
+import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
+import { MessageComponentComponent } from './component/message-component/message-component.component';
 export function playerFactory(): any {  
   return import('lottie-web');
 }
@@ -54,27 +47,21 @@ export function playerFactory(): any {
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     ResponsiveSidebarComponent,
     ProfiloComponent,
     HomeComponent,
     OrdiniComponent,
-    SearchbarComponent,
     StatisticheComponent,
     FooterComponent,
     LoginComponent,
     ErrorComponent,
-    ErrorLayoutComponent,
     CarrelloComponent,
     PulsanteCarrelloComponent,
     CardPiattoComponent,
-    CategoriePiattiComponent,
     RegisterComponent,
-    AccessoNegatoComponent,
     LogoutPopupComponent,
-    OrdineSuccesComponent,
-    MessageComponentComponent,
     ConfirmDialogComponent,
+    MessageComponentComponent,
     ],
   imports: [
     BrowserModule,

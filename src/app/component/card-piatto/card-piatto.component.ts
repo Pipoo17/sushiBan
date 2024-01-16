@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { MenuService } from '../servizi/menu.service';
-import { MessageService } from '../servizi/message.service';
-import { SupabaseService } from '../servizi/supabase.service';
+import { MenuService } from '../../servizi/menu.service';
+import { MessageService } from '../../servizi/message.service';
+import { SupabaseService } from '../../servizi/supabase.service';
 
 
 @Component({

@@ -5,7 +5,7 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/servizi/message.service';
-import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
