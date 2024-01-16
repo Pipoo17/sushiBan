@@ -38,13 +38,16 @@
       <ng-template mat-tab-label>
         <span class="matTabLable fonttabs">Preferiti</span>
       </ng-template>
+      <div class="nessunPiatto" *ngIf="!mostraCard()">
+        <p>Nessun Piatto Trovato</p>
+      </div>
       <div *ngIf="servizioMenu.getQuantiPreferiti() <= 0" class="centered-alert">
         <h1 class="alertPreferiti">Aggiungi dei piatti ai preferiti per poterli selezionare più facilmente!</h1>
       </div>
       <div class="card-container">
         <ng-container *ngFor="let categoria of servizioMenu.getCategorie(); let categoriaIndex = index">
           <ng-container *ngIf="servizioMenu.hasPreferitiInCategoria(categoria)">
-            <h1 class="titoloCategoria">{{ categoria }}</h1>
+            <h1 class="titoloCategoria" *ngIf="esistonoCard(categoria)">{{ categoria }}</h1>
             <div *ngFor="let piatto of servizioMenu.menu; let i = index">
               <div class="card" *ngIf="piatto.preferito && (piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(searchValue.toUpperCase()) || piatto.nome.toLowerCase().includes(searchValue.toLowerCase()))">
                 <app-card-piatto [piatto]="piatto" [img]="piatto.img" [i]="i"></app-card-piatto>
