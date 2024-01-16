@@ -152,3 +152,12 @@
     z-index: 1000; /* Imposta un valore di z-index appropriato */
   }
   
+  .nessunPiatto{
+    display: flex;
+    justify-content: center;
+    font-family: 'Japanese Style', sans-serif;
+    color: aliceblue;
+    font-size: larger;
+    margin-top: 30vh;
+    margin-bottom: 20vh;
+  }
