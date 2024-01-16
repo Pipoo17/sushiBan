@@ -67,4 +67,9 @@ esistonoCard(categoria: string): boolean {
     (piatto.categoria === categoria) && (piatto.codice.toUpperCase().includes(this.searchValue.toUpperCase()) || piatto.nome.toLowerCase().includes(this.searchValue.toLowerCase()))
   );
 }
+mostraCard(): boolean {
+  return this.servizioMenu.menu.some(piatto =>
+    (piatto.codice.toUpperCase().includes(this.searchValue.toUpperCase()) || piatto.nome.toLowerCase().includes(this.searchValue.toLowerCase()))
+  );
+}
 }
