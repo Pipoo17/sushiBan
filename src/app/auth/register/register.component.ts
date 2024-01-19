@@ -45,7 +45,7 @@ onSubmit(form: NgForm){
     if(!controlliForm.success){
       console.log(controlliForm);
       
-      this.MessageService.showMessageError("",controlliForm.description)
+      this.MessageService.showMessageError("",this.supabaseService.getMessageError(controlliForm.description))
     }
     else{
     this.supabaseService.register(paramJson)

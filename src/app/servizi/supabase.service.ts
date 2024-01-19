@@ -798,7 +798,7 @@ async getPiatti(){
     else if (descErrore.includes('Email rate limit exceeded'))  return "Troppe richieste in arrivo: riprova tra un po'.";
     else if (descErrore.includes('insert or update on table "profiles" violates foreign key constraint "profiles_id_fkey"')) return "Esiste già un profilo connesso con questa email";
     else if (descErrore.includes('For security purposes, you can only request this once every 60 seconds')) return "Per motivi di sicurezza puoi mandare una richiesta ogni 60 secondi";
-    else if (descErrore.includes('Password recovery requires an email')) return "Inserisci la tua Email";
+    else if (descErrore.includes('duplicate key value violates unique constraint "profiles_username_key')) return "Esiste già un profilo connesso con questa email";
     
     
     else return "Errore: " + descErrore;
