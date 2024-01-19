@@ -14,6 +14,7 @@ import { MessageService } from 'src/app/servizi/message.service';
 export class RegisterComponent {
   //constructor(private servizioMenu: MenuService,private router: Router){}
   @ViewChild('passwordInput') passwordInput: ElementRef<HTMLInputElement> | undefined;
+  @ViewChild('passwordRepeatInput') passwordRepeatInput: ElementRef<HTMLInputElement> | undefined;
 
   constructor(
     public servizioMenu: MenuService,
@@ -107,8 +108,10 @@ controlliForm(paramJson : any){
 
 
 togglePasswordVisibility() {
-  if(this.passwordInput){
-    const input = this.passwordInput.nativeElement;
+  if(this.passwordInput && this.passwordRepeatInput){
+    let input = this.passwordInput.nativeElement;
+    input.type = input.type === 'password' ? 'text' : 'password';
+    input = this.passwordRepeatInput.nativeElement;
     input.type = input.type === 'password' ? 'text' : 'password';
     this.isPasswordVisible = !this.isPasswordVisible
   }
