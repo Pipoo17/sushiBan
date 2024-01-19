@@ -8,7 +8,8 @@ import { HomeComponent } from './pagine/home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ErrorComponent } from './pagine/error/error.component';
-
+import { ResetPasswordComponent } from './auth/resetPassword/reset-password/reset-password.component';
+import { EmailFormComponent } from './auth/resetPassword/email-form/email-form.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,8 @@ const routes: Routes = [
   {path:'home', component: HomeComponent},
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
+  {path:'ResetPassword/Password', component: ResetPasswordComponent},
+  {path:'ResetPassword/Email', component: EmailFormComponent},
   {path:'404', component: ErrorComponent, title: 'Pagina non trovata'},
   {path:'**', pathMatch: 'full', redirectTo : '/404' },
 

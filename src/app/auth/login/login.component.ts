@@ -18,6 +18,7 @@ export class LoginComponent {
   authError : boolean = false;
   isLoading : boolean = false;
 
+
   constructor(
     private supabaseService: SupabaseService,
     private servizioMenu: MenuService,
@@ -79,6 +80,5 @@ export class LoginComponent {
     }
   }
 
-  
 
 }

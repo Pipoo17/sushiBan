@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="wrapper">
+      <div class="title"><span>Resetta Password</span></div>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+        <div class="row">
+          <i class='bx bxs-user labelIcon'></i>
+          <input type="email" placeholder="Email" required ngModel name="email">
+        </div>
+        <div class="row button">
+          <button type="submit">
+            <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
+            <i class='bx bx-log-in-circle' *ngIf="this.isLoading == false"></i>
+            Invia Richiesta
+          </button>
+        </div>
+        <div class="link"> <a routerLink="/login">Accedi al tuo account</a></div>
+      </form>
+    </div>
+  </div>

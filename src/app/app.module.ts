@@ -39,6 +39,8 @@ import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { MessageComponentComponent } from './component/message-component/message-component.component';
+import { ResetPasswordComponent } from './auth/resetPassword/reset-password/reset-password.component';
+import { EmailFormComponent } from './auth/resetPassword/email-form/email-form.component';
 export function playerFactory(): any {  
   return import('lottie-web');
 }
@@ -62,6 +64,8 @@ export function playerFactory(): any {
     LogoutPopupComponent,
     ConfirmDialogComponent,
     MessageComponentComponent,
+    ResetPasswordComponent,
+    EmailFormComponent,
     ],
   imports: [
     BrowserModule,

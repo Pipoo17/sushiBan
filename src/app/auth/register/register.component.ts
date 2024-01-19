@@ -38,7 +38,7 @@ onSubmit(form: NgForm){
         if (data.success == false) {
           this.authError = true,
           console.error("ERRORE : ", data.description);
-          this.MessageService.showMessageError('',this.getMessageError(data.description))
+          this.MessageService.showMessageError('',this.supabaseService.getMessageError(data.description))
         }else {
           this.isLoading = false;
           this.MessageService.showMessageInfo('',"Conferma la mail per completare la registrazione")
@@ -60,29 +60,7 @@ onSubmit(form: NgForm){
 }
 
 
-getMessageError(descErrore : any){
-  if (descErrore == 'Password should be at least 6 characters'){
-    return "La password deve avere alemno 6 caratteri";
-  }
-  else if (descErrore == 'Unable to validate email address: invalid format'){
-    return"Email non valida.";
-  }
-  else if (descErrore == 'User already registered'){
-    return"Questo utente è gia registrato.";
-  }
-  else if (descErrore == 'duplicate key value violates unique constraint "profiles_username_key'){
-    return "Esiste già un utente con questo Username.";
-  }
-  else if (descErrore == 'Email rate limit exceeded'){
-    return "Troppe richieste in arrivo : riprova tra un po." ;
-  }
-  else if (descErrore == 'insert or update on table "profiles" violates foreign key constraint "profiles_id_fkey"'){
-    return "Esiste già un profilo connesso con questa email" ;
-  }
-  else{
-    return "Errore nella registrazione : "+ descErrore;
-  }
-}
+
 
 
 }

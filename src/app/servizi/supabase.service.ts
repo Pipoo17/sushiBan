@@ -140,6 +140,9 @@ async getSession(){
 async checkAuth(){
   this.checkIfUserAuth();
   this.setUserLogged(true)
+  console.log("Accesso Confermato");
+  
+
 }
 
 
@@ -153,11 +156,32 @@ async checkIfUserAuth() {
 }
 
 
-async restorePassword(paramJson : any){
- // TODO
- // const { data, error } = await this.supabase.auth.resetPasswordForEmail(paramJson.email, {
- //   redirectTo: 'https://example.com/update-password',
- // })
+async restorePasswordRedirect(paramJson : any){
+ 
+  //var redirectURL = 'http://localhost:4200'
+  var redirectURL = 'https://sushiban.vercel.app'
+
+  const { data, error } = await this.supabase.auth.resetPasswordForEmail(paramJson.email, {
+    redirectTo: redirectURL + '/ResetPassword/Password',
+  })
+  if(error){
+    return { success: false, description: error.message };
+  }
+  return { success: true, description: data };
+
+
+}
+
+
+async restorePasswordUpdate(paramJson: any) {
+  
+  const { data, error } = await this.supabase.auth.updateUser({ password: paramJson.Password })
+
+  if(error){
+    return { success: false, description: error.message };
+  }
+  return { success: true, description: data };
+
 }
 
 
@@ -755,5 +779,21 @@ async getPiatti(){
     return oggettoOrdineRapido
 
   }
+
+  getMessageError(descErrore: any) {
+    if (descErrore.includes('Password should be at least 6 characters')) return "La password deve avere almeno 6 caratteri";
+    else if (descErrore.includes('Unable to validate email address: invalid format'))  return "Email non valida.";
+    else if (descErrore.includes('User already registered')) return "Questo utente è già registrato.";
+    else if (descErrore.includes('duplicate key value violates unique constraint "profiles_username_key"'))  return "Esiste già un utente con questo Username.";
+    else if (descErrore.includes('Email rate limit exceeded'))  return "Troppe richieste in arrivo: riprova tra un po'.";
+    else if (descErrore.includes('insert or update on table "profiles" violates foreign key constraint "profiles_id_fkey"')) return "Esiste già un profilo connesso con questa email";
+    else if (descErrore.includes('For security purposes, you can only request this once every 60 seconds')) return "Per motivi di sicurezza puoi mandare una richiesta ogni 60 secondi";
+    else if (descErrore.includes('Password recovery requires an email')) return "Inserisci la tua Email";
+    
+    
+    else return "Errore: " + descErrore;
+    
+  }
+  
 }
 
