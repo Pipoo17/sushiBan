@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,8 @@ import { MessageService } from 'src/app/servizi/message.service';
 })
 export class RegisterComponent {
   //constructor(private servizioMenu: MenuService,private router: Router){}
-  
+  @ViewChild('passwordInput') passwordInput: ElementRef<HTMLInputElement> | undefined;
+
   constructor(
     public servizioMenu: MenuService,
     private supabaseService: SupabaseService,
@@ -25,6 +26,7 @@ export class RegisterComponent {
   authError : boolean = false;
   isLoading : boolean = false;
   isBeforeLoading : boolean = true;
+  isPasswordVisible : boolean = false
 
 onSubmit(form: NgForm){
   this.isLoading= true;
@@ -60,7 +62,13 @@ onSubmit(form: NgForm){
 }
 
 
-
+togglePasswordVisibility() {
+  if(this.passwordInput){
+  const input = this.passwordInput.nativeElement;
+  input.type = input.type === 'password' ? 'text' : 'password';
+  this.isPasswordVisible = !this.isPasswordVisible
+}
+}
 
 
 }

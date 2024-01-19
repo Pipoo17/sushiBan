@@ -9,7 +9,6 @@
       <div class="row">
         <i class='bx bx-lock labelIcon'></i>
         <input type="password" placeholder="Password" required ngModel name="password" minlength="6" #passwordInput>
-        <!-- Aggiungi l'icona dell'occhio dentro l'input -->
         <span class="password-toggle" (click)="togglePasswordVisibility()">
           <i *ngIf="this.isPasswordVisible == false" class='bx bx-show' ></i>
           <i *ngIf="this.isPasswordVisible" class='bx bx-low-vision' ></i>
