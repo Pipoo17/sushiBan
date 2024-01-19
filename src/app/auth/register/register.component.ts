@@ -93,8 +93,10 @@ controlliForm(paramJson : any){
     return { success: false, description: 'Valorizza tutti i campi' };
   }
 
-  if(this.checkPassword(password, ripetiPassword)){
-  return { success: false, description: 'Le password sono diverse' };
+  console.log(this.checkPassword(password, ripetiPassword));
+  
+  if(!this.checkPassword(password, ripetiPassword)){
+    return { success: false, description: 'Le password sono diverse' };
   }
 
   if(!this.supabaseService.isValidEmail(email)){
@@ -102,7 +104,7 @@ controlliForm(paramJson : any){
   }
 
 
-  return { success: true, description: 'Inserisci una Email valida' };
+  return { success: true, description: 'Form Corretto' };
 
 }
 
@@ -118,6 +120,9 @@ togglePasswordVisibility() {
 }
 
  checkPassword(password: string, ripetiPassword: string): boolean {
+  console.log(password);
+  console.log(ripetiPassword);
+  
   return password == ripetiPassword;
 }
 
