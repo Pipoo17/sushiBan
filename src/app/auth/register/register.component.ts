@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,9 @@ import { MessageService } from 'src/app/servizi/message.service';
 })
 export class RegisterComponent {
   //constructor(private servizioMenu: MenuService,private router: Router){}
-  
+  @ViewChild('passwordInput') passwordInput: ElementRef<HTMLInputElement> | undefined;
+  @ViewChild('passwordRepeatInput') passwordRepeatInput: ElementRef<HTMLInputElement> | undefined;
+
   constructor(
     public servizioMenu: MenuService,
     private supabaseService: SupabaseService,
@@ -25,20 +27,34 @@ export class RegisterComponent {
   authError : boolean = false;
   isLoading : boolean = false;
   isBeforeLoading : boolean = true;
+  isPasswordVisible : boolean = false
 
 onSubmit(form: NgForm){
   this.isLoading= true;
   this.isBeforeLoading= false;
-  
+
+
+
   try{
     let paramJson = form.value;
+    console.log(paramJson);
+    
+    let controlliForm = this.controlliForm(paramJson)
+    console.log(controlliForm);
+
+    if(!controlliForm.success){
+      console.log(controlliForm);
+      
+      this.MessageService.showMessageError("",this.supabaseService.getMessageError(controlliForm.description))
+    }
+    else{
     this.supabaseService.register(paramJson)
       .then((data) => {
         this.isLoading = false;
         if (data.success == false) {
           this.authError = true,
           console.error("ERRORE : ", data.description);
-          this.MessageService.showMessageError('',this.getMessageError(data.description))
+          this.MessageService.showMessageError('',this.supabaseService.getMessageError(data.description))
         }else {
           this.isLoading = false;
           this.MessageService.showMessageInfo('',"Conferma la mail per completare la registrazione")
@@ -53,37 +69,62 @@ onSubmit(form: NgForm){
         this.isLoading = false;
         console.error("Errore durante l'inserimento:", error);
       });
+    }
+
+
+
+
   }catch(error){
     console.error("Errore durante l'inserimento:", error);
     this.isLoading = false;
   }
+  this.isLoading = false
+
+}
+
+controlliForm(paramJson : any){
+
+  let password = paramJson.password
+  let ripetiPassword = paramJson.ripetiPassword
+  let email = paramJson.email
+  let userName = paramJson.username
+
+  if (!(password && ripetiPassword && email && userName) || password.trim() === '' || ripetiPassword.trim() === '' || email.trim() === '' || userName.trim() === '') {
+    return { success: false, description: 'Valorizza tutti i campi' };
+  }
+
+  console.log(this.checkPassword(password, ripetiPassword));
+  
+  if(!this.checkPassword(password, ripetiPassword)){
+    return { success: false, description: 'Le password sono diverse' };
+  }
+
+  if(!this.supabaseService.isValidEmail(email)){
+    return { success: false, description: 'Inserisci una Email valida' };
+  }
+
+
+  return { success: true, description: 'Form Corretto' };
+
 }
 
 
-getMessageError(descErrore : any){
-  if (descErrore == 'Password should be at least 6 characters'){
-    return "La password deve avere alemno 6 caratteri";
-  }
-  else if (descErrore == 'Unable to validate email address: invalid format'){
-    return"Email non valida.";
-  }
-  else if (descErrore == 'User already registered'){
-    return"Questo utente è gia registrato.";
-  }
-  else if (descErrore == 'duplicate key value violates unique constraint "profiles_username_key'){
-    return "Esiste già un utente con questo Username.";
-  }
-  else if (descErrore == 'Email rate limit exceeded'){
-    return "Troppe richieste in arrivo : riprova tra un po." ;
-  }
-  else if (descErrore == 'insert or update on table "profiles" violates foreign key constraint "profiles_id_fkey"'){
-    return "Esiste già un profilo connesso con questa email" ;
-  }
-  else{
-    return "Errore nella registrazione : "+ descErrore;
+togglePasswordVisibility() {
+  if(this.passwordInput && this.passwordRepeatInput){
+    let input = this.passwordInput.nativeElement;
+    input.type = input.type === 'password' ? 'text' : 'password';
+    input = this.passwordRepeatInput.nativeElement;
+    input.type = input.type === 'password' ? 'text' : 'password';
+    this.isPasswordVisible = !this.isPasswordVisible
   }
 }
 
+ checkPassword(password: string, ripetiPassword: string): boolean {
+  console.log(password);
+  console.log(ripetiPassword);
+  
+  return password == ripetiPassword;
+}
 
 }
 

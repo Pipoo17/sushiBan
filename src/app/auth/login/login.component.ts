@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MenuService } from 'src/app/servizi/menu.service';
@@ -12,11 +12,14 @@ import { MessageService } from 'src/app/servizi/message.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  @ViewChild('passwordInput') passwordInput: ElementRef<HTMLInputElement> | undefined;
+
   message: string = '';
   //registrationSuccess: boolean = false;
   //logoutSuccess: boolean = false;
   authError : boolean = false;
   isLoading : boolean = false;
+  isPasswordVisible : boolean = false
 
   constructor(
     private supabaseService: SupabaseService,
@@ -79,6 +82,13 @@ export class LoginComponent {
     }
   }
 
-  
+  togglePasswordVisibility() {
+    if(this.passwordInput){
+    const input = this.passwordInput.nativeElement;
+    input.type = input.type === 'password' ? 'text' : 'password';
+    this.isPasswordVisible = !this.isPasswordVisible
+  }
+}
+
 
 }

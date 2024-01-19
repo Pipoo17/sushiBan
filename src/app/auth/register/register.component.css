@@ -131,3 +131,11 @@ form .signup-link a:hover{
   font-weight: bold;
   font-family: monospace
 }
+.password-toggle {
+  font-size: 1.5em; 
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
