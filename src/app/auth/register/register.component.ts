@@ -31,9 +31,22 @@ export class RegisterComponent {
 onSubmit(form: NgForm){
   this.isLoading= true;
   this.isBeforeLoading= false;
-  
+
+
+
   try{
     let paramJson = form.value;
+    console.log(paramJson);
+    
+    let controlliForm = this.controlliForm(paramJson)
+    console.log(controlliForm);
+
+    if(!controlliForm.success){
+      console.log(controlliForm);
+      
+      this.MessageService.showMessageError("",controlliForm.description)
+    }
+    else{
     this.supabaseService.register(paramJson)
       .then((data) => {
         this.isLoading = false;
@@ -55,10 +68,41 @@ onSubmit(form: NgForm){
         this.isLoading = false;
         console.error("Errore durante l'inserimento:", error);
       });
+    }
+
+
+
+
   }catch(error){
     console.error("Errore durante l'inserimento:", error);
     this.isLoading = false;
   }
+  this.isLoading = false
+
+}
+
+controlliForm(paramJson : any){
+
+  let password = paramJson.password
+  let ripetiPassword = paramJson.ripetiPassword
+  let email = paramJson.email
+  let userName = paramJson.username
+
+  if (!(password && ripetiPassword && email && userName) || password.trim() === '' || ripetiPassword.trim() === '' || email.trim() === '' || userName.trim() === '') {
+    return { success: false, description: 'Valorizza tutti i campi' };
+  }
+
+  if(this.checkPassword(password, ripetiPassword)){
+  return { success: false, description: 'Le password sono diverse' };
+  }
+
+  if(!this.supabaseService.isValidEmail(email)){
+    return { success: false, description: 'Inserisci una Email valida' };
+  }
+
+
+  return { success: true, description: 'Inserisci una Email valida' };
+
 }
 
 
@@ -70,6 +114,9 @@ togglePasswordVisibility() {
   }
 }
 
+ checkPassword(password: string, ripetiPassword: string): boolean {
+  return password == ripetiPassword;
+}
 
 }
 

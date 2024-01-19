@@ -779,7 +779,17 @@ async getPiatti(){
     return oggettoOrdineRapido
 
   }
-
+  
+  
+  isValidEmail(email: string): boolean {
+    // Utilizza una regex per controllare se la stringa è un formato email valido
+    console.log(email);
+    
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+    }
+  
+  
   getMessageError(descErrore: any) {
     if (descErrore.includes('Password should be at least 6 characters')) return "La password deve avere almeno 6 caratteri";
     else if (descErrore.includes('Unable to validate email address: invalid format'))  return "Email non valida.";
