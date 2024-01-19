@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MenuService } from 'src/app/servizi/menu.service';
@@ -12,75 +11,53 @@ import { MessageService } from 'src/app/servizi/message.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  //constructor(private servizioMenu: MenuService,private router: Router){}
   @ViewChild('passwordInput') passwordInput: ElementRef<HTMLInputElement> | undefined;
   @ViewChild('passwordRepeatInput') passwordRepeatInput: ElementRef<HTMLInputElement> | undefined;
+
+  isLoading: boolean = false;
+  isPasswordVisible: boolean = false;
 
   constructor(
     public servizioMenu: MenuService,
     private supabaseService: SupabaseService,
     private router: Router,
-    private MessageService: MessageService,
-    
+    private messageService: MessageService,
   ) {}
-  message: string = '';
-  authError : boolean = false;
-  isLoading : boolean = false;
-  isBeforeLoading : boolean = true;
-  isPasswordVisible : boolean = false
 
-onSubmit(form: NgForm){
-  this.isLoading= true;
-  this.isBeforeLoading= false;
+  onSubmit(form: NgForm) {
+    this.isLoading = true;
 
+    try {
+      let paramJson = form.value;
+      let controlliForm = this.controlliForm(paramJson);
 
-
-  try{
-    let paramJson = form.value;
-    console.log(paramJson);
-    
-    let controlliForm = this.controlliForm(paramJson)
-    console.log(controlliForm);
-
-    if(!controlliForm.success){
-      console.log(controlliForm);
-      
-      this.MessageService.showMessageError("",this.supabaseService.getMessageError(controlliForm.description))
-    }
-    else{
-    this.supabaseService.register(paramJson)
-      .then((data) => {
+      if (!controlliForm.success) {
         this.isLoading = false;
-        if (data.success == false) {
-          this.authError = true,
-          console.error("ERRORE : ", data.description);
-          this.MessageService.showMessageError('',this.supabaseService.getMessageError(data.description))
-        }else {
-          this.isLoading = false;
-          this.MessageService.showMessageInfo('',"Conferma la mail per completare la registrazione")
-          console.log('Conferma Mail')
-      // Puoi gestire la conferma dell'email o altre azioni qui
+        this.messageService.showMessageError("", this.supabaseService.getMessageError(controlliForm.description));
+      } else {
+        this.supabaseService.register(paramJson)
+          .then((data) => {
+            this.isLoading = false;
+
+            if (data.success == false) {
+              this.messageService.showMessageError('', this.supabaseService.getMessageError(data.description));
+            } else {
+              console.log('Conferma Mail');
+              this.messageService.showMessageInfo('', "Conferma la mail per completare la registrazione");
+            }
+
+            this.router.navigate(['/register']);
+          })
+          .catch((error) => {
+            this.isLoading = false;
+            console.error("Errore durante l'inserimento:", error);
+          });
+      }
+    } catch (error) {
+      this.isLoading = false;
+      console.error("Errore durante l'inserimento:", error);
     }
-
-    this.router.navigate(['/register']);
-
-      })
-      .catch((error) => {
-        this.isLoading = false;
-        console.error("Errore durante l'inserimento:", error);
-      });
-    }
-
-
-
-
-  }catch(error){
-    console.error("Errore durante l'inserimento:", error);
-    this.isLoading = false;
   }
-  this.isLoading = false
-
-}
 
 controlliForm(paramJson : any){
 

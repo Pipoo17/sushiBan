@@ -791,6 +791,8 @@ async getPiatti(){
   
   
   getMessageError(descErrore: any) {
+    console.error("ERRORE : ",+descErrore)
+    
     if (descErrore.includes('Password should be at least 6 characters')) return "La password deve avere almeno 6 caratteri";
     else if (descErrore.includes('Unable to validate email address: invalid format'))  return "Email non valida.";
     else if (descErrore.includes('User already registered')) return "Questo utente è già registrato.";

@@ -42,11 +42,9 @@
 
         <div class="row button">
           <button type="submit">
+            {{this.isLoading}}
             <i class='bx bx-loader-alt bx-spin' *ngIf="this.isLoading"></i>
-            <i class='bx bx-user' *ngIf="this.isLoading == false && this.isBeforeLoading"></i>
-            <i class='bx bx-user-voice' *ngIf="this.isLoading == false && this.authError == false && this.isBeforeLoading == false"></i>
-            <i class='bx bx-user-x' *ngIf="this.isLoading == false && this.authError && this.isBeforeLoading == false"></i>
-
+            <i class='bx bx-user' *ngIf="this.isLoading == false"></i>
             Registrati
           </button>
         </div>
