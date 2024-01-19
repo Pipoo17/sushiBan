@@ -64,10 +64,10 @@ onSubmit(form: NgForm){
 
 togglePasswordVisibility() {
   if(this.passwordInput){
-  const input = this.passwordInput.nativeElement;
-  input.type = input.type === 'password' ? 'text' : 'password';
-  this.isPasswordVisible = !this.isPasswordVisible
-}
+    const input = this.passwordInput.nativeElement;
+    input.type = input.type === 'password' ? 'text' : 'password';
+    this.isPasswordVisible = !this.isPasswordVisible
+  }
 }
 
 

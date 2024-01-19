@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MenuService } from 'src/app/servizi/menu.service';
@@ -13,9 +13,12 @@ import { MessageService } from 'src/app/servizi/message.service';
 })
 export class ResetPasswordComponent {
 
+  @ViewChild('passwordInput') passwordInput: ElementRef<HTMLInputElement> | undefined;
+  @ViewChild('passwordRepeatInput') passwordRepeatInput: ElementRef<HTMLInputElement> | undefined;
 
   isLoading : boolean = false;
   message: string = '';
+  isPasswordVisible : boolean = false
 
   constructor(
     private supabaseService: SupabaseService,
@@ -68,6 +71,18 @@ export class ResetPasswordComponent {
    
   }
 
+  togglePasswordVisibility() {
+    if(this.passwordInput && this.passwordRepeatInput){
 
+      let input = this.passwordInput.nativeElement;
+      input.type = input.type === 'password' ? 'text' : 'password';
+
+      input = this.passwordRepeatInput.nativeElement;
+      input.type = input.type === 'password' ? 'text' : 'password';
+
+
+      this.isPasswordVisible = !this.isPasswordVisible
+    }
+  }
 
 }
