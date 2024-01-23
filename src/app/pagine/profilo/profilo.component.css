@@ -54,7 +54,6 @@ body {
     margin: 20px;
 }
 .ultimoOrdine{
-    width: 20vw;
     background-color: aliceblue;
     min-width: 220px;
     min-height: 40vh;
@@ -171,12 +170,12 @@ body {
     margin: 10px;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 800px) {
     .profile-image {
         width: 130px;
         height: 130px;
     }
-    .immageContainer{
+    .immageContainer {
         display: inline-block;
         width: 130px;
         height: 130px;
@@ -184,25 +183,24 @@ body {
         object-fit: cover;
         box-shadow: 0 0 0 10px #04364A; /* Margine colorato */
     }
-        .ultimoOrdine,.ElencoOrdiniSalvati{
-        width: 100%;
-        margin: 0px;
-        
+    .ultimoOrdine, .ElencoOrdiniSalvati {
+        margin: 10px; /* Aggiungi il margine ai div interni */
     }
-    
 }
 
-@media (max-width: 1500px) {
-    .divContainer{
+@media (max-width: 1450px) {
+    .divContainer {
         display: flex; /* or inline-flex */
-        flex-direction: column
+        flex-direction: column;
     }
-    .ultimoOrdine,.ElencoOrdiniSalvati{
-        width: 100%;
-        margin: 3px;
+    .ultimoOrdine, .ElencoOrdiniSalvati {
         flex-wrap: wrap;
-        
     }
+}
+
+
+/* Stili per schermi più piccoli come quelli dei dispositivi mobili */
+@media only screen and (max-width: 1200px) {
     .ordineContainer {
         display: flex;  
         align-items: center;
@@ -232,15 +230,6 @@ body {
         flex-wrap: wrap;
       }
     
-    
-
-    
-}
-
-
-/* Stili per schermi più piccoli come quelli dei dispositivi mobili */
-@media only screen and (max-width: 600px) {
-
 
 
 }
