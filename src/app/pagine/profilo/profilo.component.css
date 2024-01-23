@@ -132,7 +132,7 @@ body {
     padding-top: 5px;
 }
 .elencoOrdiniRapidi{
-    max-height: 400px;
+    max-height: 390px;
     padding: 10px;
     position: relative;
     overflow: auto;
@@ -147,6 +147,10 @@ body {
     width: 160px;  
     margin-right: 10px; /* Aggiunge uno spazio tra gli ordini */
 
+}
+.contenitoreElencoPiatti{
+    overflow: auto;
+    max-height: 400px;
 }
 
 .containerPulsantiOrdineRapido {
