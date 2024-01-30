@@ -6,21 +6,13 @@ import { Router } from '@angular/router';
 import { MessageService } from './message.service';
 import { DatasetController, LogarithmicScale } from 'chart.js';
 import { EnvironmentService } from './environment.service';
+import { BehaviorSubject } from 'rxjs';
 
-export interface IUser {
-  email: string;
-  name: string;
-  website: string;
-  url: string;
-}
 
 
 @Injectable({
   providedIn: 'root'
 })
-
-
-
 
 
 
@@ -34,8 +26,11 @@ export class SupabaseService {
 
   private storageURL = this.setStorageURL();
 
-  
   private isThisUserLogged : boolean = false
+
+  /* QUANDO VIENE FATTO IL LOGIN BISOGNA RICARICARE LA NAVBAR */ 
+  private eventoSubject = new BehaviorSubject<any>(null);
+  eventoLogin$ = this.eventoSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -49,6 +44,15 @@ export class SupabaseService {
 
 
 
+
+
+  /*=====================================*/ 
+  /*============  BEHAVIOUR  ============*/
+  /*=====================================*/ 
+
+  eventoLogin(dato: any) {
+    this.eventoSubject.next(dato);
+  }
 
 
   /*====================================*/ 
@@ -90,6 +94,7 @@ export class SupabaseService {
             id: userId,
             username: paramJson.username,
             avatar_url: paramJson.username + ".jpg",
+            role: 3,
           },
         ]);
 //todo : aguardare se l'immagine viene caricata correttamente quando si crea un profilo
@@ -197,7 +202,8 @@ async getPiatti(){
   let menu = [{}]
   await this.getSession();
   let idutente = await this.getUserId()
-
+  console.log("idutente : ",idutente);
+  
   const { data, error } = await this.supabase.rpc('getpiatti', { idutente: idutente })
   if(error){ return [{}] }
   return data
@@ -692,6 +698,20 @@ async getPiatti(){
   getUserLogged(){
     return this.isThisUserLogged
   }
+
+  async getUserRole(userId : String){
+    const { data: selectData, error: selectError } = await this.supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', userId)
+
+    if(!selectError){
+      return selectData[0].role
+    }
+    return -1
+
+  }
+
   
  async uploadImage(bucket : string,imageName : string, imageFile : any){
 

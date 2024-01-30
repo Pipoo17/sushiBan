@@ -54,6 +54,7 @@ export class LoginComponent {
             this.MessageService.showMessageSuccess('','Accesso avvenuto con successo')
             //this.ResponsiveSidebarComponent.getProfilePic();
             this.servizioMenu.riempiMenu();
+            this.supabaseService.eventoLogin(data)
             this.router.navigate(['/home']);
           }
         })

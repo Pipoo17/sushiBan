@@ -81,15 +81,6 @@
       </li>
       -->
       <li>
-        <a (click)="openLogoutDialog()">
-          <i class='bx bx-log-out-circle bx-burst-hover' ></i>
-          <span class="link_name">Logout</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Logout</a></li>
-        </ul>
-      </li>
-      <li>
         <a href="https://sareca.it/MENU/MIYA-PRANZO/menu.php" target="_blank">
             <i class='bx bx-food-menu bx-burst-hover' ></i>
           <span class="link_name">Menu</span>
@@ -98,19 +89,41 @@
           <li><a class="link_name" href="#">Menu</a></li>
         </ul>
       </li>
+
+      <li *ngIf="this.isAdmin == true">
+        <a routerLink="datiMenu">
+            <i class='bx bx-data bx-burst-hover' ></i>
+          <span class="link_name">Dati Menu</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Dati Menu</a></li>
+        </ul>
+      </li>
+
       <li>
-    <div class="profile-details">
-      <div class="profile-content">
-        <img src={{immagineProfilo}} alt="profileImg" routerLink="profilo" >
-      </div>
-      <div class="name-job">
-        <div class="profile_name">Prem Shahi</div>
-        <div class="job">Web Desginer</div>
-      </div>
-      <i class='bx bx-log-out' ></i>
-    </div>
-  </li>
-</ul>
+        <a (click)="openLogoutDialog()">
+          <i class='bx bx-log-out-circle bx-burst-hover' ></i>
+          <span class="link_name">Logout</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Logout</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="profile-details">
+          <div class="profile-content">
+            <img src={{immagineProfilo}} alt="profileImg" routerLink="profilo" >
+          </div>
+          <div class="name-job">
+            <div class="profile_name">Prem Shahi</div>
+            <div class="job">Web Desginer</div>
+          </div>
+          <i class='bx bx-log-out' ></i>
+        </div>
+      </li>
+
+    </ul>
   </div>
   <!--
   <section class="home-section">
