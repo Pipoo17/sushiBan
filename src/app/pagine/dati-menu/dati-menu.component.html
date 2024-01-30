@@ -1,0 +1,163 @@
+
+<div class="tableContainer">
+    
+    <p-table
+        #dt1
+        dataKey="id"
+        [value]="this.menuJson"
+        [tableStyle]="{ 'min-width': '50rem' }" 
+        styleClass="p-datatable-striped"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Vista da {first} a {last} su {totalRecords} entità"
+        [rowsPerPageOptions]="[5, 10, 20]" 
+        [globalFilterFields]="['codice', 'nome', 'categoria']"
+        [loading]="loading"
+        [scrollable]="true"
+        scrollHeight="78vh"
+    >
+        <ng-template pTemplate="caption" >
+            <div class="flex align-items-center justify-content-between">
+                Piatti
+                <p-button icon="pi pi-refresh"></p-button>
+            </div>
+<!--             <div class="flex">
+                <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+            </div> -->
+        </ng-template>
+        
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th pSortableColumn="codice" style="width:20%">Codice <p-sortIcon field="code"></p-sortIcon></th> -->
+                <th style="width:22%">Codice</th>
+                <th style="width:22%">Nome</th>
+                <th style="width:22%">Categoria</th>
+                <th style="width:25%">Immagine</th>
+                <th style="width: 5rem"></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="codice"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="nome"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="categoria"></p-columnFilter>
+                </th>
+                <th>
+                    <!-- immagini -->
+                </th>
+                <th>
+                    <!-- pulsanti -->
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="product">
+                <td style="width:10%">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.codice">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.codice}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="width:40%">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.nome">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.nome}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td style="width:25%">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="product.categoria">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{product.categoria}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+
+                <td style="width:25%"><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
+<!--                 <td>
+                    <button type="button" pButton pRipple icon="pi pi-pencil" (click)="update(product)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                </td> -->
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+
+<!-- 
+<div class="tableContainer"  *ngIf="this.menuJson != null">
+    
+    <p-table
+        #dt1
+        dataKey="id"
+        [value]="this.menuJson"
+        [tableStyle]="{ 'min-width': '50rem' }" 
+        styleClass="p-datatable-striped"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Vista da {first} a {last} su {totalRecords} entità"
+        [rowsPerPageOptions]="[5, 10, 20]" 
+        [globalFilterFields]="['codice', 'nome', 'categoria']"
+        [loading]="loading"
+    >
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Codice
+                        <p-columnFilter type="text" field="codice" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Nome
+                        <p-columnFilter type="text" field="nome" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width:15rem">
+                    <div class="flex align-items-center">
+                        Categoria
+                        <p-columnFilter type="text" field="categoria" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="width:25%">Immagine</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td style="width:10%">{{ product.codice }}</td>
+                <td style="width:40%">{{ product.nome }}</td>
+                <td style="width:25%">{{ product.categoria }}</td>
+                <td style="width:25%"><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div> -->

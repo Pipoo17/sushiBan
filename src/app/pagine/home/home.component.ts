@@ -39,6 +39,8 @@ export class HomeComponent implements OnInit {
     this.servizioMenu.menu$.subscribe((menu) => {
       this.filteredMenu = menu;
     });
+    console.log(this.filteredMenu);
+    
   }
 
 
