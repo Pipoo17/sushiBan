@@ -1,3 +1,8 @@
 .tableContainer{
     padding: 30px;
   }
+  :host ::ng-deep .p-dialog .product-image {
+    width: 150px;
+    margin: 0 auto 2rem auto;
+    display: block;
+}

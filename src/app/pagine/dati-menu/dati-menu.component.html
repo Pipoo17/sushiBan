@@ -57,50 +57,14 @@
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
-            <tr [pEditableRow]="product">
-                <td style="width:10%">
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.codice">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{product.codice}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td style="width:40%">
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.nome">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{product.nome}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td style="width:25%">
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="product.categoria">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{product.categoria}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.codice }}</td>
+                <td>{{ product.nome }}</td>
+                <td>{{ product.categoria }}</td>
                 <td style="width:25%"><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
-<!--                 <td>
-                    <button type="button" pButton pRipple icon="pi pi-pencil" (click)="update(product)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
-                </td> -->
                 <td>
-                    <div class="flex align-items-center justify-content-center gap-2">
-                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
-                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
-                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
-                    </div>
+                    <button type="button" pButton pRipple icon="pi pi-pencil" (click)="openUpdate(product)"></button>
                 </td>
             </tr>
         </ng-template>
@@ -110,54 +74,27 @@
 
 
 
-<!-- 
-<div class="tableContainer"  *ngIf="this.menuJson != null">
-    
-    <p-table
-        #dt1
-        dataKey="id"
-        [value]="this.menuJson"
-        [tableStyle]="{ 'min-width': '50rem' }" 
-        styleClass="p-datatable-striped"
-        [paginator]="true"
-        [rows]="10"
-        [showCurrentPageReport]="true"
-        currentPageReportTemplate="Vista da {first} a {last} su {totalRecords} entità"
-        [rowsPerPageOptions]="[5, 10, 20]" 
-        [globalFilterFields]="['codice', 'nome', 'categoria']"
-        [loading]="loading"
-    >
 
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Codice
-                        <p-columnFilter type="text" field="codice" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Nome
-                        <p-columnFilter type="text" field="nome" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="min-width:15rem">
-                    <div class="flex align-items-center">
-                        Categoria
-                        <p-columnFilter type="text" field="categoria" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th style="width:25%">Immagine</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td style="width:10%">{{ product.codice }}</td>
-                <td style="width:40%">{{ product.nome }}</td>
-                <td style="width:25%">{{ product.categoria }}</td>
-                <td style="width:25%"><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div> -->
+<!--
+                                              ==========================================
+                                              ==============  POP UP UPDATE ============
+                                              ==========================================
+-->
+<p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '450px' }" header="Aggiorna piatto" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <img [src]=this.getImgPiatto(updatePiattoJson.codice)  class="block m-auto pb-3 product-image" />
+    </ng-template>
+
+    <div class="field">
+        <label for="name">Nome</label>
+        <input type="text" pInputText id="name" [(ngModel)]="updatePiattoJson.nome" required autofocus />
+    </div>
+
+
+    <p>
+        {{ updatePiattoJson.id}}
+        {{ updatePiattoJson.nome}}
+        {{ updatePiattoJson.codice}}
+        {{ updatePiattoJson.id}}
+    </p>
+</p-dialog>

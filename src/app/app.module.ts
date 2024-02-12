@@ -42,6 +42,8 @@ import { MessageComponentComponent } from './component/message-component/message
 import { ResetPasswordComponent } from './auth/resetPassword/reset-password/reset-password.component';
 import { EmailFormComponent } from './auth/resetPassword/email-form/email-form.component';
 import { DatiMenuComponent } from './pagine/dati-menu/dati-menu.component';
+import { DialogModule } from 'primeng/dialog';
+
 export function playerFactory(): any {  
   return import('lottie-web');
 }
@@ -91,6 +93,7 @@ export function playerFactory(): any {
     ButtonModule,
     ChartModule,
     TableModule,
+    DialogModule,
   ],
 
   providers: [

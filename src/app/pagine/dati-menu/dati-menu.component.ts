@@ -5,7 +5,7 @@ import { Table } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmationService, MessageService } from 'primeng/api';
-
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -22,8 +22,10 @@ totalRecords : any;
 loading: boolean = false;
 categorie : any = [];
 
+isUpdatePopUpVisible : boolean = false;
+updatePiattoJson :any = {};
 
-clonedProducts: { [s: string]: any } = {};
+submitted: boolean = false;
 
 
 
@@ -59,28 +61,41 @@ clonedProducts: { [s: string]: any } = {};
     table.clear();
 }
 
-update(piatto : any){
-  console.log(piatto);
+openUpdate(piatto : any){
+  this.isUpdatePopUpVisible = !this.isUpdatePopUpVisible
+  this.updatePiattoJson = piatto;
+  console.log(this.updatePiattoJson);
   
 }
-onRowEditInit(product: any) {
-  console.log("product : ",product);
-  
-  this.clonedProducts[product.id as string] = { ...product };
-  console.log(this.clonedProducts);
-  
+/*
+update() {
+  this.submitted = true;
+
+  if (this.product.name?.trim()) {
+      if (this.product.id) {
+          this.products[this.findIndexById(this.product.id)] = this.product;
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+      } else {
+          this.product.id = this.createId();
+          this.product.image = 'product-placeholder.svg';
+          this.products.push(this.product);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+      }
+
+      this.products = [...this.products];
+      this.productDialog = false;
+      this.product = {};
+  }
 }
 
-onRowEditSave(product: any) {
-  console.log("save");
+*/
+openNew() {
+  console.log('nowopeen');
   
+  this.updatePiattoJson = {};
+  this.submitted = false;
+  this.isUpdatePopUpVisible = true;
 }
-
-onRowEditCancel(product: any, index: number) {
-  console.log("cancel");
-  
-}
-
 
 /* 
 exportPdf() {
