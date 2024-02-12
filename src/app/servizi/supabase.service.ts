@@ -799,6 +799,14 @@ async getPiatti(){
     return oggettoOrdineRapido
 
   }
+
+  async getListaCategorie(){
+    const { data, error } = await this.supabase
+    .from('CategoriePiatti')
+    .select('idCategoria,descrizione')
+
+    return data
+  }
   
   
   isValidEmail(email: string): boolean {

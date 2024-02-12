@@ -8,7 +8,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 
 
-
+interface Categoria {
+  codice: string;
+  nome: string;
+}
 
 @Component({
   selector: 'app-dati-menu',
@@ -27,6 +30,7 @@ updatePiattoJson :any = {};
 
 submitted: boolean = false;
 
+filtroCategorie: Categoria[] | undefined;
 
 
   constructor(
@@ -43,6 +47,8 @@ submitted: boolean = false;
     this.menuJson = await this.supabaseService.getPiatti()
     this.categorie = this.servizioMenu.getCategorie();
     this.loading = false
+
+    await this.getFiltroCategorieValues()
 
     console.log(this.menuJson);
     console.log(this.totalRecords);
@@ -96,6 +102,36 @@ openNew() {
   this.submitted = false;
   this.isUpdatePopUpVisible = true;
 }
+
+async getFiltroCategorieValues(){
+
+
+  this.filtroCategorie = this.filtroCategorie ?? [];
+  let data = await this.supabaseService.getListaCategorie();
+
+  if(data == null) return
+
+  data.forEach(categoria => {
+    this.filtroCategorie?.push({ codice: categoria.idCategoria, nome: categoria.descrizione }) 
+  });
+
+
+}
+
+
+saveProduct(){
+  console.log('prodotto salvato');
+  
+}
+
+
+hideDialog(){
+  console.log('modifiche annullate');
+  this.isUpdatePopUpVisible = false;
+  this.submitted = false;
+}
+
+
 
 /* 
 exportPdf() {

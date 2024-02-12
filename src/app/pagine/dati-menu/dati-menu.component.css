@@ -11,3 +11,19 @@
 .odd{
   background-color: beige;
 }
+
+.field{
+  margin-bottom: 10px;
+}
+.form{
+  height: 90%;
+}
+
+
+.bottonFooter{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}

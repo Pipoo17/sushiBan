@@ -80,21 +80,44 @@
                                               ==============  POP UP UPDATE ============
                                               ==========================================
 -->
-<p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '450px' }" header="Aggiorna piatto" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
-        <img [src]=this.getImgPiatto(updatePiattoJson.codice)  class="block m-auto pb-3 product-image" />
+        <div class="form">
+
+            <img [src]=this.getImgPiatto(updatePiattoJson.codice)  class="block m-auto pb-3 product-image" />
+    
+
+            <div class="field">
+                <label for="name">Codice</label>
+                <input type="text" pInputText id="name" [(ngModel)]="updatePiattoJson.codice" required autofocus [required]="true"/>
+            </div>
+
+
+            <div class="field">
+                <label for="name">Nome</label>
+                <input type="text" pInputText id="name" [(ngModel)]="updatePiattoJson.nome" required autofocus [required]="true"/>
+            </div>
+
+
+            <div class="field">
+                <label for="name">Categoria</label>
+                <p-dropdown [options]="filtroCategorie" [(ngModel)]="updatePiattoJson.categoria" optionLabel="nome" [showClear]="true" placeholder="Seleziona una Categoria" [required]="true"></p-dropdown>
+            </div>
+
+
+        </div>
+        <div class="bottonFooter">
+            <p-button size="small" icon="pi pi-check" (click)="hideDialog()" label="Modifica"></p-button>
+            <p-button size="small" icon="pi pi-check" (click)="saveProduct()" label="Annulla"></p-button>
+        </div>
+        
+<!--           <p>
+            {{ updatePiattoJson.id}}
+            {{ updatePiattoJson.nome}}
+            {{ updatePiattoJson.codice}}
+            {{ updatePiattoJson.categoria}}
+            {{ updatePiattoJson.categoria | json}}
+            {{ updatePiattoJson.id}}
+        </p>   -->
     </ng-template>
-
-    <div class="field">
-        <label for="name">Nome</label>
-        <input type="text" pInputText id="name" [(ngModel)]="updatePiattoJson.nome" required autofocus />
-    </div>
-
-
-    <p>
-        {{ updatePiattoJson.id}}
-        {{ updatePiattoJson.nome}}
-        {{ updatePiattoJson.codice}}
-        {{ updatePiattoJson.id}}
-    </p>
 </p-dialog>
