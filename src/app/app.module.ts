@@ -45,7 +45,7 @@ import { DatiMenuComponent } from './pagine/dati-menu/dati-menu.component';
 import { DialogModule } from 'primeng/dialog';
 import { ChipsModule } from 'primeng/chips';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { AccordionModule } from 'primeng/accordion';
 
 export function playerFactory(): any {  
   return import('lottie-web');
@@ -99,6 +99,7 @@ export function playerFactory(): any {
     DialogModule,
     ChipsModule,
     DropdownModule,
+    AccordionModule,
   ],
 
   providers: [

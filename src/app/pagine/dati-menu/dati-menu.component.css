@@ -16,14 +16,19 @@
   margin-bottom: 10px;
 }
 .form{
-  height: 90%;
+display: flex;
+flex-grow: 1;
+gap: 3px;
+flex-direction: column;
 }
 
 
 .bottonFooter{
+  margin-top: 20px;
   display: flex;
   width: 100%;
   flex-direction: row;
   justify-content: center;
   gap: 10px;
 }
+

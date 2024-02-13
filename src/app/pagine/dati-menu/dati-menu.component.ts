@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
+import { EnvironmentService } from 'src/app/servizi/environment.service';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { Table } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
@@ -32,10 +33,13 @@ submitted: boolean = false;
 
 filtroCategorie: Categoria[] | undefined;
 
+//debug: boolean = true;
+debug: boolean = this.EnvironmentService.getIsProd();
 
   constructor(
     private supabaseService: SupabaseService,
     private servizioMenu: MenuService,
+    private EnvironmentService: EnvironmentService,
 
   ){
     this.supabaseService.checkAuth();
@@ -47,6 +51,9 @@ filtroCategorie: Categoria[] | undefined;
     this.menuJson = await this.supabaseService.getPiatti()
     this.categorie = this.servizioMenu.getCategorie();
     this.loading = false
+
+    console.log(this.EnvironmentService.getIsProd());
+    
 
     await this.getFiltroCategorieValues()
 
@@ -118,6 +125,32 @@ async getFiltroCategorieValues(){
 
 }
 
+getObjectFields(obj: any): [string, any][] {
+    if (typeof obj === 'object' && !Array.isArray(obj)) {
+        const fields: [string, any][] = [];
+        for (const [key, value] of Object.entries(obj)) {
+            if (typeof value === 'object') {
+                // Se il valore è un oggetto, aggiungi ricorsivamente i suoi campi
+                const nestedFields = this.getObjectFields(value);
+                // Aggiungi il campo dell'oggetto annidato sotto un unico titolo
+                fields.push([key, nestedFields]);
+            } else {
+                // Se il valore non è un oggetto, aggiungi il campo
+                fields.push([key, value]);
+            }
+        }
+        return fields;
+    } else {
+        // Se l'oggetto non è un oggetto, ritorna un array vuoto
+        return [];
+    }
+}
+
+
+
+
+
+
 
 saveProduct(){
   console.log('prodotto salvato');
@@ -125,7 +158,7 @@ saveProduct(){
 }
 
 
-hideDialog(){
+close(){
   console.log('modifiche annullate');
   this.isUpdatePopUpVisible = false;
   this.submitted = false;

@@ -83,7 +83,7 @@
 <p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="form">
-
+                
             <img [src]=this.getImgPiatto(updatePiattoJson.codice)  class="block m-auto pb-3 product-image" />
     
 
@@ -106,18 +106,25 @@
 
 
         </div>
-        <div class="bottonFooter">
-            <p-button size="small" icon="pi pi-check" (click)="hideDialog()" label="Conferma" severity="info" ></p-button>
-            <p-button size="small" icon="pi pi-times" (click)="saveProduct()" label="Annulla" severity="danger"></p-button>
-        </div>
+
         
-<!--           <p>
-            {{ updatePiattoJson.id}}
-            {{ updatePiattoJson.nome}}
-            {{ updatePiattoJson.codice}}
-            {{ updatePiattoJson.categoria}}
-            {{ updatePiattoJson.categoria | json}}
-            {{ updatePiattoJson.id}}
-        </p>   -->
+
+        <div class="bottonFooter">
+            <p-button size="small" icon="pi pi-check" (click)="saveProduct()" label="Conferma" severity="info" ></p-button>
+            <p-button size="small" icon="pi pi-times" (click)="close()" label="Annulla" severity="danger"></p-button>
+        </div>
+
+        <div *ngIf="debug == true" style="margin-top: 20px;">
+            <p-accordion [activeIndex]="1">
+                <p-accordionTab header="Dati updatePiattoJson">
+                    <ng-container *ngFor="let key of getObjectFields(updatePiattoJson)">
+                        <p>{{ key }}</p>
+                    </ng-container>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+           
+        
+
     </ng-template>
 </p-dialog>
