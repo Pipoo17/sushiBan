@@ -117,12 +117,11 @@
         <div *ngIf="debug == true" style="margin-top: 20px;">
             <p-accordion [activeIndex]="1">
                 <p-accordionTab header="Dati updatePiattoJson">
-                    <ng-container *ngFor="let key of getObjectFields(updatePiattoJson)">
-                        <p>{{ key }}</p>
-                    </ng-container>
+                    <pre>{{updatePiattoJson | json}}</pre>
                 </p-accordionTab>
             </p-accordion>
         </div>
+        
            
         
 

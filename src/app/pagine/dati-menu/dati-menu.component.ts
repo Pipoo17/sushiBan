@@ -34,7 +34,7 @@ submitted: boolean = false;
 filtroCategorie: Categoria[] | undefined;
 
 //debug: boolean = true;
-debug: boolean = this.EnvironmentService.getIsProd();
+debug: boolean = !this.EnvironmentService.getIsProd();
 
   constructor(
     private supabaseService: SupabaseService,
