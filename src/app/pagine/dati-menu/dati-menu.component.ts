@@ -14,6 +14,13 @@ interface Categoria {
   nome: string;
 }
 
+interface piatto {
+  id: string,
+  codice: string,
+  nome: string,
+  categoria :Categoria,
+}
+
 @Component({
   selector: 'app-dati-menu',
   templateUrl: './dati-menu.component.html',
@@ -27,7 +34,16 @@ loading: boolean = false;
 categorie : any = [];
 
 isUpdatePopUpVisible : boolean = false;
-updatePiattoJson :any = {};
+
+updatePiattoJson :piatto = {
+  id: '',
+  codice: '',
+  nome: '',
+  categoria: {
+    codice:'',
+    nome:''
+  }
+} ;
 
 submitted: boolean = false;
 
@@ -76,7 +92,18 @@ debug: boolean = !this.EnvironmentService.getIsProd();
 
 openUpdate(piatto : any){
   this.isUpdatePopUpVisible = !this.isUpdatePopUpVisible
-  this.updatePiattoJson = piatto;
+
+  this.updatePiattoJson = {
+    id: piatto.id,
+    codice: piatto.codice,
+    nome: piatto.nome,
+    categoria:{
+      codice:'',
+      nome:piatto.categoria
+    }
+
+  }
+  //piatto;
   console.log(this.updatePiattoJson);
   
 }
@@ -102,14 +129,22 @@ update() {
 }
 
 */
-openNew() {
+
+
+/*  openNew() {
   console.log('nowopeen');
   
-  this.updatePiattoJson = {};
+  this.updatePiattoJson = {
+    id: '',
+    codice: '',
+    nome: '',
+    categoria:''
+  }
+
   this.submitted = false;
   this.isUpdatePopUpVisible = true;
-}
-
+} 
+ */
 async getFiltroCategorieValues(){
 
 
