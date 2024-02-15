@@ -10,7 +10,7 @@ import { DialogModule } from 'primeng/dialog';
 
 
 interface Categoria {
-  codice: string;
+  codice: number;
   nome: string;
 }
 
@@ -40,8 +40,8 @@ updatePiattoJson :piatto = {
   codice: '',
   nome: '',
   categoria: {
-    codice:'',
-    nome:''
+    codice: Number(''),
+    nome: ''
   }
 } ;
 
@@ -98,7 +98,7 @@ openUpdate(piatto : any){
     codice: piatto.codice,
     nome: piatto.nome,
     categoria:{
-      codice:'',
+      codice: Number('2'),
       nome:piatto.categoria
     }
 
@@ -159,31 +159,6 @@ async getFiltroCategorieValues(){
 
 
 }
-
-getObjectFields(obj: any): [string, any][] {
-    if (typeof obj === 'object' && !Array.isArray(obj)) {
-        const fields: [string, any][] = [];
-        for (const [key, value] of Object.entries(obj)) {
-            if (typeof value === 'object') {
-                // Se il valore è un oggetto, aggiungi ricorsivamente i suoi campi
-                const nestedFields = this.getObjectFields(value);
-                // Aggiungi il campo dell'oggetto annidato sotto un unico titolo
-                fields.push([key, nestedFields]);
-            } else {
-                // Se il valore non è un oggetto, aggiungi il campo
-                fields.push([key, value]);
-            }
-        }
-        return fields;
-    } else {
-        // Se l'oggetto non è un oggetto, ritorna un array vuoto
-        return [];
-    }
-}
-
-
-
-
 
 
 
