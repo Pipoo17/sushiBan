@@ -20,7 +20,8 @@
         <ng-template pTemplate="caption" >
             <div class="flex align-items-center justify-content-between">
                 Piatti
-                <p-button icon="pi pi-refresh"></p-button>
+                <p-button icon="pi pi-refresh" (click)="refresh()"></p-button>
+                <p-button icon="pi pi-plus" (click)="openInsert()"></p-button>
             </div>
 <!--             <div class="flex">
                 <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
@@ -80,11 +81,11 @@
                                               ==============  POP UP UPDATE ============
                                               ==========================================
 -->
-<p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="isUpdatePopUpVisible || isInsertPopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="form">
                 
-            <img [src]="updatePiattoJson.img.file"  class="block m-auto pb-3 product-image" />
+            <img [src]="piattoJson.img.file"  class="block m-auto pb-3 product-image" />
 
 
 
@@ -98,19 +99,19 @@
 
             <div class="field">
                 <label for="name">Codice</label>
-                <input type="text" pInputText id="name" [(ngModel)]="updatePiattoJson.codice" required autofocus [required]="true"/>
+                <input type="text" pInputText id="name" [(ngModel)]="piattoJson.codice" required autofocus [required]="true"/>
             </div>
 
 
             <div class="field">
                 <label for="name">Nome</label>
-                <input type="text" pInputText id="name" [(ngModel)]="updatePiattoJson.nome" required autofocus [required]="true"/>
+                <input type="text" pInputText id="name" [(ngModel)]="piattoJson.nome" required autofocus [required]="true"/>
             </div>
 
 
             <div class="field">
                 <label for="name">Categoria</label>
-                <p-dropdown [options]="filtroCategorie" [(ngModel)]="updatePiattoJson.categoria" optionLabel="nome" [showClear]="true" placeholder="Seleziona una Categoria" [required]="true"></p-dropdown>
+                <p-dropdown [options]="filtroCategorie" [(ngModel)]="piattoJson.categoria" optionLabel="nome" [showClear]="true" placeholder="Seleziona una Categoria" [required]="true"></p-dropdown>
             </div>
 
 
@@ -125,8 +126,8 @@
 
         <div *ngIf="debug == true" style="margin-top: 20px;">
             <p-accordion [activeIndex]="1">
-                <p-accordionTab header="Dati updatePiattoJson">
-                    <pre>{{updatePiattoJson | json}}</pre>
+                <p-accordionTab header="Dati piattoJson">
+                    <pre>{{piattoJson | json}}</pre>
                 </p-accordionTab>
             </p-accordion>
         </div>

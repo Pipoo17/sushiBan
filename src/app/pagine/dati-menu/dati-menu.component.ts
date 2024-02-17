@@ -38,8 +38,9 @@ loading: boolean = false;
 categorie : any = [];
 
 isUpdatePopUpVisible : boolean = false;
+isInsertPopUpVisible : boolean = false;
 
-updatePiattoJson :piatto = {
+piattoJson :piatto = {
   id: '',
   codice: '',
   nome: '',
@@ -100,24 +101,17 @@ debug: boolean = !this.EnvironmentService.getIsProd();
     table.clear();
 }
 
+
+
 openUpdate(piatto : any){
   this.isUpdatePopUpVisible = !this.isUpdatePopUpVisible
+  this.setUpdatePiattoJson(piatto);
+  
+}
 
-  this.updatePiattoJson = {
-    id: piatto.id,
-    codice: piatto.codice,
-    nome: piatto.nome,
-    categoria:{
-      codice: Number(piatto.idcategoria),
-      nome:piatto.categoria
-    },
-    img: {
-      file: this.getImgPiatto(piatto.codice),
-      changed: false
-    }
-  }
-  //piatto;
-  console.log(this.updatePiattoJson);
+openInsert(){
+  this.isInsertPopUpVisible = !this.isInsertPopUpVisible
+  this.resetPiattoJson()
   
 }
 
@@ -135,13 +129,13 @@ openUpdate(piatto : any){
 
       const imageUrl = URL.createObjectURL(imgPiatto);
 
-      this.updatePiattoJson = {
-        id: this.updatePiattoJson.id,
-        codice: this.updatePiattoJson.codice,
-        nome: this.updatePiattoJson.nome,
+      this.piattoJson = {
+        id: this.piattoJson.id,
+        codice: this.piattoJson.codice,
+        nome: this.piattoJson.nome,
         categoria:{
-          codice: Number(this.updatePiattoJson.categoria.codice),
-          nome:this.updatePiattoJson.categoria.nome
+          codice: Number(this.piattoJson.categoria.codice),
+          nome:this.piattoJson.categoria.nome
         },
         img: {
           file: imageUrl,
@@ -177,7 +171,7 @@ update(){
 
   this.submitted = true;
 
-  this.supabaseService.updatePiatto(this.updatePiattoJson)
+  this.supabaseService.updatePiatto(this.piattoJson)
   
 }
 
@@ -185,10 +179,15 @@ update(){
 close(){
   console.log('modifiche annullate');
   this.isUpdatePopUpVisible = false;
+  this.isInsertPopUpVisible = false;
   this.submitted = false;
 }
 
 
+async refresh(){
+  this.menuJson = await this.supabaseService.getPiatti()
+  
+}
 
 /* 
 exportPdf() {
@@ -219,4 +218,44 @@ saveAsExcelFile(buffer: any, fileName: string): void {
   FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
 }
  */
+
+
+
+resetPiattoJson(){
+  this.piattoJson = {
+    id: '',
+    codice: '',
+    nome: '',
+    categoria: {
+      codice: Number(''),
+      nome: ''
+    },
+    img:{
+      file: '',
+      changed: false
+    }
+  };
+}
+
+
+
+setUpdatePiattoJson(piatto: any){
+  this.piattoJson = {
+    id: piatto.id,
+    codice: piatto.codice,
+    nome: piatto.nome,
+    categoria:{
+      codice: Number(piatto.idcategoria),
+      nome:piatto.categoria
+    },
+    img: {
+      file: this.getImgPiatto(piatto.codice),
+      changed: false
+    }
+  }
+}
+
+
+
+
 }
