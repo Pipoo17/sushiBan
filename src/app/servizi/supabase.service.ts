@@ -20,7 +20,10 @@ interface piatto {
   codice: string,
   nome: string,
   categoria :Categoria,
-  img: string | File
+  img:{
+    file: string | File
+    changed: boolean
+  }
 }
 
 

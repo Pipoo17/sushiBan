@@ -19,7 +19,10 @@ interface piatto {
   codice: string,
   nome: string,
   categoria :Categoria,
-  img: string | File
+  img:{
+    file: string | File
+    changed: boolean
+  }
 }
 
 @Component({
@@ -44,7 +47,10 @@ updatePiattoJson :piatto = {
     codice: Number(''),
     nome: ''
   },
-  img: ''
+  img:{
+    file: '',
+    changed: false
+  }
 };
 
 submitted: boolean = false;
@@ -105,8 +111,10 @@ openUpdate(piatto : any){
       codice: Number(piatto.idcategoria),
       nome:piatto.categoria
     },
-    img: this.getImgPiatto(piatto.codice)
-
+    img: {
+      file: this.getImgPiatto(piatto.codice),
+      changed: false
+    }
   }
   //piatto;
   console.log(this.updatePiattoJson);
@@ -135,33 +143,16 @@ openUpdate(piatto : any){
           codice: Number(this.updatePiattoJson.categoria.codice),
           nome:this.updatePiattoJson.categoria.nome
         },
-        img: imageUrl
-    
+        img: {
+          file: imageUrl,
+          changed: true
+        }
       }
     }
   }
 
 
 
-
-update() {
-/* 
-  if (this.product.name?.trim()) {
-      if (this.product.id) {
-          this.products[this.findIndexById(this.product.id)] = this.product;
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-      } else {
-          this.product.id = this.createId();
-          this.product.image = 'product-placeholder.svg';
-          this.products.push(this.product);
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-      }
-
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
-  } */
-}
 
 
 
@@ -182,7 +173,7 @@ async getFiltroCategorieValues(){
 
 
 
-saveProduct(){
+update(){
 
   this.submitted = true;
 

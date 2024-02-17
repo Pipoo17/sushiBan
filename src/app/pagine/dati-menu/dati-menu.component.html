@@ -84,7 +84,7 @@
     <ng-template pTemplate="content">
         <div class="form">
                 
-            <img [src]="updatePiattoJson.img"  class="block m-auto pb-3 product-image" />
+            <img [src]="updatePiattoJson.img.file"  class="block m-auto pb-3 product-image" />
 
 
 
@@ -119,7 +119,7 @@
         
 
         <div class="containerPulsanti">
-            <p-button size="small" icon="pi pi-check" (click)="saveProduct()" label="Conferma" severity="info" ></p-button>
+            <p-button size="small" icon="pi pi-check" (click)="update()" label="Conferma" severity="info" ></p-button>
             <p-button size="small" icon="pi pi-times" (click)="close()" label="Annulla" severity="danger"></p-button>
         </div>
 
