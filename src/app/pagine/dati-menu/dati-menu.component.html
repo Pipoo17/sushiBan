@@ -84,8 +84,17 @@
     <ng-template pTemplate="content">
         <div class="form">
                 
-            <img [src]=this.getImgPiatto(updatePiattoJson.codice)  class="block m-auto pb-3 product-image" />
-    
+            <img [src]="updatePiattoJson.img"  class="block m-auto pb-3 product-image" />
+
+
+
+            <div class="containerPulsanti d-flex justify-content-center">
+                <input type="file" accept=".jpg" (change)="onFileSelected($event)" style="display: none" #fileInput>
+                <p-button label="Modifica Immagine" severity="help" (click)="fileInput.click()" size="small" class="text-center"></p-button>
+            </div>
+
+            <br>
+            <br>
 
             <div class="field">
                 <label for="name">Codice</label>
@@ -109,7 +118,7 @@
 
         
 
-        <div class="bottonFooter">
+        <div class="containerPulsanti">
             <p-button size="small" icon="pi pi-check" (click)="saveProduct()" label="Conferma" severity="info" ></p-button>
             <p-button size="small" icon="pi pi-times" (click)="close()" label="Annulla" severity="danger"></p-button>
         </div>

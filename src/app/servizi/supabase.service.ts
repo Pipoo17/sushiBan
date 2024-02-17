@@ -9,11 +9,24 @@ import { EnvironmentService } from './environment.service';
 import { BehaviorSubject } from 'rxjs';
 
 
+//usati per update piatti
+interface Categoria {
+  codice: number;
+  nome: string;
+}
+
+interface piatto {
+  id: string,
+  codice: string,
+  nome: string,
+  categoria :Categoria,
+  img: string | File
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
-
 
 
 
@@ -495,6 +508,12 @@ async getPiatti(){
   }
 
     
+
+  async updatePiatto(piatto: piatto){
+
+    console.log(piatto);
+    
+  }
 
   /*============================================*/ 
   /*==========  METODI PER I GRAFICI  ==========*/

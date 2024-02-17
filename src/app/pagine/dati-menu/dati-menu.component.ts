@@ -19,6 +19,7 @@ interface piatto {
   codice: string,
   nome: string,
   categoria :Categoria,
+  img: string | File
 }
 
 @Component({
@@ -42,8 +43,9 @@ updatePiattoJson :piatto = {
   categoria: {
     codice: Number(''),
     nome: ''
-  }
-} ;
+  },
+  img: ''
+};
 
 submitted: boolean = false;
 
@@ -65,6 +67,8 @@ debug: boolean = !this.EnvironmentService.getIsProd();
   async ngOnInit(){
     this.loading = true
     this.menuJson = await this.supabaseService.getPiatti()
+    console.log(this.menuJson);
+    
     this.categorie = this.servizioMenu.getCategorie();
     this.loading = false
 
@@ -98,19 +102,50 @@ openUpdate(piatto : any){
     codice: piatto.codice,
     nome: piatto.nome,
     categoria:{
-      codice: Number('2'),
+      codice: Number(piatto.idcategoria),
       nome:piatto.categoria
-    }
+    },
+    img: this.getImgPiatto(piatto.codice)
 
   }
   //piatto;
   console.log(this.updatePiattoJson);
   
 }
-/*
-update() {
-  this.submitted = true;
 
+
+  //Aggiornamento foto profilo
+  async onFileSelected(event: any) {
+    console.log("onFileSelected");
+    
+    const imgPiatto = event.target.files[0]
+    
+    console.log(typeof imgPiatto);
+    console.log(imgPiatto);
+
+    if (imgPiatto) {
+
+      const imageUrl = URL.createObjectURL(imgPiatto);
+
+      this.updatePiattoJson = {
+        id: this.updatePiattoJson.id,
+        codice: this.updatePiattoJson.codice,
+        nome: this.updatePiattoJson.nome,
+        categoria:{
+          codice: Number(this.updatePiattoJson.categoria.codice),
+          nome:this.updatePiattoJson.categoria.nome
+        },
+        img: imageUrl
+    
+      }
+    }
+  }
+
+
+
+
+update() {
+/* 
   if (this.product.name?.trim()) {
       if (this.product.id) {
           this.products[this.findIndexById(this.product.id)] = this.product;
@@ -125,26 +160,11 @@ update() {
       this.products = [...this.products];
       this.productDialog = false;
       this.product = {};
-  }
+  } */
 }
 
-*/
 
 
-/*  openNew() {
-  console.log('nowopeen');
-  
-  this.updatePiattoJson = {
-    id: '',
-    codice: '',
-    nome: '',
-    categoria:''
-  }
-
-  this.submitted = false;
-  this.isUpdatePopUpVisible = true;
-} 
- */
 async getFiltroCategorieValues(){
 
 
@@ -163,7 +183,10 @@ async getFiltroCategorieValues(){
 
 
 saveProduct(){
-  console.log('prodotto salvato');
+
+  this.submitted = true;
+
+  this.supabaseService.updatePiatto(this.updatePiattoJson)
   
 }
 

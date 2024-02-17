@@ -23,7 +23,7 @@ flex-direction: column;
 }
 
 
-.bottonFooter{
+.containerPulsanti{
   margin-top: 20px;
   display: flex;
   width: 100%;
@@ -32,3 +32,6 @@ flex-direction: column;
   gap: 10px;
 }
 
+.pulsanteModificaImmagine{
+  width: 200px;
+}
