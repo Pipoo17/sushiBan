@@ -35,3 +35,26 @@ flex-direction: column;
 .pulsanteModificaImmagine{
   width: 200px;
 }
+
+
+.filter{
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 40px
+}
+
+.filterRow{
+  display: flex;
+  justify-content: space-between;
+}
+
+.placeholder {
+  text-align: center;
+  border: 2px dashed #ccc;
+  padding: 40px;
+  width: 100%;
+}
+
+::ng-deep .p-dropdown {
+  width: 250px; /* Imposta la larghezza desiderata */
+}

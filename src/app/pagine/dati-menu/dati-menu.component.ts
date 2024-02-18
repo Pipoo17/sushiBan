@@ -36,6 +36,7 @@ menuJson :any;
 totalRecords : any;
 loading: boolean = false;
 categorie : any = [];
+showPlaceholder: boolean = false;
 
 isUpdatePopUpVisible : boolean = false;
 isInsertPopUpVisible : boolean = false;
@@ -176,6 +177,15 @@ update(){
 }
 
 
+insert(){
+
+  this.submitted = true;
+
+  this.supabaseService.insertPiatto(this.piattoJson)
+  
+}
+
+
 close(){
   console.log('modifiche annullate');
   this.isUpdatePopUpVisible = false;
@@ -255,7 +265,9 @@ setUpdatePiattoJson(piatto: any){
   }
 }
 
-
+handleImageError() {
+  this.showPlaceholder = true;
+}
 
 
 }

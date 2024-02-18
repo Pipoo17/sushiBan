@@ -78,10 +78,97 @@
 
 <!--
                                               ==========================================
+                                              ==============  POP UP INSERT ============
+                                              ==========================================
+-->
+<p-dialog [(visible)]="isInsertPopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Aggiungi piatto" [modal]="true" >
+    <ng-template pTemplate="content">
+        <div class="form">
+                
+            <div class="product-image-container">
+                <ng-container *ngIf="piattoJson.img.file; else placeholderTemplate">
+                    <img [src]="piattoJson.img.file" (error)="handleImageError()" class="block m-auto pb-3 product-image" />
+                </ng-container>
+                <ng-template #placeholderTemplate>
+                    <div class="placeholder">
+                        Clicca sul pulsante sotto per caricare una foto
+                    </div>
+                </ng-template>
+            </div>
+            
+
+
+            <div class="containerPulsanti d-flex justify-content-center">
+                <input type="file" accept=".jpg" (change)="onFileSelected($event)" style="display: none" #fileInput>
+                <p-button label="Modifica Immagine" severity="help" (click)="fileInput.click()" size="small" class="text-center"></p-button>
+            </div>
+
+
+            <div class="filterRow">
+
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Codice" [(ngModel)]="piattoJson.codice" required [required]="true"/>
+                        <label for="Codice">Codice</label>
+                    </span>
+                </div>
+    
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Nome" [(ngModel)]="piattoJson.nome" required [required]="true"/>
+                        <label for="Nome">Nome</label>
+                    </span>
+                </div>
+             </div>
+
+
+             <div class="filterRow">
+
+                <div class="filter">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="filtroCategorie" [(ngModel)]="piattoJson.categoria"  placeholder="Seleziona una Categoria" optionLabel="nome" inputId="float-label" [required]="true" />
+                        <label for="float-label">Categoria</label>
+                    </span>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+        
+
+        <div class="containerPulsanti">
+            <p-button size="small" icon="pi pi-check" (click)="insert()" label="Conferma" severity="info" ></p-button>
+            <p-button size="small" icon="pi pi-times" (click)="close()" label="Annulla" severity="danger"></p-button>
+        </div>
+
+        <div *ngIf="debug == true" style="margin-top: 20px;">
+            <p-accordion [activeIndex]="1">
+                <p-accordionTab header="Dati piattoJson">
+                    <pre>{{piattoJson | json}}</pre>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+        
+           
+        
+
+    </ng-template>
+</p-dialog>
+
+
+
+
+
+
+<!--
+                                              ==========================================
                                               ==============  POP UP UPDATE ============
                                               ==========================================
 -->
-<p-dialog [(visible)]="isUpdatePopUpVisible || isInsertPopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" >
     <ng-template pTemplate="content">
         <div class="form">
                 
@@ -94,27 +181,36 @@
                 <p-button label="Modifica Immagine" severity="help" (click)="fileInput.click()" size="small" class="text-center"></p-button>
             </div>
 
-            <br>
-            <br>
 
-            <div class="field">
-                <label for="name">Codice</label>
-                <input type="text" pInputText id="name" [(ngModel)]="piattoJson.codice" required autofocus [required]="true"/>
+             <div class="filterRow">
+
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Codice" [(ngModel)]="piattoJson.codice" required [required]="true"/>
+                        <label for="Codice">Codice</label>
+                    </span>
+                </div>
+    
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Nome" [(ngModel)]="piattoJson.nome" required [required]="true"/>
+                        <label for="Nome">Nome</label>
+                    </span>
+                </div>
+             </div>
+
+
+             <div class="filterRow">
+
+                <div class="filter">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="filtroCategorie" [(ngModel)]="piattoJson.categoria" placeholder="Seleziona una Categoria" optionLabel="nome" inputId="float-label" [required]="true" />
+                        <label for="float-label">Categoria</label>
+                    </span>
+                </div>
+
+
             </div>
-
-
-            <div class="field">
-                <label for="name">Nome</label>
-                <input type="text" pInputText id="name" [(ngModel)]="piattoJson.nome" required autofocus [required]="true"/>
-            </div>
-
-
-            <div class="field">
-                <label for="name">Categoria</label>
-                <p-dropdown [options]="filtroCategorie" [(ngModel)]="piattoJson.categoria" optionLabel="nome" [showClear]="true" placeholder="Seleziona una Categoria" [required]="true"></p-dropdown>
-            </div>
-
-
         </div>
 
         

@@ -517,6 +517,13 @@ async getPiatti(){
     console.log(piatto);
     
   }
+  
+  
+  async insertPiatto(piatto: piatto){
+
+    console.log(piatto);
+    
+  }
 
   /*============================================*/ 
   /*==========  METODI PER I GRAFICI  ==========*/
