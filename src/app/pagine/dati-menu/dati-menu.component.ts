@@ -5,8 +5,9 @@ import { MenuService } from 'src/app/servizi/menu.service';
 import { Table } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'src/app/servizi/message.service';
 
 
 interface Categoria {
@@ -66,6 +67,7 @@ debug: boolean = !this.EnvironmentService.getIsProd();
     private supabaseService: SupabaseService,
     private servizioMenu: MenuService,
     private EnvironmentService: EnvironmentService,
+    private MessageService: MessageService,
 
   ){
     this.supabaseService.checkAuth();
@@ -177,12 +179,33 @@ update(){
 }
 
 
-insert(){
+async insert(){
 
   this.submitted = true;
 
-  this.supabaseService.insertPiatto(this.piattoJson)
+  if (this.isFormValid()) {
+    // Se il form è valido, esegui l'invio dei dati
+    let response = await this.supabaseService.insertPiatto(this.piattoJson)
+
+    if(response.success){
+      this.close()
+      this.MessageService.showMessageSuccess('',response.description)
+
+    }else{
+      this.MessageService.showMessageError('',response.description)
+
+    }
+
+  }else{
+    this.MessageService.showMessageError('','Riempi tutti i campi')
+}
   
+}
+
+
+isFormValid(): boolean {
+  // Controlla se tutti i campi obbligatori sono stati compilati
+  return !!this.piattoJson.codice && !!this.piattoJson.nome && !!this.piattoJson.categoria.nome && !!this.piattoJson.img.file;
 }
 
 

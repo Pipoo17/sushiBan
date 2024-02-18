@@ -522,7 +522,28 @@ async getPiatti(){
   async insertPiatto(piatto: piatto){
 
     console.log(piatto);
+    const file = new File([piatto.img.file], piatto.nome ,{ type: "image/jpg" });
+
+    let response = await this.uploadImage('immaginiPiatti',piatto.codice, file)
+
+    console.log(response);
     
+/*     const { data, error } = await this.supabase
+    .from('Piatti')
+    .insert({ 
+      codice: piatto.codice, 
+      descrizione: piatto.nome, 
+      idCategoria: piatto.categoria.codice });
+
+      if(error){
+        
+        return { success: false, description: error.message };
+
+      }
+      return { success: true, description: 'Inserimento completato con successo' };
+  */
+      return { success: true, description: 'Inserimento completato con successo' };
+
   }
 
   /*============================================*/ 
@@ -752,6 +773,11 @@ async getPiatti(){
       upsert: false
     })
 
+    if(error){
+      return { success: false, description: error.message };
+    }
+    return { success: true, description: 'Inserimento completato con successo' };
+    
   }
 
   async deleteImmage(bucket : string, imageName : string){
