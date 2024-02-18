@@ -269,5 +269,23 @@ handleImageError() {
   this.showPlaceholder = true;
 }
 
+handleDragOver(event: DragEvent) {
+  event.preventDefault();
+}
+
+handleDrop(event: DragEvent) {
+  event.preventDefault();
+  const file = event.dataTransfer?.files[0];
+  if (file) {
+      // Qui puoi gestire il caricamento dell'immagine
+      // Ad esempio, puoi convertirla in un URL Blob e assegnarla a piattoJson.img.file
+      const reader = new FileReader();
+      reader.onload = (e) => {
+          this.piattoJson.img.file = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+  }
+}
+
 
 }

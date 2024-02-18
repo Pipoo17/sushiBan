@@ -58,3 +58,7 @@ flex-direction: column;
 ::ng-deep .p-dropdown {
   width: 250px; /* Imposta la larghezza desiderata */
 }
+
+.product-image-container{
+  cursor: pointer;
+}

@@ -85,13 +85,13 @@
     <ng-template pTemplate="content">
         <div class="form">
                 
-            <div class="product-image-container">
+            <div class="product-image-container" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)" (click)="fileInput.click()">
                 <ng-container *ngIf="piattoJson.img.file; else placeholderTemplate">
-                    <img [src]="piattoJson.img.file" (error)="handleImageError()" class="block m-auto pb-3 product-image" />
+                    <img [src]="piattoJson.img.file" class="block m-auto pb-3 product-image" />
                 </ng-container>
                 <ng-template #placeholderTemplate>
                     <div class="placeholder">
-                        Clicca sul pulsante sotto per caricare una foto
+                        Clicca qui o trascina un'immagine per caricarla
                     </div>
                 </ng-template>
             </div>
@@ -172,8 +172,17 @@
     <ng-template pTemplate="content">
         <div class="form">
                 
-            <img [src]="piattoJson.img.file"  class="block m-auto pb-3 product-image" />
-
+            <div class="product-image-container" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)" (click)="fileInput.click()">
+                <ng-container *ngIf="piattoJson.img.file; else placeholderTemplate">
+                    <img [src]="piattoJson.img.file" class="block m-auto pb-3 product-image" />
+                </ng-container>
+                <ng-template #placeholderTemplate>
+                    <div class="placeholder">
+                        Clicca qui o trascina un'immagine per caricarla
+                    </div>
+                </ng-template>
+            </div>
+            
 
 
             <div class="containerPulsanti d-flex justify-content-center">
