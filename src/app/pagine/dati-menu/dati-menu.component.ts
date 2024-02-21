@@ -124,7 +124,6 @@ openInsert(){
 }
 
 
-  //Aggiornamento foto profilo
   async onFileSelected(event: any) {
     console.log("onFileSelected");
     

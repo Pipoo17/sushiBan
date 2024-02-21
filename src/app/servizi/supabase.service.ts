@@ -521,6 +521,7 @@ async getPiatti(){
     let response;
 
     if (piatto.img.changed) {
+        await this.deleteImmage('immaginiPiatti', piatto.codice + '.jpg') 
         response = await this.uploadImage('immaginiPiatti', piatto.codice, piatto.img.file);
     }
     
