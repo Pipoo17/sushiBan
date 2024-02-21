@@ -572,6 +572,28 @@ async getPiatti(){
   
   }
 
+
+  async deletePiatto(piatto: piatto){
+
+    let response = await this.deleteImmage('immaginiPiatti', piatto.codice + '.jpg') 
+
+
+    if(!response.success){
+      return { success: false, description: response.description };
+    }
+
+     const { data, error } = await this.supabase
+    .from('Piatti')
+    .delete({})
+    .eq('codice', piatto.codice);
+
+      if(error){
+        return { success: false, description: error.message };
+      }
+      return { success: true, description: 'Piatto Eliminato'
+    }
+  }
+
   async getImageDataFromUrl(url: string): Promise<ArrayBuffer> {
     const response = await fetch(url);
     const imageData = await response.arrayBuffer();
@@ -817,15 +839,16 @@ async getPiatti(){
 
   async deleteImmage(bucket : string, imageName : string){
 
-    const { data : deleteData, error: errorData } = await this.supabase
+    const { data , error } = await this.supabase
     .storage
     .from(bucket)
     .remove([imageName])
 
-    console.log("immagine eliminata : ", imageName);
+    if(error){
+      return { success: false, description: error.message };
+    }
+    return { success: true, description: 'Inserimento completato con successo' };
     
-    console.log("deleteData : ",deleteData);
-    console.log("errorData : ",errorData);
     
   }
 

@@ -126,30 +126,26 @@ openInsert(){
   
 }
 
-openDelete(piatto : any){
+openDelete(piatto : piatto){
 
   console.log(piatto);
   
   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
-      message: "Sei sicuro di voler eliminare questo piatto? L'azione non è reversibile",
+      message: "Sei sicuro di voler eliminare " + piatto.codice + " - " + piatto.nome + "?",
       buttonText: {
         ok: 'Conferma',
         cancel: 'Annulla'
       }
     }
   });
-/*
+
   dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
-    this.isLoading = true;
     if (confirmed) {
-      await this.supabaseService.deleteOrderRapido(idOrdine);
-      this.ordiniSalvati = await this.supabaseService.getOrdiniRapidi();
-      this.MessageService.showMessageSuccess('','Ordine Rapido cancellato con successo')
+       await this.delete(piatto);
     }
-    this.isLoading = false;
-  });
-*/
+});
+
 }
 
 
@@ -250,6 +246,28 @@ async insert(){
 this.isLoading = false
 }
 
+
+
+async delete(piatto : piatto){
+
+  this.submitted = true;
+  this.isLoading = true
+
+    // Se il form è valido, esegui l'invio dei dati
+    let response = await this.supabaseService.deletePiatto(piatto)
+
+    if(response.success){
+      this.close()
+      this.refresh()
+      this.MessageService.showMessageSuccess('',response.description)
+
+    }else{
+      this.MessageService.showMessageError('',response.description)
+
+    }
+    this.isLoading = false
+
+}
 
 isFormValid(): boolean {
   // Controlla se tutti i campi obbligatori sono stati compilati
