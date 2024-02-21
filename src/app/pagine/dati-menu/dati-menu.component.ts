@@ -176,7 +176,7 @@ async getFiltroCategorieValues(){
 async update(){
 
   this.submitted = true;
-
+  this.isLoading = true
 
     // Se il form è valido, esegui l'invio dei dati
     let response = await this.supabaseService.updatePiatto(this.piattoJson)
@@ -190,6 +190,7 @@ async update(){
       this.MessageService.showMessageError('',response.description)
 
     }
+    this.isLoading = false
 
 }
   
@@ -198,7 +199,7 @@ async update(){
 async insert(){
 
   this.submitted = true;
-
+  this.isLoading = true
 
   if (this.isFormValid()) {
     // Se il form è valido, esegui l'invio dei dati
@@ -217,7 +218,7 @@ async insert(){
   }else{
     this.MessageService.showMessageError('','Riempi tutti i campi')
 }
-  
+this.isLoading = false
 }
 
 
