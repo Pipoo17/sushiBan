@@ -517,6 +517,32 @@ async getPiatti(){
   async updatePiatto(piatto: piatto){
 
     console.log(piatto);
+
+    let response;
+
+    if (piatto.img.changed) {
+        response = await this.uploadImage('immaginiPiatti', piatto.codice, piatto.img.file);
+    }
+    
+    
+    if (response == undefined || response.success) {
+      const { data, error } = await this.supabase
+      .from('Piatti')
+      .update({ 
+        descrizione: piatto.nome, 
+        idCategoria: piatto.categoria.codice })
+      .eq('codice', piatto.codice);
+  
+        if(error){
+          return { success: false, description: error.message };
+        }
+        return { success: true, description: 'Inserimento completato con successo' };
+        
+      }
+      else{
+        return { success: false, description: response.description };
+      }
+
     
   }
   

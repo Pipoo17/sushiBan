@@ -44,6 +44,8 @@ showPlaceholder: boolean = false;
 isUpdatePopUpVisible : boolean = false;
 isInsertPopUpVisible : boolean = false;
 
+isLoading: boolean = false;
+
 piattoJson :piatto = {
   id: '',
   codice: '',
@@ -172,18 +174,32 @@ async getFiltroCategorieValues(){
 
 
 
-update(){
+async update(){
 
   this.submitted = true;
 
-  this.supabaseService.updatePiatto(this.piattoJson)
-  
+
+    // Se il form è valido, esegui l'invio dei dati
+    let response = await this.supabaseService.updatePiatto(this.piattoJson)
+
+    if(response.success){
+      this.close()
+      this.refresh()
+      this.MessageService.showMessageSuccess('',response.description)
+
+    }else{
+      this.MessageService.showMessageError('',response.description)
+
+    }
+
 }
+  
 
 
 async insert(){
 
   this.submitted = true;
+
 
   if (this.isFormValid()) {
     // Se il form è valido, esegui l'invio dei dati
@@ -191,6 +207,7 @@ async insert(){
 
     if(response.success){
       this.close()
+      this.refresh()
       this.MessageService.showMessageSuccess('',response.description)
 
     }else{
