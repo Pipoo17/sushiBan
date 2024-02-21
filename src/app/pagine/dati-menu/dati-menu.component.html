@@ -65,7 +65,8 @@
                 <td>{{ product.categoria }}</td>
                 <td style="width:25%"><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
                 <td>
-                    <button type="button" pButton pRipple icon="pi pi-pencil" (click)="openUpdate(product)"></button>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (click)="openUpdate(product)"></p-button>
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="openDelete(product)" severity="danger "></p-button>
                 </td>
             </tr>
         </ng-template>

@@ -8,6 +8,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'src/app/servizi/message.service';
+import { ConfirmDialogComponent } from 'src/app/component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 interface Categoria {
@@ -73,6 +75,7 @@ debug: boolean = !this.EnvironmentService.getIsProd();
     private servizioMenu: MenuService,
     private EnvironmentService: EnvironmentService,
     private MessageService: MessageService,
+    public dialog: MatDialog,
 
   ){
     this.supabaseService.checkAuth();
@@ -121,6 +124,32 @@ openInsert(){
   this.isInsertPopUpVisible = !this.isInsertPopUpVisible
   this.resetPiattoJson()
   
+}
+
+openDelete(piatto : any){
+
+  console.log(piatto);
+  
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: "Sei sicuro di voler eliminare questo piatto? L'azione non è reversibile",
+      buttonText: {
+        ok: 'Conferma',
+        cancel: 'Annulla'
+      }
+    }
+  });
+/*
+  dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+    this.isLoading = true;
+    if (confirmed) {
+      await this.supabaseService.deleteOrderRapido(idOrdine);
+      this.ordiniSalvati = await this.supabaseService.getOrdiniRapidi();
+      this.MessageService.showMessageSuccess('','Ordine Rapido cancellato con successo')
+    }
+    this.isLoading = false;
+  });
+*/
 }
 
 
