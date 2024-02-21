@@ -9,10 +9,14 @@ import { EnvironmentService } from './environment.service';
 import { BehaviorSubject } from 'rxjs';
 
 
-//usati per update piatti
 interface Categoria {
   codice: number;
   nome: string;
+}
+interface Immagine{
+  url: string
+  file: any
+  changed: boolean
 }
 
 interface piatto {
@@ -20,10 +24,7 @@ interface piatto {
   codice: string,
   nome: string,
   categoria :Categoria,
-  img:{
-    file: string | File
-    changed: boolean
-  }
+  img:Immagine
 }
 
 
@@ -179,8 +180,9 @@ async checkIfUserAuth() {
 
 async restorePasswordRedirect(paramJson : any){
  
-  //var redirectURL = 'http://localhost:4200'
-  var redirectURL = 'https://sushiban.vercel.app'
+  var redirectURL = 'http://localhost:4200'
+  if(this.EnvironmentService.getIsProd())
+    var redirectURL = 'https://sushiban.vercel.app'
 
   const { data, error } = await this.supabase.auth.resetPasswordForEmail(paramJson.email, {
     redirectTo: redirectURL + '/ResetPassword/Password',
@@ -518,17 +520,18 @@ async getPiatti(){
     
   }
   
-  
+
   async insertPiatto(piatto: piatto){
 
     console.log(piatto);
-    const file = new File([piatto.img.file], piatto.nome ,{ type: "image/jpg" });
 
-    let response = await this.uploadImage('immaginiPiatti',piatto.codice, file)
+    let response = await this.uploadImage('immaginiPiatti',piatto.codice, piatto.img.file)
 
-    console.log(response);
-    
-/*     const { data, error } = await this.supabase
+    if(!response.success){
+      return { success: false, description: response.description };
+    }
+
+     const { data, error } = await this.supabase
     .from('Piatti')
     .insert({ 
       codice: piatto.codice, 
@@ -536,15 +539,20 @@ async getPiatti(){
       idCategoria: piatto.categoria.codice });
 
       if(error){
-        
         return { success: false, description: error.message };
-
       }
       return { success: true, description: 'Inserimento completato con successo' };
-  */
-      return { success: true, description: 'Inserimento completato con successo' };
-
+  
   }
+
+  async getImageDataFromUrl(url: string): Promise<ArrayBuffer> {
+    const response = await fetch(url);
+    const imageData = await response.arrayBuffer();
+    return imageData;
+}
+  
+  
+  
 
   /*============================================*/ 
   /*==========  METODI PER I GRAFICI  ==========*/
@@ -768,7 +776,7 @@ async getPiatti(){
   const { data, error } = await this.supabase
     .storage
     .from(bucket)
-    .upload(imageName +'.png', imageFile, {
+    .upload(imageName +'.jpg', imageFile, {
       cacheControl: '3600',
       upsert: false
     })

@@ -14,16 +14,18 @@ interface Categoria {
   codice: number;
   nome: string;
 }
+interface Immagine{
+  url: string
+  file: any
+  changed: boolean
+}
 
 interface piatto {
   id: string,
   codice: string,
   nome: string,
   categoria :Categoria,
-  img:{
-    file: string | File
-    changed: boolean
-  }
+  img:Immagine
 }
 
 @Component({
@@ -51,7 +53,8 @@ piattoJson :piatto = {
     nome: ''
   },
   img:{
-    file: '',
+    url: '',
+    file: null,
     changed: false
   }
 };
@@ -125,8 +128,6 @@ openInsert(){
     
     const imgPiatto = event.target.files[0]
     
-    console.log(typeof imgPiatto);
-    console.log(imgPiatto);
 
     if (imgPiatto) {
 
@@ -141,7 +142,8 @@ openInsert(){
           nome:this.piattoJson.categoria.nome
         },
         img: {
-          file: imageUrl,
+          url: imageUrl,
+          file: imgPiatto,
           changed: true
         }
       }
@@ -222,37 +224,6 @@ async refresh(){
   
 }
 
-/* 
-exportPdf() {
-  import('jspdf').then((jsPDF) => {
-      import('jspdf-autotable').then((x) => {
-          const doc = new jsPDF.default('p', 'px', 'a4');
-          (doc as any).autoTable(this.exportColumns, this.products);
-          doc.save('products.pdf');
-      });
-  });
-}
-
-exportExcel() {
-  import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(this.products);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, 'products');
-  });
-}
-
-saveAsExcelFile(buffer: any, fileName: string): void {
-  let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-  let EXCEL_EXTENSION = '.xlsx';
-  const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE
-  });
-  FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-}
- */
-
-
 
 resetPiattoJson(){
   this.piattoJson = {
@@ -264,7 +235,8 @@ resetPiattoJson(){
       nome: ''
     },
     img:{
-      file: '',
+      url: '',
+      file: null,
       changed: false
     }
   };
@@ -282,7 +254,8 @@ setUpdatePiattoJson(piatto: any){
       nome:piatto.categoria
     },
     img: {
-      file: this.getImgPiatto(piatto.codice),
+      url: this.getImgPiatto(piatto.codice),
+      file: null,
       changed: false
     }
   }
@@ -304,7 +277,7 @@ handleDrop(event: DragEvent) {
       // Ad esempio, puoi convertirla in un URL Blob e assegnarla a piattoJson.img.file
       const reader = new FileReader();
       reader.onload = (e) => {
-          this.piattoJson.img.file = e.target?.result as string;
+          this.piattoJson.img.url = e.target?.result as string;
       };
       reader.readAsDataURL(file);
   }

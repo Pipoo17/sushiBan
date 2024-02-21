@@ -86,8 +86,8 @@
         <div class="form">
                 
             <div class="product-image-container" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)" (click)="fileInput.click()">
-                <ng-container *ngIf="piattoJson.img.file; else placeholderTemplate">
-                    <img [src]="piattoJson.img.file" class="block m-auto pb-3 product-image" />
+                <ng-container *ngIf="piattoJson.img.url; else placeholderTemplate">
+                    <img [src]="piattoJson.img.url" class="block m-auto pb-3 product-image" />
                 </ng-container>
                 <ng-template #placeholderTemplate>
                     <div class="placeholder">
@@ -171,10 +171,9 @@
 <p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" >
     <ng-template pTemplate="content">
         <div class="form">
-                
             <div class="product-image-container" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)" (click)="fileInput.click()">
-                <ng-container *ngIf="piattoJson.img.file; else placeholderTemplate">
-                    <img [src]="piattoJson.img.file" class="block m-auto pb-3 product-image" />
+                <ng-container *ngIf="piattoJson.img.url; else placeholderTemplate">
+                    <img [src]="piattoJson.img.url" class="block m-auto pb-3 product-image" />
                 </ng-container>
                 <ng-template #placeholderTemplate>
                     <div class="placeholder">
