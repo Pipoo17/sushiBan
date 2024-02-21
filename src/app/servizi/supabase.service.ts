@@ -583,7 +583,7 @@ async getPiatti(){
     }
 
      const { data, error } = await this.supabase
-    .from('Piatti')
+    .from('Piatti') 
     .delete({})
     .eq('codice', piatto.codice);
 

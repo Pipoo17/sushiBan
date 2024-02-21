@@ -130,13 +130,19 @@ openDelete(piatto : piatto){
 
   console.log(piatto);
   
+  let dettaglioPiatto = 
+  `Codice: ${piatto.codice}
+    Nome: ${piatto.nome}
+    Categoria: ${piatto.categoria}`
+
   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
-      message: "Sei sicuro di voler eliminare " + piatto.codice + " - " + piatto.nome + "?",
+      message: "Sei sicuro di voler eliminare questo piatto?",
       buttonText: {
         ok: 'Conferma',
         cancel: 'Annulla'
-      }
+      },
+      dettaglio: dettaglioPiatto
     }
   });
 

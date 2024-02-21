@@ -6,9 +6,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   selector: 'app-confirm-dialog',
   template: `
     <h2 mat-dialog-title>Attenzione</h2>
+
     <div mat-dialog-content>
       <p>{{ data.message }}</p>
     </div>
+
+    <div mat-dialog-content *ngIf="data.dettaglio">
+      <ul>
+        <li *ngFor="let item of data.dettaglio.split('\n')" >{{ item }}</li>
+      </ul>
+    </div>
+
     <div mat-dialog-actions class="containerPulsantiDiv">
       <div class="button-container">
         <p-button severity="info"   [outlined]="true" [raised]="true" size="small" mat-button color="primary" (click)="onYesClick()">{{ data.buttonText.ok }}</p-button>
