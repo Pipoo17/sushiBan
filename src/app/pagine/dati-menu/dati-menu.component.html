@@ -18,10 +18,12 @@
         scrollHeight="78vh"
     >
         <ng-template pTemplate="caption" >
-            <div class="flex align-items-center justify-content-between">
+            <div class="tabellaHeader">
                 Piatti
+                <div class="pulsantiTabellaHeader">
                 <p-button icon="pi pi-refresh" (click)="refresh()"></p-button>
                 <p-button icon="pi pi-plus" (click)="openInsert()"></p-button>
+                </div>
             </div>
 <!--             <div class="flex">
                 <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
@@ -30,15 +32,16 @@
                 <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
             </div> -->
         </ng-template>
-        
+
+
         <ng-template pTemplate="header">
             <tr>
                 <!-- <th pSortableColumn="codice" style="width:20%">Codice <p-sortIcon field="code"></p-sortIcon></th> -->
-                <th style="width:22%">Codice</th>
-                <th style="width:22%">Nome</th>
-                <th style="width:22%">Categoria</th>
-                <th style="width:25%">Immagine</th>
-                <th style="width: 5rem"></th>
+                <th style="width:10% ">Codice</th>
+                <th style="width:40%">Nome</th>
+                <th style="width:20%">Categoria</th>
+                <th style="width:10%"></th>
+                <th style="width: 10%" ></th>
             </tr>
             <tr>
                 <th>
@@ -48,7 +51,19 @@
                     <p-columnFilter type="text" field="nome"></p-columnFilter>
                 </th>
                 <th>
-                    <p-columnFilter type="text" field="categoria"></p-columnFilter>
+                    <!--
+                    <p-columnFilter field="idcategoria" matchMode="in" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown [options]="filtroCategorie" [(ngModel)]="selectedCategoria" placeholder="Seleziona una Categoria" (onChange)="filter($event.value)" optionLabel="nome" optionValue="codice" field="idcategoria" defaultLabel="Tutte le Categorie">
+                            </p-dropdown>                            
+                        </ng-template>
+                    </p-columnFilter>
+   -->
+                    <p-columnFilter field="idcategoria" matchMode="equals" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown [ngModel]="selectedCategoria" [options]="filtroCategorieHeader" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true" placeholder="Seleziona una Categoria" defaultLabel="Tutte le Categorie"/>
+                        </ng-template>
+                    </p-columnFilter>
                 </th>
                 <th>
                     <!-- immagini -->
@@ -63,7 +78,7 @@
                 <td>{{ product.codice }}</td>
                 <td>{{ product.nome }}</td>
                 <td>{{ product.categoria }}</td>
-                <td style="width:25%"><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
+                <td><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
                 <td>
                     <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (click)="openUpdate(product)"></p-button>
                     <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="openDelete(product)" severity="danger "></p-button>

@@ -580,13 +580,16 @@ async getPiatti(){
 
     if(!response.success){
       return { success: false, description: response.description };
-    }
+    }console.log(piatto);
+    
 
      const { data, error } = await this.supabase
     .from('Piatti') 
-    .delete({})
-    .eq('codice', piatto.codice);
-
+    .delete()
+    .eq('id', piatto.id);
+    console.log(data);
+    console.log(error);
+    
       if(error){
         return { success: false, description: error.message };
       }
@@ -847,7 +850,7 @@ async getPiatti(){
     if(error){
       return { success: false, description: error.message };
     }
-    return { success: true, description: 'Inserimento completato con successo' };
+    return { success: true, description: 'immagine eliminata' };
     
     
   }

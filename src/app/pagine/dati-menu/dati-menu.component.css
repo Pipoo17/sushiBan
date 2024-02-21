@@ -62,3 +62,12 @@ flex-direction: column;
 .product-image-container{
   cursor: pointer;
 }
+.tabellaHeader{
+  display: flex;
+  align-items:center ;
+  justify-content:space-between
+}
+.pulsantiTabellaHeader{
+  display: flex;
+  gap: 5px;
+}

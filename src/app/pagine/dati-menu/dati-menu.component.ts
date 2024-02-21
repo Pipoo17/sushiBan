@@ -47,7 +47,9 @@ isUpdatePopUpVisible : boolean = false;
 isInsertPopUpVisible : boolean = false;
 
 isLoading: boolean = false;
+selectedCategoria: any[] = [] ;
 
+filtroCategorieHeader: any;
 piattoJson :piatto = {
   id: '',
   codice: '',
@@ -89,16 +91,21 @@ debug: boolean = !this.EnvironmentService.getIsProd();
     
     this.categorie = this.servizioMenu.getCategorie();
     this.loading = false
-
-    console.log(this.EnvironmentService.getIsProd());
     
-
     await this.getFiltroCategorieValues()
 
     console.log(this.menuJson);
     console.log(this.totalRecords);
     console.log(this.menuJson)
-
+/*
+    this.filtroCategorieHeader = [
+      { label: 'Unqualified', value: '1' },
+      { label: 'Qualified', value: '2' },
+      { label: 'New', value: '3' },
+      { label: 'Negotiation', value: '4' },
+      { label: 'Renewal', value: '5' },
+      { label: 'Proposal', value: '6' }
+  ];*/
   }
 
   getImgPiatto(codicePiatto : string){
@@ -191,13 +198,17 @@ async getFiltroCategorieValues(){
 
 
   this.filtroCategorie = this.filtroCategorie ?? [];
+  this.filtroCategorieHeader = [];
+
   let data = await this.supabaseService.getListaCategorie();
 
   if(data == null) return
 
   data.forEach(categoria => {
     this.filtroCategorie?.push({ codice: categoria.idCategoria, nome: categoria.descrizione }) 
+    this.filtroCategorieHeader?.push({ label: categoria.descrizione, value: categoria.idCategoria })
   });
+console.log('filtroCategorieHeader : ',this.filtroCategorieHeader);
 
 
 }
@@ -224,8 +235,6 @@ async update(){
     this.isLoading = false
 
 }
-  
-
 
 async insert(){
 
@@ -252,8 +261,6 @@ async insert(){
 this.isLoading = false
 }
 
-
-
 async delete(piatto : piatto){
 
   this.submitted = true;
@@ -274,6 +281,8 @@ async delete(piatto : piatto){
     this.isLoading = false
 
 }
+
+
 
 isFormValid(): boolean {
   // Controlla se tutti i campi obbligatori sono stati compilati
