@@ -568,7 +568,7 @@ async getPiatti(){
       if(error){
         return { success: false, description: error.message };
       }
-      return { success: true, description: 'Inserimento completato' };
+      return { success: true, description: 'Inserimento completato!' };
   
   }
 
@@ -593,7 +593,7 @@ async getPiatti(){
       if(error){
         return { success: false, description: error.message };
       }
-      return { success: true, description: 'Piatto Eliminato'
+      return { success: true, description: 'Piatto Eliminato!'
     }
   }
 
