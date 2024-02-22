@@ -18,6 +18,7 @@ export class OrdiniComponent {
   isLoading : boolean = false;
   userOrder :any= [];
   allUsersOrder: any=[];
+  usersWithOrder: any=[];
 
   userOrderLabel: string = ''
   allUserOrdersLabel: string = ''
@@ -41,6 +42,7 @@ export class OrdiniComponent {
     this.thisUserOrder();
     //TRY ORDINE GENERALE
    this.allUsersOrders();
+   this.getUsersWithOrder()
   }
 
 
@@ -199,5 +201,15 @@ getImmagineUrlFromName(nomePiatto: string){
 
 
 
+
+async getUsersWithOrder(){
+  this.usersWithOrder = await this.supabaseService.getUsersWithOrder()  
+}
+
+getImgUser(username : string){
+  console.log(username);
+  
+  return this.supabaseService.getPictureURL('avatars',username)
+}
 
 }
