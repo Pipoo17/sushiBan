@@ -109,6 +109,18 @@ button[color="#176B87"] {
     width: 150px;
   }
 
+.immaginiUtentiOrdini{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+}
+
+.imgUserWithOrder{
+    border-radius: 100px;
+}
+
 @media (max-width: 1050px) {
     .container {
         flex-direction: column;

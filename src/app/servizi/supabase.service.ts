@@ -602,6 +602,29 @@ async getPiatti(){
     const imageData = await response.arrayBuffer();
     return imageData;
 }
+
+
+async getUsersWithOrder(){
+
+
+  let today = this.getDataFormatted('-')
+  let usernameList: {  }[][] = []
+
+  const { data, error } = await this.supabase
+    .from('Ordini')
+    .select('idutente,profiles(username)')
+    .eq('dataOrdine', today) 
+
+    if(error){
+      return usernameList;
+    }
+    data.forEach((utente) => {
+      usernameList.push(utente.profiles)
+    });
+    
+    return usernameList;
+
+}
   
   
   
@@ -782,6 +805,16 @@ async getPiatti(){
     const giorno = oggi.getDate().toString().padStart(2, '0');
   
     return anno + mese + giorno;
+  }
+
+
+  private getDataFormatted(divisore : string): string {
+    const oggi = new Date();
+    const anno = oggi.getFullYear().toString();
+    const mese = (oggi.getMonth() + 1).toString().padStart(2, '0'); // Mese inizia da 0
+    const giorno = oggi.getDate().toString().padStart(2, '0');
+  
+    return anno + divisore+ mese + divisore + giorno;
   }
 
   async isUserLogged(): Promise<boolean> {
