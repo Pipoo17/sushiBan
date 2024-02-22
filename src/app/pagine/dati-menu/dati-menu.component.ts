@@ -223,15 +223,8 @@ async update(){
     // Se il form è valido, esegui l'invio dei dati
     let response = await this.supabaseService.updatePiatto(this.piattoJson)
 
-    if(response.success){
-      this.close()
-      this.refresh()
-      this.MessageService.showMessageSuccess('',response.description)
+    this.crudCallBack(response);
 
-    }else{
-      this.MessageService.showMessageError('',response.description)
-
-    }
     this.isLoading = false
 
 }
@@ -245,15 +238,8 @@ async insert(){
     // Se il form è valido, esegui l'invio dei dati
     let response = await this.supabaseService.insertPiatto(this.piattoJson)
 
-    if(response.success){
-      this.close()
-      this.refresh()
-      this.MessageService.showMessageSuccess('',response.description)
+    this.crudCallBack(response);
 
-    }else{
-      this.MessageService.showMessageError('',response.description)
-
-    }
 
   }else{
     this.MessageService.showMessageError('','Riempi tutti i campi')
@@ -269,15 +255,7 @@ async delete(piatto : piatto){
     // Se il form è valido, esegui l'invio dei dati
     let response = await this.supabaseService.deletePiatto(piatto)
 
-    if(response.success){
-      this.close()
-      this.refresh()
-      this.MessageService.showMessageSuccess('',response.description)
-
-    }else{
-      this.MessageService.showMessageError('',response.description)
-
-    }
+    this.crudCallBack(response);
     this.isLoading = false
 
 }
@@ -340,6 +318,21 @@ setUpdatePiattoJson(piatto: any){
   }
 }
 
+
+crudCallBack(response : any){
+  if(response.success){
+    this.close()
+    this.refresh()
+    this.servizioMenu.riempiMenu();
+    this.MessageService.showMessageSuccess('',response.description)
+
+  }else{
+    this.MessageService.showMessageError('',response.description)
+
+  }
+}
+
+
 handleImageError() {
   this.showPlaceholder = true;
 }
@@ -361,6 +354,7 @@ handleDrop(event: DragEvent) {
       reader.readAsDataURL(file);
   }
 }
+
 
 
 }
