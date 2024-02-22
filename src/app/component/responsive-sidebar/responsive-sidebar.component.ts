@@ -11,18 +11,43 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 export class ResponsiveSidebarComponent {
 immagineProfilo: any;
 isLogged: any;
+userRole : any;
+isAdmin : boolean = false;
 
   constructor(
     public dialog: MatDialog,
     private supabaseService: SupabaseService,
     ) {
       this.getProfilePic();
-
       
       //this.supabaseService.isUserLogged().then((data) => {
       //  this.isLogged = data;
       //})
 
+
+
+
+    }
+
+    async ngOnInit(){
+
+      this.supabaseService.eventoLogin$.subscribe(async (dato) => {
+        
+        //aggiorna i dati del componente ogni volta che viene fatto il login
+          this.getProfilePic();
+          let userId = await this.supabaseService.getUserId();
+          this.isAdmin = await this.isUserAdmin(userId)    
+
+
+      });
+
+
+      let userId = await this.supabaseService.getUserId();
+      //this.userRole = await this.supabaseService.getUserRole(userId)
+      
+      
+      this.isAdmin = await this.isUserAdmin(userId)
+      
     }
 
   openLogoutDialog(): void {
@@ -46,6 +71,13 @@ isLogged: any;
 
 getIsUserLogged(){
   return this.supabaseService.getUserLogged();
+}
+
+async isUserAdmin(userId : string){
+  this.userRole = await this.supabaseService.getUserRole(userId)
+
+  if(this.userRole == 1 || this.userRole == 2) return true
+  return false
 }
 
   

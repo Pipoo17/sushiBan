@@ -10,7 +10,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { ErrorComponent } from './pagine/error/error.component';
 import { ResetPasswordComponent } from './auth/resetPassword/reset-password/reset-password.component';
 import { EmailFormComponent } from './auth/resetPassword/email-form/email-form.component';
-
+import { DatiMenuComponent } from './pagine/dati-menu/dati-menu.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent, title: 'Sushiban'},
@@ -20,6 +20,7 @@ const routes: Routes = [
   {path:'home', component: HomeComponent},
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
+  {path:'datiMenu', component: DatiMenuComponent},
   {path:'ResetPassword/Password', component: ResetPasswordComponent},
   {path:'ResetPassword/Email', component: EmailFormComponent},
   {path:'404', component: ErrorComponent, title: 'Pagina non trovata'},

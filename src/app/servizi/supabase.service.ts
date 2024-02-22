@@ -6,22 +6,31 @@ import { Router } from '@angular/router';
 import { MessageService } from './message.service';
 import { DatasetController, LogarithmicScale } from 'chart.js';
 import { EnvironmentService } from './environment.service';
+import { BehaviorSubject } from 'rxjs';
 
-export interface IUser {
-  email: string;
-  name: string;
-  website: string;
-  url: string;
+
+interface Categoria {
+  codice: number;
+  nome: string;
+}
+interface Immagine{
+  url: string
+  file: any
+  changed: boolean
+}
+
+interface piatto {
+  id: string,
+  codice: string,
+  nome: string,
+  categoria :Categoria,
+  img:Immagine
 }
 
 
 @Injectable({
   providedIn: 'root'
 })
-
-
-
-
 
 
 
@@ -34,8 +43,11 @@ export class SupabaseService {
 
   private storageURL = this.setStorageURL();
 
-  
   private isThisUserLogged : boolean = false
+
+  /* QUANDO VIENE FATTO IL LOGIN BISOGNA RICARICARE LA NAVBAR */ 
+  private eventoSubject = new BehaviorSubject<any>(null);
+  eventoLogin$ = this.eventoSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -49,6 +61,15 @@ export class SupabaseService {
 
 
 
+
+
+  /*=====================================*/ 
+  /*============  BEHAVIOUR  ============*/
+  /*=====================================*/ 
+
+  eventoLogin(dato: any) {
+    this.eventoSubject.next(dato);
+  }
 
 
   /*====================================*/ 
@@ -90,6 +111,7 @@ export class SupabaseService {
             id: userId,
             username: paramJson.username,
             avatar_url: paramJson.username + ".jpg",
+            role: 3,
           },
         ]);
 //todo : aguardare se l'immagine viene caricata correttamente quando si crea un profilo
@@ -158,8 +180,9 @@ async checkIfUserAuth() {
 
 async restorePasswordRedirect(paramJson : any){
  
-  //var redirectURL = 'http://localhost:4200'
-  var redirectURL = 'https://sushiban.vercel.app'
+  var redirectURL = 'http://localhost:4200'
+  if(this.EnvironmentService.getIsProd())
+    var redirectURL = 'https://sushiban.vercel.app'
 
   const { data, error } = await this.supabase.auth.resetPasswordForEmail(paramJson.email, {
     redirectTo: redirectURL + '/ResetPassword/Password',
@@ -197,7 +220,8 @@ async getPiatti(){
   let menu = [{}]
   await this.getSession();
   let idutente = await this.getUserId()
-
+  console.log("idutente : ",idutente);
+  
   const { data, error } = await this.supabase.rpc('getpiatti', { idutente: idutente })
   if(error){ return [{}] }
   return data
@@ -490,6 +514,98 @@ async getPiatti(){
 
     
 
+  async updatePiatto(piatto: piatto){
+
+    console.log(piatto);
+
+    let response;
+
+    if (piatto.img.changed) {
+        await this.deleteImmage('immaginiPiatti', piatto.codice + '.jpg') 
+        response = await this.uploadImage('immaginiPiatti', piatto.codice, piatto.img.file);
+    }
+    
+    
+    if (response == undefined || response.success) {
+      const { data, error } = await this.supabase
+      .from('Piatti')
+      .update({ 
+        descrizione: piatto.nome, 
+        idCategoria: piatto.categoria.codice })
+      .eq('codice', piatto.codice);
+  
+        if(error){
+          return { success: false, description: error.message };
+        }
+        return { success: true, description: 'Aggiornamento completato!' };
+        
+      }
+      else{
+        return { success: false, description: response.description };
+      }
+
+    
+  }
+  
+
+  async insertPiatto(piatto: piatto){
+
+    console.log(piatto);
+
+    let response = await this.uploadImage('immaginiPiatti',piatto.codice, piatto.img.file)
+
+    if(!response.success){
+      return { success: false, description: response.description };
+    }
+
+     const { data, error } = await this.supabase
+    .from('Piatti')
+    .insert({ 
+      codice: piatto.codice, 
+      descrizione: piatto.nome, 
+      idCategoria: piatto.categoria.codice });
+
+      if(error){
+        return { success: false, description: error.message };
+      }
+      return { success: true, description: 'Inserimento completato!' };
+  
+  }
+
+
+  async deletePiatto(piatto: piatto){
+
+    let response = await this.deleteImmage('immaginiPiatti', piatto.codice + '.jpg') 
+
+
+    if(!response.success){
+      return { success: false, description: response.description };
+    }console.log(piatto);
+    
+
+     const { data, error } = await this.supabase
+    .from('Piatti') 
+    .delete()
+    .eq('id', piatto.id);
+    console.log(data);
+    console.log(error);
+    
+      if(error){
+        return { success: false, description: error.message };
+      }
+      return { success: true, description: 'Piatto Eliminato!'
+    }
+  }
+
+  async getImageDataFromUrl(url: string): Promise<ArrayBuffer> {
+    const response = await fetch(url);
+    const imageData = await response.arrayBuffer();
+    return imageData;
+}
+  
+  
+  
+
   /*============================================*/ 
   /*==========  METODI PER I GRAFICI  ==========*/
   /*============================================*/ 
@@ -692,30 +808,50 @@ async getPiatti(){
   getUserLogged(){
     return this.isThisUserLogged
   }
+
+  async getUserRole(userId : String){
+    const { data: selectData, error: selectError } = await this.supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', userId)
+
+    if(!selectError){
+      return selectData[0].role
+    }
+    return -1
+
+  }
+
   
  async uploadImage(bucket : string,imageName : string, imageFile : any){
 
   const { data, error } = await this.supabase
     .storage
     .from(bucket)
-    .upload(imageName +'.png', imageFile, {
+    .upload(imageName +'.jpg', imageFile, {
       cacheControl: '3600',
       upsert: false
     })
 
+    if(error){
+      return { success: false, description: error.message };
+    }
+    return { success: true, description: 'Inserimento completato con successo' };
+    
   }
 
   async deleteImmage(bucket : string, imageName : string){
 
-    const { data : deleteData, error: errorData } = await this.supabase
+    const { data , error } = await this.supabase
     .storage
     .from(bucket)
     .remove([imageName])
 
-    console.log("immagine eliminata : ", imageName);
+    if(error){
+      return { success: false, description: error.message };
+    }
+    return { success: true, description: 'immagine eliminata' };
     
-    console.log("deleteData : ",deleteData);
-    console.log("errorData : ",errorData);
     
   }
 
@@ -778,6 +914,14 @@ async getPiatti(){
 
     return oggettoOrdineRapido
 
+  }
+
+  async getListaCategorie(){
+    const { data, error } = await this.supabase
+    .from('CategoriePiatti')
+    .select('idCategoria,descrizione')
+
+    return data
   }
   
   

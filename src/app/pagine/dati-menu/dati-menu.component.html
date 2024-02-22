@@ -1,0 +1,256 @@
+
+<div class="tableContainer">
+    
+    <p-table
+        #dt1
+        dataKey="id"
+        [value]="this.menuJson"
+        [tableStyle]="{ 'min-width': '50rem' }" 
+        styleClass="p-datatable-striped"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Vista da {first} a {last} su {totalRecords} entità"
+        [rowsPerPageOptions]="[5, 10, 20]" 
+        [globalFilterFields]="['codice', 'nome', 'categoria']"
+        [loading]="loading"
+        [scrollable]="true"
+        scrollHeight="78vh"
+    >
+        <ng-template pTemplate="caption" >
+            <div class="tabellaHeader">
+                Piatti
+                <div class="pulsantiTabellaHeader">
+                <p-button icon="pi pi-refresh" (click)="refresh()"></p-button>
+                <p-button icon="pi pi-plus" (click)="openInsert()"></p-button>
+                </div>
+            </div>
+<!--             <div class="flex">
+                <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
+            </div> -->
+        </ng-template>
+
+
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th pSortableColumn="codice" style="width:20%">Codice <p-sortIcon field="code"></p-sortIcon></th> -->
+                <th style="width:10% ">Codice</th>
+                <th style="width:40%">Nome</th>
+                <th style="width:20%">Categoria</th>
+                <th style="width:10%"></th>
+                <th style="width: 10%" ></th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="codice"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="nome"></p-columnFilter>
+                </th>
+                <th>
+                    <!--
+                    <p-columnFilter field="idcategoria" matchMode="in" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown [options]="filtroCategorie" [(ngModel)]="selectedCategoria" placeholder="Seleziona una Categoria" (onChange)="filter($event.value)" optionLabel="nome" optionValue="codice" field="idcategoria" defaultLabel="Tutte le Categorie">
+                            </p-dropdown>                            
+                        </ng-template>
+                    </p-columnFilter>
+   -->
+                    <p-columnFilter field="idcategoria" matchMode="equals" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown [ngModel]="selectedCategoria" [options]="filtroCategorieHeader" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true" placeholder="Seleziona una Categoria" defaultLabel="Tutte le Categorie"/>
+                        </ng-template>
+                    </p-columnFilter>
+                </th>
+                <th>
+                    <!-- immagini -->
+                </th>
+                <th>
+                    <!-- pulsanti -->
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.codice }}</td>
+                <td>{{ product.nome }}</td>
+                <td>{{ product.categoria }}</td>
+                <td><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
+                <td>
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (click)="openUpdate(product)"></p-button>
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="openDelete(product)" severity="danger "></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+
+
+
+<!--
+                                              ==========================================
+                                              ==============  POP UP INSERT ============
+                                              ==========================================
+-->
+<p-dialog [(visible)]="isInsertPopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Aggiungi piatto" [modal]="true" >
+    <ng-template pTemplate="content">
+        <div class="form">
+                
+            <div class="product-image-container" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)" (click)="fileInput.click()">
+                <ng-container *ngIf="piattoJson.img.url; else placeholderTemplate">
+                    <img [src]="piattoJson.img.url" class="block m-auto pb-3 product-image" />
+                </ng-container>
+                <ng-template #placeholderTemplate>
+                    <div class="placeholder">
+                        Clicca qui o trascina un'immagine per caricarla
+                    </div>
+                </ng-template>
+            </div>
+            
+
+
+            <div class="containerPulsanti d-flex justify-content-center">
+                <input type="file" accept=".jpg" (change)="onFileSelected($event)" style="display: none" #fileInput>
+                <p-button label="Modifica Immagine" severity="help" (click)="fileInput.click()" size="small" class="text-center" [loading]="isLoading"></p-button>
+            </div>
+
+
+            <div class="filterRow">
+
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Codice" [(ngModel)]="piattoJson.codice" required [required]="true"/>
+                        <label for="Codice">Codice</label>
+                    </span>
+                </div>
+    
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Nome" [(ngModel)]="piattoJson.nome" required [required]="true"/>
+                        <label for="Nome">Nome</label>
+                    </span>
+                </div>
+             </div>
+
+
+             <div class="filterRow">
+                <div class="filter">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="filtroCategorie" [(ngModel)]="piattoJson.categoria"  placeholder="Seleziona una Categoria" optionLabel="nome" inputId="float-label" [required]="true" />
+                        <label for="float-label">Categoria</label>
+                    </span>
+                </div>
+           
+            </div>
+        </div>
+
+
+
+        <div class="containerPulsanti">
+            <p-button size="small" icon="pi pi-check" (click)="insert()" label="Conferma" severity="info" [loading]="isLoading"></p-button>
+            <p-button size="small" icon="pi pi-times" (click)="close()" label="Annulla" severity="danger" [loading]="isLoading"></p-button>
+        </div>
+
+        <div *ngIf="debug == true" style="margin-top: 20px;">
+            <p-accordion [activeIndex]="1">
+                <p-accordionTab header="Dati piattoJson">
+                    <pre>{{piattoJson | json}}</pre>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+        
+           
+        
+
+    </ng-template>
+</p-dialog>
+
+
+
+
+
+
+<!--
+                                              ==========================================
+                                              ==============  POP UP UPDATE ============
+                                              ==========================================
+-->
+<p-dialog [(visible)]="isUpdatePopUpVisible" [style]="{ width: '600px', height: '700px' }" header="Modifica piatto" [modal]="true" >
+    <ng-template pTemplate="content">
+        <div class="form">
+            <div class="product-image-container" (dragover)="handleDragOver($event)" (drop)="handleDrop($event)" (click)="fileInput.click()">
+                <ng-container *ngIf="piattoJson.img.url; else placeholderTemplate">
+                    <img [src]="piattoJson.img.url" class="block m-auto pb-3 product-image" />
+                </ng-container>
+                <ng-template #placeholderTemplate>
+                    <div class="placeholder">
+                        Clicca qui o trascina un'immagine per caricarla
+                    </div>
+                </ng-template>
+            </div>
+            
+
+
+            <div class="containerPulsanti d-flex justify-content-center">
+                <input type="file" accept=".jpg" (change)="onFileSelected($event)" style="display: none" #fileInput>
+                <p-button label="Modifica Immagine" severity="help" (click)="fileInput.click()" size="small" class="text-center" [loading]="isLoading"></p-button>
+            </div>
+
+
+             <div class="filterRow">
+
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Codice" [(ngModel)]="piattoJson.codice" required [required]="true" [disabled]="true"/>
+                        <label for="Codice">Codice</label>
+                    </span>
+                </div>
+                
+    
+                <div class="filter">
+                    <span class="p-float-label">
+                        <input pInputText id="Nome" [(ngModel)]="piattoJson.nome" required [required]="true"/>
+                        <label for="Nome">Nome</label>
+                    </span>
+                </div>
+             </div>
+
+
+             <div class="filterRow">
+
+                <div class="filter">
+                    <span class="p-float-label">
+                        <p-dropdown [options]="filtroCategorie" [(ngModel)]="piattoJson.categoria" placeholder="Seleziona una Categoria" optionLabel="nome" inputId="float-label" [required]="true" />
+                        <label for="float-label">Categoria</label>
+                    </span>
+                </div>
+
+
+            </div>
+        </div>
+
+        
+
+        <div class="containerPulsanti">
+            <p-button size="small" icon="pi pi-check" (click)="update()" label="Conferma" severity="info" [loading]="isLoading"></p-button>
+            <p-button size="small" icon="pi pi-times" (click)="close()" label="Annulla" severity="danger" [loading]="isLoading"></p-button>
+        </div>
+
+        <div *ngIf="debug == true" style="margin-top: 20px;">
+            <p-accordion [activeIndex]="1">
+                <p-accordionTab header="Dati piattoJson">
+                    <pre>{{piattoJson | json}}</pre>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+        
+           
+        
+
+    </ng-template>
+</p-dialog>

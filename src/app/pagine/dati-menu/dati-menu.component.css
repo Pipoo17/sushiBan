@@ -1,0 +1,77 @@
+.tableContainer{
+    padding: 30px;
+  }
+
+  :host ::ng-deep .p-dialog .product-image {
+    width: 150px;
+    margin: 0 auto 2rem auto;
+    display: block;
+}
+
+.odd{
+  background-color: beige;
+}
+
+.field{
+  margin-bottom: 10px;
+}
+.form{
+display: flex;
+flex-grow: 1;
+gap: 3px;
+flex-direction: column;
+}
+
+
+.containerPulsanti{
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pulsanteModificaImmagine{
+  width: 200px;
+}
+
+
+.filter{
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 40px
+}
+
+.filterRow{
+  display: flex;
+  justify-content: space-between;
+}
+
+.placeholder {
+  text-align: center;
+  border: 2px dashed #ccc;
+  padding: 40px;
+  width: 100%;
+}
+
+::ng-deep .p-dropdown {
+  width: 250px; /* Imposta la larghezza desiderata */
+}
+
+.product-image-container{
+  cursor: pointer;
+}
+.tabellaHeader{
+  display: flex;
+  align-items:center ;
+  justify-content:space-between
+}
+.pulsantiTabellaHeader{
+  display: flex;
+  gap: 5px;
+}
+.product-image{
+  height: 200px;
+  width: 180px;
+}
