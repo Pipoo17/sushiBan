@@ -71,3 +71,7 @@ flex-direction: column;
   display: flex;
   gap: 5px;
 }
+.product-image{
+  height: 200px;
+  width: 180px;
+}
