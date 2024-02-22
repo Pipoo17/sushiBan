@@ -537,7 +537,7 @@ async getPiatti(){
         if(error){
           return { success: false, description: error.message };
         }
-        return { success: true, description: 'Inserimento completato con successo' };
+        return { success: true, description: 'Aggiornamento completato!' };
         
       }
       else{
@@ -568,7 +568,7 @@ async getPiatti(){
       if(error){
         return { success: false, description: error.message };
       }
-      return { success: true, description: 'Inserimento completato con successo' };
+      return { success: true, description: 'Inserimento completato' };
   
   }
 
