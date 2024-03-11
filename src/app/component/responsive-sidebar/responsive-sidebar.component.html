@@ -1,132 +1,78 @@
 
   <head>
     <meta charset="UTF-8">
-    <title> Drop Down Sidebar Menu | CodingLab </title>
-    <!-- Boxiocns CDN Link -->
+    <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
-<body>
-  <div class="sidebar close">
+
+  <div class="overlay {{ isOpen ? 'overlayShadow' : 'none' }}"></div>
+
+  <div class="sidebar" [hidden]="!getIsUserLogged()">
+    {{isOpen}}
     <div class="logo-details">
-      <!-- <i class='bx bxl-c-plus-plus'></i> -->
-      <img src="https://cdn-icons-png.flaticon.com/512/2821/2821808.png" alt="" style="height: 60px;width: 60px;margin-left: 10%;">
+      <i class='bx bxl-c-plus-plus icon'></i>
+        <div class="logo_name">CodingLab</div>
+        <i class='bx bx-menu' id="btn" ></i>
     </div>
-
-
-    <ul class="nav-links" *ngIf="getIsUserLogged()">
+    <ul class="nav-list">
+  <!--    
+      <li>
+          <i class='bx bx-search' ></i>
+         <input type="text" placeholder="Search...">
+         <span class="tooltip">Search</span>
+      </li>
+  -->
       <li>
         <a routerLink="/">
-          <i class='bx bx-grid-alt  bx-burst-hover' ></i>
-          <span class="link_name">Home</span>
+          <i class='bx bx-grid-alt bx-burst-hover'></i>
+          <span class="links_name">Home</span>
         </a>
-        <ul class="sub-menu blank ">
-          <li><a class="link_name" routerLink="/">Home</a></li>
-        </ul>
+         <span class="tooltip">Home</span>
       </li>
       <li>
-        <div class="iocn-link">
-          <a routerLink="profilo">
-            <i class='bx bx-user bx-burst-hover' ></i>
-            <span class="link_name">Profilo</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow' ></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" routerLink="profilo">Profilo</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a routerLink="ordini">
-            <i class='bx bx-book-open bx-burst-hover'></i>
-            <span class="link_name">Ordini</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow' ></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" routerLink="ordini">Ordini</a></li>
-        </ul>
-      </li>
-      <li>
-        <a routerLink="statistiche">
-          <i class='bx bx-pie-chart-alt-2 bx-burst-hover' ></i>
-          <span class="link_name">Statistiche</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Statistiche</a></li>
-        </ul>
-      </li>
-      <!--
-      <li>
-        <a routerLink="register">
-          <i class='bx bxs-user-plus'></i>
-          <span class="link_name">Registrazione - TEST</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Registrazione - TEST</a></li>
-        </ul>
-      </li>
-      <li>
-        <a routerLink="login">
-          <i class='bx bx-log-in-circle' ></i>
-          <span class="link_name">Login - TEST</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Login - TEST</a></li>
-        </ul>
-      </li>
-      -->
-      <li>
-        <a href="https://sareca.it/MENU/MIYA-PRANZO/menu.php" target="_blank">
-            <i class='bx bx-food-menu bx-burst-hover' ></i>
-          <span class="link_name">Menu</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Menu</a></li>
-        </ul>
-      </li>
+       <a routerLink="profilo">
+         <i class='bx bx-user bx-burst-hover' ></i>
+         <span class="links_name">Profilo</span>
+       </a>
+       <span class="tooltip">Profilo</span>
+     </li>
+     <li>
+       <a routerLink="ordini">
+        <i class='bx bx-book-open bx-burst-hover'></i>
+        <span class="links_name">Ordini</span>
+       </a>
+       <span class="tooltip">Ordini</span>
+     </li>
+     <li>
+       <a routerLink="classifiche">
+        <i class='bx bx-bar-chart-alt-2 bx-burst-hover'></i>
+        <span class="links_name">Classifiche</span>
+       </a>
+       <span class="tooltip">Classifiche</span>
+     </li>
 
-      <li *ngIf="this.isAdmin == true">
-        <a routerLink="datiMenu">
-            <i class='bx bx-data bx-burst-hover' ></i>
-          <span class="link_name">Dati Menu</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Dati Menu</a></li>
-        </ul>
-      </li>
+     <li  *ngIf="this.isAdmin == true">
+       <a routerLink="datiMenu">
+        <i class='bx bx-data bx-burst-hover' ></i>
+         <span class="links_name">Dati Menu</span>
+       </a>
+       <span class="tooltip">Dati Menu</span>
+     </li>
+     
 
-      <li>
-        <a (click)="openLogoutDialog()">
-          <i class='bx bx-log-out-circle bx-burst-hover' ></i>
-          <span class="link_name">Logout</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Logout</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <div class="profile-details">
-          <div class="profile-content">
-            <img src={{immagineProfilo}} alt="profileImg" routerLink="profilo" >
-          </div>
-          <div class="name-job">
-            <div class="profile_name">Prem Shahi</div>
-            <div class="job">Web Desginer</div>
-          </div>
-          <i class='bx bx-log-out' ></i>
-        </div>
-      </li>
-
+     <li class="profile">
+         <div class="profile-details">
+           <img src={{immagineProfilo}} class="pointer" alt="profileImg" routerLink="profilo">
+           <div class="name_job">
+             <div class="name">{{username}}</div>
+             <div class="job">{{isAdmin ? 'Admin' : 'Utente'}}</div>
+           </div>
+         </div>
+         <i class='bx bx-log-out pointer' id="log_out"  (click)="openLogoutDialog()"></i>
+     </li>
     </ul>
   </div>
-  <!--
-  <section class="home-section">
-  </section>
--->
-</body>
+
+
+
