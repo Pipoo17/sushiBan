@@ -9,7 +9,6 @@
   <div class="overlay {{ isOpen ? 'overlayShadow' : 'none' }}"></div>
 
   <div class="sidebar" [hidden]="!getIsUserLogged()">
-    {{isOpen}}
     <div class="logo-details">
       <i class='bx bx-sushi icon'></i>
         <div class="logo_name">SushiBan</div>
@@ -23,37 +22,37 @@
          <span class="tooltip">Search</span>
       </li>
   -->
-      <li>
-        <a routerLink="/">
-          <i class='bx bx-grid-alt bx-burst-hover'></i>
+      <li class="pointer">
+        <a (click)='changeRoute("")' >
+          <i class='bx bx-home-alt bx-burst-hover'></i>
           <span class="links_name">Home</span>
         </a>
          <span class="tooltip">Home</span>
       </li>
-      <li>
-       <a routerLink="profilo">
+      <li class="pointer">
+        <a (click)='changeRoute("profilo")' >
          <i class='bx bx-user bx-burst-hover' ></i>
          <span class="links_name">Profilo</span>
        </a>
        <span class="tooltip">Profilo</span>
      </li>
-     <li>
-       <a routerLink="ordini">
+     <li class="pointer">
+      <a  (click)='changeRoute("ordini")'>
         <i class='bx bx-book-open bx-burst-hover'></i>
         <span class="links_name">Ordini</span>
        </a>
        <span class="tooltip">Ordini</span>
      </li>
-     <li>
-       <a routerLink="classifiche">
+     <li class="pointer">
+       <a (click)='changeRoute("classifiche")'>
         <i class='bx bx-bar-chart-alt-2 bx-burst-hover'></i>
         <span class="links_name">Classifiche</span>
        </a>
        <span class="tooltip">Classifiche</span>
      </li>
 
-     <li  *ngIf="this.isAdmin == true">
-       <a routerLink="datiMenu">
+     <li class="pointer" *ngIf="this.isAdmin == true">
+       <a (click)='changeRoute("datiMenu")'>
         <i class='bx bx-data bx-burst-hover' ></i>
          <span class="links_name">Dati Menu</span>
        </a>
@@ -63,10 +62,10 @@
 
      <li class="profile">
          <div class="profile-details">
-           <img src={{immagineProfilo}} class="pointer" alt="profileImg" routerLink="profilo">
+           <img src={{immagineProfilo}} class="pointer" alt="profileImg" (click)='changeRoute("profilo")'>
            <div class="name_job">
              <div class="name">{{username}}</div>
-             <div class="job">{{isAdmin ? 'Admin' : 'Utente'}}</div>
+             <div class="job">{{isAdmin ? 'Admin' : ''}}</div>
            </div>
          </div>
          <i class='bx bx-log-out pointer' id="log_out"  (click)="openLogoutDialog()"></i>

@@ -2,6 +2,7 @@ import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LogoutPopupComponent } from '../../auth/logout-popup/logout-popup.component';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-responsive-sidebar',
@@ -20,7 +21,9 @@ export class ResponsiveSidebarComponent {
     public dialog: MatDialog,
     private supabaseService: SupabaseService,
     private elementRef: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router,
+
   ) {
     this.getProfilePic();
     //this.supabaseService.isUserLogged().then((data) => {
@@ -82,6 +85,19 @@ export class ResponsiveSidebarComponent {
   }
 
 
+
+changeRoute(route : string){
+ const sidebar = this.elementRef.nativeElement.querySelector('.sidebar');
+
+ this.renderer.removeClass(sidebar, 'open');
+ this.menuBtnChange();
+ 
+ this.router.navigate(['/'+route]);
+
+
+}
+
+
   ngAfterViewInit() {  
   const overlay = this.elementRef.nativeElement.querySelector('.overlay');
   const sidebar = this.elementRef.nativeElement.querySelector('.sidebar');
@@ -102,12 +118,16 @@ export class ResponsiveSidebarComponent {
   } else {
     console.error('One or more elements not found!');
   }
+
+  if (this.isOpen) {
+    // Aggiorna la posizione della navbar quando si scrolla
+    if (sidebar) {
+      sidebar.scrollTop = window.scrollY;
+    }
   }
-
-
-
-
+  }
   
+
 
   // funzione per cambiare il pulsante della barra laterale (opzionale)
   menuBtnChange() {    
