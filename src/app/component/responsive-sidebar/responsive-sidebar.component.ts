@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { LogoutPopupComponent } from '../../auth/logout-popup/logout-popup.component';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MessageService } from 'src/app/servizi/message.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-responsive-sidebar',
@@ -23,6 +25,8 @@ export class ResponsiveSidebarComponent {
     private elementRef: ElementRef,
     private renderer: Renderer2,
     private router: Router,
+    private MessageService: MessageService,
+
 
   ) {
     this.getProfilePic();
@@ -48,21 +52,6 @@ export class ResponsiveSidebarComponent {
 
     //this.setupOverlayClickListener();
 
-  }
-
-  openLogoutDialog(): void {
-    const dialogRef = this.dialog.open(LogoutPopupComponent, {
-      width: '40 em',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === true) {
-        this.isOpen = false;
-        console.log('Logout eseguito!');
-      } else {
-        console.log('Logout annullato');
-      }
-    });
   }
 
   async getProfilePic() {
@@ -95,6 +84,33 @@ changeRoute(route : string){
  this.router.navigate(['/'+route]);
 
 
+}
+
+
+
+logout() {
+  this.supabaseService.logout()
+  this.MessageService.showMessageSuccess('','Logout avvenuto con successo')
+  this.router.navigate(['/login']);
+  this
+}
+
+popupLogout(){
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    data: {
+      message: 'Sei sicuro di uscire?',
+      buttonText: {
+        ok: 'Conferma',
+        cancel: 'Annulla'
+      }
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+    if (confirmed) {
+      this.logout();
+    }
+  });
 }
 
 
