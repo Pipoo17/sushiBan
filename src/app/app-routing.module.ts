@@ -16,7 +16,7 @@ const routes: Routes = [
   {path:'', component: HomeComponent, title: 'Sushiban'},
   {path:'profilo', component: ProfiloComponent, title: 'Profilo'},
   {path:'ordini', component: OrdiniComponent, title: 'Ordini'},
-  {path:'statistiche', component: StatisticheComponent, title: 'Statistiche'},
+  {path:'classifiche', component: StatisticheComponent, title: 'Statistiche'},
   {path:'home', component: HomeComponent},
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
