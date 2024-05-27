@@ -32,10 +32,6 @@ export class LoginComponent {
   ) {
     this.supabaseService.setUserLogged(false)
     this.isLoading = false;
-    const footer = document.querySelector('footer');
-    if (footer) {
-      footer.style.display = 'none';
-    }
   }
 
 
