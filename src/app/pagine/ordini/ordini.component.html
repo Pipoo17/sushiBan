@@ -1,7 +1,7 @@
 <h1 class="title">ordini</h1>
 
 <div class="container">
-<!--
+    <!--
 palette : 
     #04364A
     #176B87
@@ -9,88 +9,93 @@ palette :
 -->
 
 
-<div class="left-div">
-    <div class="intestazioneDiv">
-        <h2 class="titoloContainer">Il tuo ordine</h2>
-    </div>
-    <div *ngIf=" this.userOrderLabel != '' ">
-        <p class="label">{{this.userOrderLabel}}</p>
-    </div>
+    <div class="left-div">
+        <div class="intestazioneDiv">
+            <h2 class="titoloContainer">Il tuo ordine</h2>
+        </div>
+        <div *ngIf=" this.userOrderLabel != '' ">
+            <p class="label">{{this.userOrderLabel}}</p>
+        </div>
 
-    <div *ngIf=" this.userOrderLabel == '' ">
-        <div class="elencoPiatti">
-            <div *ngFor="let piatto of userOrder; let i = index">
-                <div class="contenitorePiattiMenu marginePiatti">
-                    <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
-                
-                    <div class="contenitoreCodice"> 
-                        <h3>{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+        <div *ngIf=" this.userOrderLabel == '' ">
+            <div class="elencoPiatti">
+                <div *ngFor="let piatto of userOrder; let i = index">
+                    <div class="contenitorePiattiMenu marginePiatti">
+                        <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
+
+                        <div class="contenitoreCodice">
+                            <h3>{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+                        </div>
+
+                        <div class="contenitoreNome">
+                            <h3>{{piatto.descrizione}}</h3>
+                        </div>
                     </div>
-    
-                    <div class="contenitoreNome"> 
-                        <h3>{{piatto.descrizione}}</h3> 
-                    </div>
-                 </div>
-             </div>
-         </div>
-
-         <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="popupDeleteOrdine()" size="small" severity="danger" [loading]="this.isLoading">
-            Annulla Ordine
-            <i class='bx bx-trash' *ngIf="this.isLoading == false"></i>
-        </p-button>
-    </div>
-    
-    <br>
-</div>
-
-
-<div class="right-div">
-  <div class="intestazioneDiv">
-    <h2 class="titoloContainer">Tutti gli ordini</h2>
-    
-    <p *ngIf="this.quantiClienti > 0 ">Numero di clienti : {{this.quantiClienti}}</p>
-  </div>
-
-  <div *ngIf=" this.allUserOrdersLabel != '' ">
-      <p class="label">{{this.allUserOrdersLabel}}</p>
-  </div>
-
-  <div *ngIf=" this.allUserOrdersLabel == '' ">
-    <div class="elencoPiatti">
-        <div *ngFor="let piatto of allUsersOrder; let i = index">
-            <div class="contenitorePiattiMenu marginePiatti">
-                <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
-
-                <div class="contenitoreCodice"> 
-                    <h3>{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
                 </div>
-
-                <div class="contenitoreNome"> 
-                    <h3>{{piatto.descrizione}}</h3> 
-                </div>
-    
             </div>
+
+            <p-button label="" class=" font-bold pulsanteOrdineRapido" (click)="popupDeleteOrdine()" size="small"
+                severity="danger" [loading]="this.isLoading">
+                Annulla Ordine
+                <i class='bx bx-trash' *ngIf="this.isLoading == false"></i>
+            </p-button>
         </div>
+
+        <br>
     </div>
 
-    
-    <p-button  label="" class=" font-bold pulsanteOrdineRapido" (click)="copyOrdine()" size="small" severity="info">
-        Copia Ordine
-        <i class='bx bx-copy-alt'></i>
-    </p-button>
+
+    <div class="right-div">
+        <div class="intestazioneDiv">
+            <h2 class="titoloContainer">Tutti gli ordini</h2>
+
+            <p *ngIf="this.quantiClienti > 0 ">Numero di clienti : {{this.quantiClienti}}</p>
+        </div>
+
+        <div *ngIf=" this.allUserOrdersLabel != '' ">
+            <p class="label">{{this.allUserOrdersLabel}}</p>
+        </div>
+
+        <div *ngIf=" this.allUserOrdersLabel == '' ">
+            <div class="elencoPiatti">
+                <div *ngFor="let piatto of allUsersOrder; let i = index">
+                    <div class="contenitorePiattiMenu marginePiatti">
+                        <img src={{this.getImmagineUrlFromName(piatto.idPiatto)}} class="imgPiatti">
+
+                        <div class="contenitoreCodice">
+                            <h3>{{ piatto.idPiatto }} x {{ piatto.numeroPiatto }}</h3>
+                        </div>
+
+                        <div class="contenitoreNome">
+                            <h3>{{piatto.descrizione}}</h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <p-button label="" class=" font-bold pulsanteOrdineRapido" (click)="copyOrdine()" size="small"
+                severity="info">
+                Copia Ordine
+                <i class='bx bx-copy-alt'></i>
+            </p-button>
 
 
 
-    <div class="immaginiUtentiOrdini">
-        <div *ngFor="let userWithOrder of usersWithOrder; let i = index" >  
-            <div class="tooltip">
-                <img [src]=this.getImgUser(userWithOrder.username) width="50" height="50" class="imgUserWithOrder " />
-                <span class="tooltiptext">{{userWithOrder.username}}</span>
-             </div>
+            <div class="immaginiUtentiOrdini">
+                <div *ngFor="let userWithOrder of usersWithOrder; let i = index">
+                    <div class="tooltip">
+                        <img [src]=this.getImgUser(userWithOrder.username) width="50" height="50"
+                            class="imgUserWithOrder " />
+                        <span class="tooltiptext">{{userWithOrder.username}}</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+    </div>
 
-</div>
 
-
-<app-footer></app-footer>
+    <app-footer></app-footer>
