@@ -15,33 +15,33 @@
         [globalFilterFields]="['codice', 'nome', 'categoria']"
         [loading]="loading"
         [scrollable]="true"
-        scrollHeight="78vh"
+        scrollHeight="70vh"
     >
         <ng-template pTemplate="caption" >
             <div class="tabellaHeader">
-                Piatti
+                Menu
                 <div class="pulsantiTabellaHeader">
-                <p-button icon="pi pi-refresh" (click)="refresh()"></p-button>
-                <p-button icon="pi pi-plus" (click)="openInsert()"></p-button>
+
+<!--                 <button mat-icon-button matTooltip="Basic" (click)="refresh()" class="button">    <mat-icon>refresh</mat-icon>  </button>
+                <button mat-icon-button matTooltip="Basic" (click)="openInsert()" class="button"> <mat-icon>add</mat-icon>      </button>
+ -->                <p-button icon="pi pi-refresh" [rounded]="true" [text]="true" (click)="refresh()" severity="secondary"  ></p-button>
+                <p-button icon="pi pi-plus"        [rounded]="true" [text]="true" (click)="openInsert()"  severity="secondary" ></p-button>
+
+
+                        
                 </div>
             </div>
-<!--             <div class="flex">
-                <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
-                <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({ selectionOnly: true })" class="p-button-info ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button>
-            </div> -->
         </ng-template>
 
 
         <ng-template pTemplate="header">
             <tr>
                 <!-- <th pSortableColumn="codice" style="width:20%">Codice <p-sortIcon field="code"></p-sortIcon></th> -->
-                <th style="width:10% ">Codice</th>
-                <th style="width:40%">Nome</th>
-                <th style="width:20%">Categoria</th>
+                <th style="width:15% ">Codice</th>
+                <th style="width:35%">Nome</th>
+                <th style="width:15%">Categoria</th>
                 <th style="width:10%"></th>
-                <th style="width: 10%" ></th>
+                <th style="width:15%" ></th>
             </tr>
             <tr>
                 <th>
@@ -74,12 +74,12 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
-            <tr>
+            <tr >
                 <td>{{ product.codice }}</td>
                 <td>{{ product.nome }}</td>
                 <td>{{ product.categoria }}</td>
-                <td><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="50" height="50" class="shadow-4" /></td>
-                <td>
+                <td><img [src]=this.getImgPiatto(product.codice) [alt]="product.name" width="40" height="40" class="shadow-4" /></td>
+                <td style="width: 100px;">
                     <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (click)="openUpdate(product)"></p-button>
                     <p-button icon="pi pi-trash" [rounded]="true" [text]="true" (click)="openDelete(product)" severity="danger "></p-button>
                 </td>

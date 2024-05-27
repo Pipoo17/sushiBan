@@ -2,6 +2,21 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+
+
+export interface ConfirmDialogData {
+  message: string;
+  extraInfo?: Array<{
+    title: string;
+    value: string;
+  }>;
+  buttonText: {
+    ok: string;
+    cancel: string;
+  };
+}
+
+
 @Component({
   selector: 'app-confirm-dialog',
   template: `
@@ -12,16 +27,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
         <p>{{ data.message }}</p>
       </div>
 
-      <div mat-dialog-content *ngIf="data.dettaglio">
+      <div mat-dialog-content *ngIf="data.extraInfo">
         <ul>
-          <li *ngFor="let item of data.dettaglio.split('\n')" >{{ item }}</li>
+          <li *ngFor="let data of data.extraInfo">{{data.title}} : {{data.value}}</li>
         </ul>
       </div>
 
       <div mat-dialog-actions class="containerPulsantiDiv">
         <div class="button-container">
-          <p-button severity="info"   [outlined]="true" [raised]="true" size="small" mat-button color="primary" (click)="onYesClick()">{{ data.buttonText.ok }}</p-button>
-          <p-button severity="danger" [outlined]="true" [raised]="true" size="small" mat-button (click)="onNoClick()">{{ data.buttonText.cancel }}</p-button>
+          <p-button severity="info"   [raised]="true" size="small" mat-button color="primary" (click)="onYesClick()">{{ data.buttonText.ok }}</p-button>
+          <p-button severity="danger" [raised]="true" size="small" mat-button (click)="onNoClick()">{{ data.buttonText.cancel }}</p-button>
         </div>
       </div>
     </div>
@@ -39,10 +54,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     }
   `],
 })
+
+
+
 export class ConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
   ) {}
 
   onNoClick(): void {

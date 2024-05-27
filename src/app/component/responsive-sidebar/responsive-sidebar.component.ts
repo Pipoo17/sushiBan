@@ -5,6 +5,7 @@ import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'src/app/servizi/message.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { navbarObject } from '../../utils/models/sidebar-interface'
 
 @Component({
   selector: 'app-responsive-sidebar',
@@ -18,6 +19,51 @@ export class ResponsiveSidebarComponent {
   isAdmin: boolean = false;
   isOpen: boolean = false;
   username : string = '';
+
+  // Oggetto Che costruisce la navBar
+  //icone = https://boxicons.com/
+  Navbar: navbarObject = {
+    Header:{
+      Title: 'SushiBan',
+      Icon: 'bx bx-sushi',
+    },
+    Cells: [
+      {
+        ico: "home-alt",
+        desc: "Home",
+        routing: "/",
+      },
+      {
+        ico: "user",
+        desc: "Profilo",
+        routing: "/profilo",
+      },
+      {
+        ico: "book",
+        desc: "Ordini",
+        routing: "/ordini",
+      },
+      {
+        ico: "bar-chart-alt-2",
+        desc: "Classifiche",
+        routing: "/classifiche",
+      },
+      {
+        ico: "data",
+        desc: "Dati Menu",
+        routing: "/datiMenu",
+        adminRestriction: true,
+      }
+    ],
+    Footer:{
+      adminLabel: 'Amministratore',
+      userLabel: '',
+    },
+    Customizations: {
+      showSearchBar: false,
+      showToolTip: false,
+    }
+  };
 
   constructor(
     public dialog: MatDialog,
@@ -34,6 +80,8 @@ export class ResponsiveSidebarComponent {
     //  this.isLogged = data;
     //})
   }
+
+
 
   async ngOnInit() {
 

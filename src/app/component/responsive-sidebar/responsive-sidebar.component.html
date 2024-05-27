@@ -1,77 +1,57 @@
+<head>
+  <meta charset="UTF-8">
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
-  <head>
-    <meta charset="UTF-8">
-    <!-- Boxicons CDN Link -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+<div class="overlay {{ isOpen ? 'overlayShadow' : 'none' }}"></div>
 
-  <div class="overlay {{ isOpen ? 'overlayShadow' : 'none' }}"></div>
 
-  <div class="sidebar" [hidden]="!getIsUserLogged()">
-    <div class="logo-details">
-      <i class='bx bx-sushi icon'></i>
-        <div class="logo_name">SushiBan</div>
-        <i class='bx bx-menu' id="btn" ></i>
-    </div>
-    <ul class="nav-list">
-  <!--    
-      <li>
-          <i class='bx bx-search' ></i>
-         <input type="text" placeholder="Search...">
-         <span class="tooltip">Search</span>
-      </li>
-  -->
-      <li class="pointer">
-        <a (click)='changeRoute("")' >
-          <i class='bx bx-home-alt bx-burst-hover'></i>
-          <span class="links_name">Home</span>
-        </a>
-         <span class="tooltip">Home</span>
-      </li>
-      <li class="pointer">
-        <a (click)='changeRoute("profilo")' >
-         <i class='bx bx-user bx-burst-hover' ></i>
-         <span class="links_name">Profilo</span>
-       </a>
-       <span class="tooltip">Profilo</span>
-     </li>
-     <li class="pointer">
-      <a  (click)='changeRoute("ordini")'>
-        <i class='bx bx-book-open bx-burst-hover'></i>
-        <span class="links_name">Ordini</span>
-       </a>
-       <span class="tooltip">Ordini</span>
-     </li>
-     <li class="pointer">
-       <a (click)='changeRoute("classifiche")'>
-        <i class='bx bx-bar-chart-alt-2 bx-burst-hover'></i>
-        <span class="links_name">Classifiche</span>
-       </a>
-       <span class="tooltip">Classifiche</span>
-     </li>
+<!-- Header -->
 
-     <li class="pointer" *ngIf="this.isAdmin == true">
-       <a (click)='changeRoute("datiMenu")'>
-        <i class='bx bx-data bx-burst-hover' ></i>
-         <span class="links_name">Dati Menu</span>
-       </a>
-       <span class="tooltip">Dati Menu</span>
-     </li>
-     
+<div class="sidebar" [hidden]="!getIsUserLogged()">
 
-     <li class="profile">
-         <div class="profile-details">
-           <img src={{immagineProfilo}} class="pointer" alt="profileImg" (click)='changeRoute("profilo")'>
-           <div class="name_job">
-             <div class="name">{{username}}</div>
-             <div class="job">{{isAdmin ? 'Admin' : ''}}</div>
-           </div>
-         </div>
-         <i class='bx bx-log-out pointer' id="log_out"  (click)="popupLogout()"></i>
-     </li>
-    </ul>
+  <div class="logo-details">
+    <i class='{{Navbar.Header.Icon}} icon'></i>
+    <div class="logo_name">{{Navbar.Header.Title}}</div>
+    <i class='bx bx-menu' id="btn"></i>
   </div>
 
+  <ul class="nav-list">
+
+    <!-- Searchbar (non funziona la parte di filtraggio del menu) -->
+    <li *ngIf="Navbar.Customizations?.showSearchBar">
+      <i class='bx bx-search'></i>
+      <input type="text" placeholder="Cerca...">
+      <span class="tooltip" *ngIf="Navbar.Customizations?.showToolTip">Cerca</span>
+    </li>
+
+    <!-- NavBar Cells -->
+    <ul>
+      <li *ngFor="let cell of Navbar.Cells">
+        <a (click)="changeRoute(cell.routing)"
+          *ngIf="cell.adminRestriction == null || (cell.adminRestriction == true && this.isAdmin == true)">
+          <i class="bx bx-{{ cell.ico }} bx-burst-hover"></i>
+          <span class="links_name ">{{ cell.desc }}</span>
+        </a>
+        <span class="tooltip" *ngIf="Navbar.Customizations?.showToolTip">{{cell.desc}}</span>
+
+      </li>
+    </ul>
+
+    <!-- profile / logout -->
+    <li class="profile">
+      <div class="profile-details">
+        <img src={{immagineProfilo}} class="pointer" alt="profileImg" (click)='changeRoute("profilo")'>
+        <div class="name_job">
+          <div class="name">{{username}}</div>
+          <div class="job">{{isAdmin ? Navbar.Footer.adminLabel : Navbar.Footer.userLabel}}</div>
+        </div>
+      </div>
+      <i class='bx bx-log-out pointer' id="log_out" (click)="popupLogout()"></i>
+    </li>
 
 
+  </ul>
+</div>

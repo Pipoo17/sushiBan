@@ -35,29 +35,27 @@ export class CardPiattoComponent {
         this.servizioMenu.menu[index].preferito = !this.servizioMenu.menu[index].preferito
         this.isClicked = !this.isClicked;
         }
-    })
-  }else{
-    this.SupabaseService.addPreferiti(this.servizioMenu.menu[index].codice)
-    .then((data) => {
-      console.log(data);
-      
-      if(data.success == false){
-        this.MessageService.showMessageError('',data.description)
-      }else{
+      })
+    }
+    else{
+      this.SupabaseService.addPreferiti(this.servizioMenu.menu[index].codice)
+      .then((data) => {
+        console.log(data);
+        
+        if(data.success == false){
+          this.MessageService.showMessageError('',data.description)
+        }else{
 
-      this.servizioMenu.menu[index].preferito = !this.servizioMenu.menu[index].preferito
-      this.isClicked = !this.isClicked;
-      }
-    })
-    .catch((error) => {
-      this.MessageService.showMessageError('','error.description')
-    });
-}
-
-
-
-  
+        this.servizioMenu.menu[index].preferito = !this.servizioMenu.menu[index].preferito
+        this.isClicked = !this.isClicked;
+        }
+      })
+      .catch((error) => {
+        this.MessageService.showMessageError('',error.description)
+      });
+    }
   }
+
 
   aggiungiPiatto(i: number) {
     this.servizioMenu.aggiungiPiatto(i);

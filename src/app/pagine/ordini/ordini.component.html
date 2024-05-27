@@ -47,7 +47,8 @@ palette :
 <div class="right-div">
   <div class="intestazioneDiv">
     <h2 class="titoloContainer">Tutti gli ordini</h2>
-    <p>Numero di clienti : {{this.quantiClienti}}</p>
+    
+    <p *ngIf="this.quantiClienti > 0 ">Numero di clienti : {{this.quantiClienti}}</p>
   </div>
 
   <div *ngIf=" this.allUserOrdersLabel != '' ">

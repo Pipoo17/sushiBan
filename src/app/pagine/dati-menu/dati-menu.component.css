@@ -1,12 +1,6 @@
 .tableContainer{
-    padding: 30px;
+    padding: 10px;
   }
-
-  :host ::ng-deep .p-dialog .product-image {
-    width: 150px;
-    margin: 0 auto 2rem auto;
-    display: block;
-}
 
 .odd{
   background-color: beige;
@@ -65,7 +59,8 @@ flex-direction: column;
 .tabellaHeader{
   display: flex;
   align-items:center ;
-  justify-content:space-between
+  justify-content:space-between;
+  height: 25px;
 }
 .pulsantiTabellaHeader{
   display: flex;

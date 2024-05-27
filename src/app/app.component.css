@@ -1,11 +1,4 @@
-mat-toolbar {
-    background: #004a9f;
-    color: white;
-  }
 
 .home-section{
-  position: relative;
-  height: 100vh;
-  transition: all 0.5s ease;
-  margin-left: 70px;
+  margin-left: 78px;
 }

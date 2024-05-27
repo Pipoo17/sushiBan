@@ -13,9 +13,9 @@
  }
  
  img {
-	max-width: 100%;
 	display: block;
 	height: 200px;
+	width: 180px;
  }
  
  .card-list {
@@ -130,28 +130,12 @@
 	justify-content: center;
  }
  
- .searchbar {
-	width: 100%;
-	font-size: xx-large;
-	font-family: sans-serif;
- }
- 
- .contenitore_searchbar {
-	padding: 20px;
-	padding-left: 10%;
-	padding-right: 10%;
-	height: 100px;
- }
- 
  .quantPiatto {
 	margin: 0;
 	display: flex;
 	align-items: center;
  }
- 
- .clicked {
-	color: red;
- }
+
  
  .material-icons {
 	transition: color 0.5s ease;

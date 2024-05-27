@@ -94,18 +94,6 @@ debug: boolean = !this.EnvironmentService.getIsProd();
     
     await this.getFiltroCategorieValues()
 
-    console.log(this.menuJson);
-    console.log(this.totalRecords);
-    console.log(this.menuJson)
-/*
-    this.filtroCategorieHeader = [
-      { label: 'Unqualified', value: '1' },
-      { label: 'Qualified', value: '2' },
-      { label: 'New', value: '3' },
-      { label: 'Negotiation', value: '4' },
-      { label: 'Renewal', value: '5' },
-      { label: 'Proposal', value: '6' }
-  ];*/
   }
 
   getImgPiatto(codicePiatto : string){
@@ -134,14 +122,8 @@ openInsert(){
 }
 
 openDelete(piatto : piatto){
-
   console.log(piatto);
   
-  let dettaglioPiatto = 
-  `Codice: ${piatto.codice}
-    Nome: ${piatto.nome}
-    Categoria: ${piatto.categoria}`
-
   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
       message: "Sei sicuro di voler eliminare questo piatto?",
@@ -149,7 +131,12 @@ openDelete(piatto : piatto){
         ok: 'Conferma',
         cancel: 'Annulla'
       },
-      dettaglio: dettaglioPiatto
+      extraInfo: [
+        { title: 'Codice', value:  piatto.codice },
+        { title: 'Nome', value: piatto.nome },
+        { title: 'Categoria', value: piatto.categoria }
+      ],
+
     }
   });
 

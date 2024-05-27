@@ -86,15 +86,12 @@ async thisUserOrder(){
 async allUsersOrders(){
   this.allUserOrdersLabel = ''
   this.allUsersOrder = []; 
-  console.log('this.quantiClienti : ',this.quantiClienti);
   
   this.quantiClienti = await this.supabaseService.getQuantiClienti();
-  console.log('this.quantiClienti : ',this.quantiClienti);
 
   try{
     let allUsersOrder : any = []
     allUsersOrder = await this.supabaseService.getAllUsersOrder()
-    console.log("allUsersOrder : ",allUsersOrder);
 
     if(allUsersOrder.length == 0){
        this.allUsersOrder = []
@@ -117,6 +114,8 @@ async allUsersOrders(){
     
   }
 }
+
+
 popupDeleteOrdine(){
   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
     data: {
