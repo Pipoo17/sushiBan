@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class EnvironmentService {
 
-  private isProd = true
+  private isProd = false
 
   private supabaseUrl = '';
   private supabaseKey = '';
