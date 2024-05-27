@@ -1,8 +1,23 @@
-.containerPulsantiDiv {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-    width: calc(100% - 20px); /* Calcola la larghezza sottraendo il padding del contenitore */
-    height: 50px;
-    margin-top: 10px;
-}
+@media (max-width: 600px) {
+    .containerPulsantiDiv {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      width: 100%;
+      gap: 4px; /* Riduci lo spazio tra i pulsanti per adattarlo meglio agli schermi piccoli */
+    }
+  
+    .mat-dialog-container {
+      min-width: auto; /* Permette al contenitore del dialogo di adattarsi alla larghezza del dispositivo */
+      width: 90vw; /* Occupare il 90% della larghezza della finestra visibile */
+      padding: 16px; /* Aggiungi padding per evitare che il contenuto tocchi i bordi */
+    }
+  
+    .mat-dialog-content {
+      word-wrap: break-word; /* Consente il wrapping delle parole per evitare overflow */
+    }
+  }
+  

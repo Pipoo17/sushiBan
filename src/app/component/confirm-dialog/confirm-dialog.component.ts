@@ -2,8 +2,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-
-
 export interface ConfirmDialogData {
   message: string;
   extraInfo?: Array<{
@@ -15,7 +13,6 @@ export interface ConfirmDialogData {
     cancel: string;
   };
 }
-
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -52,11 +49,31 @@ export interface ConfirmDialogData {
       display: flex;
       gap: 8px; /* Spazio tra i pulsanti, puoi regolare questo valore secondo le tue esigenze */
     }
+
+    @media (max-width: 600px) {
+      .containerPulsantiDiv {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button-container {
+        flex-direction: column;
+        width: 100%;
+        gap: 4px; /* Riduci lo spazio tra i pulsanti per adattarlo meglio agli schermi piccoli */
+      }
+
+      .mat-dialog-container {
+        min-width: auto; /* Permette al contenitore del dialogo di adattarsi alla larghezza del dispositivo */
+        width: 90vw; /* Occupare il 90% della larghezza della finestra visibile */
+        padding: 16px; /* Aggiungi padding per evitare che il contenuto tocchi i bordi */
+      }
+
+      .mat-dialog-content {
+        word-wrap: break-word; /* Consente il wrapping delle parole per evitare overflow */
+      }
+    }
   `],
 })
-
-
-
 export class ConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
