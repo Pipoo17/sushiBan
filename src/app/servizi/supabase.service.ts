@@ -154,7 +154,7 @@ async logout(){
 
 async getSession(){
   const {data: dataSession, error : errorSession } = await this.supabase.auth.getSession()
-  console.log("dataSession : ",dataSession)
+  //console.log("dataSession : ",dataSession)
   return dataSession
   
 }

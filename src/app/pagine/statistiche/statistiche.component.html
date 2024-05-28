@@ -1,15 +1,16 @@
 <h1 class="titolo">Classifiche</h1>
-<br><br>
 <h1 class="sottotitolo">Gli utenti più affamati</h1>
 <hr>
 <br>
 <div class="contenitoreordiniPerUtente">
     <div class="tableContainer rounded-table">
         <table mat-table [dataSource]="tabellaclassificaOrdiniPerUtente" matSort matPaginator>
+
             <ng-container matColumnDef="avatar">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let user"><img src="{{getImages('avatars', user.username)}}" class="immginiProflo"></td>
             </ng-container>
+            
             <ng-container matColumnDef="username">
                 <th mat-header-cell *matHeaderCellDef>Nome</th>
                 <td mat-cell *matCellDef="let user; let i = index">
@@ -19,12 +20,14 @@
                     </span>
                 </td>
             </ng-container>
+
             <ng-container matColumnDef="numeroordini">
                 <th mat-header-cell *matHeaderCellDef>Ordini</th>
                 <td mat-cell *matCellDef="let user">{{ user.numeroordini }}</td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;" 
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsClassificaUtenti"></tr>
+            <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumnsClassificaUtenti;" 
             [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}"></tr>
         </table>
     </div>
@@ -40,40 +43,53 @@
 <h1 class="sottotitolo">I Piatti Più Gustosi</h1>
 <hr>
 <br>
-<!-- 
+
 <div class="contenitorePiattiPiuMangiati">
-    <div class="tabellaOrdini">
-        <table mat-table [dataSource]="tabellaPiattiPiuOrdinati" class="mat-elevation-z8" matSort matPaginator>
+    <div class="tableContainer rounded-table">
+        <table mat-table [dataSource]="tabellaPiattiPiuOrdinati" matSort >
+            
             <ng-container matColumnDef="immagine">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let piatto"><img src="{{getImages('immaginiPiatti', piatto.id)}}" class="immginiProflo"></td>
             </ng-container>
+
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef>Codice</th>
-                <td mat-cell *matCellDef="let piatto; let i = index" [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}">
+                <td mat-cell *matCellDef="let piatto; let i = index">
                     {{ piatto.id }}
                     <span *ngIf="i === 0">
                         <i class='bx bx-crown'></i>
                     </span>
                 </td>
             </ng-container>
+
             <ng-container matColumnDef="descrizione">
                 <th mat-header-cell *matHeaderCellDef>Nome</th>
-                <td mat-cell *matCellDef="let piatto">{{ piatto.descrizione }}</td>
+                <td mat-cell *matCellDef="let piatto; let i = index">
+                    {{ piatto.descrizione }}
+                    <span *ngIf="i === 0">
+                        <i class='bx bx-crown'></i>
+                    </span>
+                </td>
             </ng-container>
+
             <ng-container matColumnDef="numeroordinazioni">
-                <th mat-header-cell *matHeaderCellDef>Piatti Ordinati</th>
+                <th mat-header-cell *matHeaderCellDef>Ordini</th>
                 <td mat-cell *matCellDef="let piatto">{{ piatto.numeroordinazioni }}</td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsClassificaPiatti"></tr>
+            <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumnsClassificaPiatti;" 
+            [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}"></tr>
         </table>
     </div>
 
-    <div class="classificaOrdiniPerUtente">
-        <p-chart type="polarArea" [data]="graficoPiattiPiuOrdinati" [options]="options" height="40vh" [responsive]="true"></p-chart>
+    <div class="charContainer">
+        <div class="char">
+            <p-chart type="pie" [data]="graficoPiattiPiuOrdinati" [options]="options" [style]="{'width': '100%'}" [responsive]="true" ></p-chart>            
+        </div>
     </div>
 </div>
-<p>.</p>
- -->
+
+
 <app-footer></app-footer>

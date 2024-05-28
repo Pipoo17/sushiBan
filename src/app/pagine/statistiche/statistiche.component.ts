@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
-import { TableModule } from 'primeng/table';
 
-import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
 
 
 @Component({
@@ -22,8 +17,8 @@ export class StatisticheComponent {
   graficoPiattiPiuOrdinati : any;
   tabellaPiattiPiuOrdinati : any;
 
-  displayedColumns: string[] = ['avatar', 'username', 'numeroordini'];
-  displayedColumnsPiatti: string[] = ['immagine', 'id', 'descrizione', 'numeroordinazioni'];
+  displayedColumnsClassificaUtenti: string[] = ['avatar', 'username', 'numeroordini'];
+  displayedColumnsClassificaPiatti: string[] = ['immagine', 'id', 'descrizione', 'numeroordinazioni'];
 
   //Modificando questo valore cambia il numero di righe mostrate nelle classifiche e dentro i grafici
   maxRowClassifica : number = 5;
@@ -44,14 +39,21 @@ export class StatisticheComponent {
     this.initGraficoPiattiPiuOrdinati()
   }
 
-// metodi PiattiPiuOrdinati
-  private async initDatiTabellaPiattiPiuOrdinati(){
-    console.log(await this.supabaseService.getMostOrderedDishes());
-    this.tabellaPiattiPiuOrdinati = await this.supabaseService.getMostOrderedDishes();
+  private async initDatiTabellaOrdiniPerUtente() {    
+    const temp = await this.supabaseService.getUserMostActive();
+    this.tabellaclassificaOrdiniPerUtente = temp.slice(0, this.maxRowClassifica);
+    
+  }
 
+  private async initDatiTabellaPiattiPiuOrdinati(){
+    const temp = await await this.supabaseService.getMostOrderedDishes();
+    this.tabellaPiattiPiuOrdinati = temp.slice(0, this.maxRowClassifica);
+    
   }
   private async initGraficoPiattiPiuOrdinati() {
-    let JsonclassificaPiattiPiuOrdinati: any[] = await this.supabaseService.getMostOrderedDishes();
+
+    let temp: any[] = await this.supabaseService.getMostOrderedDishes();
+    let JsonclassificaPiattiPiuOrdinati = temp.slice(0, this.maxRowClassifica);
 
     const labels = JsonclassificaPiattiPiuOrdinati.map(item => item.id);
     const data = JsonclassificaPiattiPiuOrdinati.map(item => item.numeroordinazioni);
@@ -75,9 +77,9 @@ export class StatisticheComponent {
 
   // metodi OrdiniPerUtente
   private async initGraficoTortaOrdiniPerUtente() {
-    let allPlateChar: any[] = await this.supabaseService.getUserMostActive();
-    let JsonclassificaOrdiniPerUtente = allPlateChar.slice(0, this.maxRowClassifica);
-    
+    let temp: any[] = await this.supabaseService.getUserMostActive();
+    let JsonclassificaOrdiniPerUtente = temp.slice(0, this.maxRowClassifica);
+
 
     const labels = JsonclassificaOrdiniPerUtente.map(item => item.username);
     const data = JsonclassificaOrdiniPerUtente.map(item => item.numeroordini);
@@ -97,18 +99,10 @@ export class StatisticheComponent {
         borderWidth: 1
       }]
     };
-  }
 
 
-/*   private async initDatiTabellaOrdiniPerUtente() {    
-    this.tabellaclassificaOrdiniPerUtente = await this.supabaseService.getUserMostActive();
   }
- */
 
-  private async initDatiTabellaOrdiniPerUtente() {    
-    const allUsers = await this.supabaseService.getUserMostActive();
-    this.tabellaclassificaOrdiniPerUtente = allUsers.slice(0, this.maxRowClassifica);
-  }
 
   getImages(bucket : string, nomeImmagine : string){
     return this.supabaseService.getPictureURL(bucket,nomeImmagine)
