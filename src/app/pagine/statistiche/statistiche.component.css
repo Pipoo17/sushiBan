@@ -68,8 +68,10 @@
 /* STILI CLASSIFICA */
 
 .immginiProflo {
-    width: 52px;
-    height: 52px;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    margin-top: 6px;
 }
 
 .oro {
