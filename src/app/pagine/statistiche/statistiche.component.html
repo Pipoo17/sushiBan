@@ -24,7 +24,8 @@
                 <td mat-cell *matCellDef="let user">{{ user.numeroordini }}</td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;" [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}"></tr>
+            <tr mat-row *matRowDef="let row; let i = index; columns: displayedColumns;" 
+            [ngClass]="{'oro': i === 0, 'argento': i === 1, 'bronzo': i === 2}"></tr>
         </table>
     </div>
 
@@ -35,11 +36,11 @@
     </div>
 </div>
 
-<!-- 
+
 <h1 class="sottotitolo">I Piatti Più Gustosi</h1>
 <hr>
 <br>
-
+<!-- 
 <div class="contenitorePiattiPiuMangiati">
     <div class="tabellaOrdini">
         <table mat-table [dataSource]="tabellaPiattiPiuOrdinati" class="mat-elevation-z8" matSort matPaginator>

@@ -25,7 +25,8 @@ export class StatisticheComponent {
   displayedColumns: string[] = ['avatar', 'username', 'numeroordini'];
   displayedColumnsPiatti: string[] = ['immagine', 'id', 'descrizione', 'numeroordinazioni'];
 
-
+  //Modificando questo valore cambia il numero di righe mostrate nelle classifiche e dentro i grafici
+  maxRowClassifica : number = 5;
 
   constructor(
     public servizioMenu: MenuService, 
@@ -74,7 +75,9 @@ export class StatisticheComponent {
 
   // metodi OrdiniPerUtente
   private async initGraficoTortaOrdiniPerUtente() {
-    let JsonclassificaOrdiniPerUtente: any[] = await this.supabaseService.getUserMostActive();
+    let allPlateChar: any[] = await this.supabaseService.getUserMostActive();
+    let JsonclassificaOrdiniPerUtente = allPlateChar.slice(0, this.maxRowClassifica);
+    
 
     const labels = JsonclassificaOrdiniPerUtente.map(item => item.username);
     const data = JsonclassificaOrdiniPerUtente.map(item => item.numeroordini);
@@ -97,10 +100,15 @@ export class StatisticheComponent {
   }
 
 
-  private async initDatiTabellaOrdiniPerUtente() {
+/*   private async initDatiTabellaOrdiniPerUtente() {    
     this.tabellaclassificaOrdiniPerUtente = await this.supabaseService.getUserMostActive();
   }
+ */
 
+  private async initDatiTabellaOrdiniPerUtente() {    
+    const allUsers = await this.supabaseService.getUserMostActive();
+    this.tabellaclassificaOrdiniPerUtente = allUsers.slice(0, this.maxRowClassifica);
+  }
 
   getImages(bucket : string, nomeImmagine : string){
     return this.supabaseService.getPictureURL(bucket,nomeImmagine)
