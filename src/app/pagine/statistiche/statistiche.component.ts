@@ -3,6 +3,12 @@ import { MenuService } from 'src/app/servizi/menu.service';
 import { SupabaseService } from 'src/app/servizi/supabase.service';
 import { TableModule } from 'primeng/table';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
+
 @Component({
   selector: 'app-statistiche',
   templateUrl: './statistiche.component.html',
@@ -15,6 +21,11 @@ export class StatisticheComponent {
 
   graficoPiattiPiuOrdinati : any;
   tabellaPiattiPiuOrdinati : any;
+
+  displayedColumns: string[] = ['avatar', 'username', 'numeroordini'];
+  displayedColumnsPiatti: string[] = ['immagine', 'id', 'descrizione', 'numeroordinazioni'];
+
+
 
   constructor(
     public servizioMenu: MenuService, 

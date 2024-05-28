@@ -1,91 +1,121 @@
-.classificaOrdiniPerUtente{
-    background-color: white;
-    width: 500px;
-    border-radius: 10px;
-    padding: 20px;
+/* HEADER */
+
+.titolo {
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    text-align: center;
+    padding: 10px;
+    margin-top: 3vh;
+    font-family: 'sf wasabi', sans-serif;
 }
-.contenitoreordiniPerUtente, .contenitorePiattiPiuMangiati {
+
+.sottotitolo {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    margin-top: 3vh;
+    font-family: 'sf wasabi', sans-serif;
+}
+
+
+
+/* CONTAINER CLASSIFICHE */
+.contenitoreordiniPerUtente,
+.contenitorePiattiPiuMangiati {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-    /* Aggiungi altri stili o regole secondo necessità */
-}
-.contenitorePiattiPiuMangiati{
-    margin-bottom: 20px;
+    padding: 20px;
+    gap: 20px;
+
 }
 
-.tabellaOrdini {
+/* GRAFICI */
+
+
+.charContainer {
+    display: flex;
+    justify-content: center;
     flex-grow: 1;
-    margin: 0 20px; /* Aggiungi margine ai lati */
-    margin-top: 15px;
+
+    height: min-content;
 }
 
+.char {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.classificaOrdiniPerUtente {
-    margin: 10px;    
-    margin: 10px;    
-}
-.titlo{
-    color: rgb(255, 255, 255);
-    font-family: 'Noto Sans JP';
-    font-size: 50px;
-    text-align: center;
-    margin-top: 20px;
+    border-radius: 10px;
     padding: 10px;
-    margin-top: 3vh;
-    font-family: 'sf wasabi', sans-serif;
+    background-color: white;
+
+
 }
 
 
-.sottotitolo{
-    color: rgb(255, 255, 255);
-    font-family: 'Noto Sans JP';
-    font-size: 30px;
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px;
-    margin-top: 3vh;
-    font-family: 'sf wasabi', sans-serif;
+/* CLASSIFICA */
+
+/* TODO : AGGIUNGERE OVERFLOW */
+.tableContainer {
+    flex-grow: 10;
+    height: min-content;
+
 }
 
 
-.immginiProflo{
-    width: 50px;
-    height: 50px;
+/* STILI CLASSIFICA */
+
+.immginiProflo {
+    width: 52px;
+    height: 52px;
 }
+
 .oro {
-    background-color: #ffd700; /* colore oro */
+    background-color: #ffd700;
 }
 
 .argento {
-    background-color: #c0c0c0; /* colore argento */
+    background-color: #c0c0c0;
 }
 
 .bronzo {
-    background-color: #cd7f32; /* colore bronzo */
+    background-color: #cd7f32;
 }
-.classifiche{
-    min-width: '25rem'
-}
-/* Aggiungi questo codice alla fine del tuo file di stile CSS o nel tag style nel tuo HTML */
 
-@media (max-width: 800px) {
-    .contenitoreordiniPerUtente, .contenitorePiattiPiuMangiati {
-        flex-direction: column;
+.rounded-table {
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+
+
+
+@media (max-width: 1000px) {
+
+    /* HEADER */
+    .titolo {
+        font-size: 30px;
+    }
+
+    .sottotitolo {
+        font-size: 20px;
+    }
+
+    /* GRAFICI */
+
+    .char {
+        display: flex;
+        justify-content: center;
         align-items: center;
-        max-width: 100%; /* Imposta la larghezza massima della tabella al 100% del contenitore */
-        overflow-x: auto; /* Aggiunge uno scroll orizzontale se la tabella è più ampia del contenitore */
-    
+
+        border-radius: 10px;
+        padding: 10px;
+        background-color: white;
+
+        width: 45vw;
+
     }
 
-    .classificaOrdiniPerUtente, .contenitorePiattiPiuMangiati {
-        width: auto;
-    }
-
-    .tabellaOrdini, .tabellaPiattiPiuMangiati {
-        margin: 0;
-    }
-    .p-table {
-        min-width: initial !important; /* Rimuove il min-width impostato da PrimeNG */
-    }
 }

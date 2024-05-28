@@ -47,6 +47,10 @@ import { ChipsModule } from 'primeng/chips';
 import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 export function playerFactory(): any {  
   return import('lottie-web');
 }
@@ -100,6 +104,9 @@ export function playerFactory(): any {
     ChipsModule,
     DropdownModule,
     AccordionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
 
   providers: [
