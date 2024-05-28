@@ -37,7 +37,7 @@
 .charContainer {
     display: flex;
     justify-content: center;
-    flex-grow: 1;
+    flex-grow: 2;
 
     height: min-content;
 }
